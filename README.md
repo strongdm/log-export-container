@@ -10,19 +10,21 @@ The container acts as a syslog concentrator. Customers that want to export their
 * [Support](#support)
 
 ## Installation
-**BETA**
-Start container:
-```
-./start-fluentd.sh
-```
 
 ### Dev setup
-Reload container with new changes and establish an SSH remote port:
+Start container:
 ```
-./reload-fluentd.sh
+./dev-tools/restart-container.sh
 ```
+
+Considerations:
 * Configure strongDM syslog: `mygateway:5140`
 * Add `mygateway 127.0.0.1` to your gateway
+
+Tail logs:
+```
+./dev-tools/tail-logs.sh
+```
 
 ## Getting Started
 -
