@@ -33,9 +33,5 @@ get_output_conf() {
     fi
 }
 
-input_conf=$(get_input_conf)
-process_conf=$(get_process_conf)
-output_conf=$(get_output_conf)
-
-cat $input_conf $process_conf $output_conf > $ETC_DIR/fluent.conf
+cat $(get_input_conf) $(get_process_conf) $(get_output_conf) > $ETC_DIR/fluent.conf
 exec fluentd -c $ETC_DIR/fluent.conf -p /fluentd/plugins

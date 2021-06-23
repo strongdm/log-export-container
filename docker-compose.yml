@@ -13,8 +13,8 @@ services:
     
       # Optional variables
       # Set when LOG_EXPORT_CONTAINER_OUTPUT=s3
-      # - AWS_ACCESS_KEY_ID=<aws-access-key-id>
+      # - AWS_ACCESS_KEY_ID=<aws-access-key-id> 
       # - AWS_SECRET_ACCESS_KEY=<aws-secret-access-key>
-      # - S3_BUCKET=<s3-bucket>
-      # - S3_REGION=<s3-region>
-      # - S3_PATH=<s3-path>
+      # - S3_BUCKET=<s3-bucket> # e.g. log-export-container
+      # - S3_REGION=<s3-region> # e.g. us-west-2
+      # - S3_PATH=<s3-path>     # e.g. logs
