@@ -1,0 +1,20 @@
+version: "3.9"
+services:
+  log-export-container:
+    build: .
+    ports:
+      - "5140:5140"
+    environment:
+      # IMPORTANT: Do not enclose values in double or single quotes 
+
+      # Required variables
+      - LOG_EXPORT_CONTAINER_INPUT=json # possible values = json or csv
+      - LOG_EXPORT_CONTAINER_OUTPUT=stdout # possible values = stdout or s3
+    
+      # Optional variables
+      # Set when LOG_EXPORT_CONTAINER_OUTPUT=s3
+      # - AWS_ACCESS_KEY_ID=<aws-access-key-id>
+      # - AWS_SECRET_ACCESS_KEY=<aws-secret-access-key>
+      # - S3_BUCKET=<s3-bucket>
+      # - S3_REGION=<s3-region>
+      # - S3_PATH=<s3-path>
