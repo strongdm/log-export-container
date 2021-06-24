@@ -10,21 +10,23 @@ The container acts as a syslog concentrator. Customers that want to export their
 * [Support](#support)
 
 ## Getting Started
-Please refer to the [docker-compose](docker-compose.yml) file for config details. Set variables and start your container.
+The Log Export Container is a Docker Image you can use for spinning up multiple containers. For configuration details, please refer to [CONFIGURE_LOG_EXPORT_CONTAINER.md](docs/CONFIGURE_LOG_EXPORT_CONTAINER.md).
+
+You could use the container via plain `docker run` command, docker-compose, k8s, among others. For simplicity sake, you could clone the repo and quickly start using executing the following file: 
 ```
 ./docker-start.sh
 ```
 
-## Dev Setup
-Start container and SSH tunnel:
+## Dev Tools
+If you want to modify the container and quickly see the changes in your local, you could start the container locally and forward the local port to your gateway using:
 ```
 ./dev-tools/start-container.sh
 ```
 
 Considerations:
-* Configure strongDM syslog: `mygateway:5140`
-* Add `mygateway 127.0.0.1` to your gateway
-* Exit process: ^C + ENTER
+* Point strongDM syslog to: `mygateway:5140`
+* Add `mygateway 127.0.0.1` to your gateway `/etc/hosts`
+* For exiting the container: `^C` + `ENTER`
 
 ## Contributing
 Refer to the [contributing](CONTRIBUTING.md) guidelines or dump part of the information here.
