@@ -10,7 +10,7 @@ The container acts as a syslog concentrator. Customers that want to export their
 * [Support](#support)
 
 ## Getting Started
-The Log Export Container is a Docker Image you can use for spinning up multiple containers. You could use the container via plain `docker run` command, docker-compose, k8s, among others. While we integrate with [quay.io](https://quay.io), you could find the docker-image under [releases](https://github.com/strongdm/log-export-container/releases)
+The Log Export Container is a Docker Image you can use for spinning up multiple containers. You could use the container via plain `docker run` command, docker-compose, k8s, among others. While we integrate with [quay.io](https://quay.io), you could find the generated docker images under [releases](https://github.com/strongdm/log-export-container/releases)
 
 ![image](docs/img/simple_demo.gif)
 
