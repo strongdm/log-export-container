@@ -2,6 +2,7 @@ version: "3.9"
 services:
   log-export-container:
     build: .
+    # build: log-export-container
     ports:
       - "5140:5140"
     environment:
@@ -12,9 +13,4 @@ services:
       - LOG_EXPORT_CONTAINER_OUTPUT=stdout # possible values = stdout or s3
     
       # Optional variables
-      # Set when LOG_EXPORT_CONTAINER_OUTPUT=s3
-      # - AWS_ACCESS_KEY_ID=<aws-access-key-id> 
-      # - AWS_SECRET_ACCESS_KEY=<aws-secret-access-key>
-      # - S3_BUCKET=<s3-bucket> # e.g. log-export-container
-      # - S3_REGION=<s3-region> # e.g. us-west-2
-      # - S3_PATH=<s3-path>     # e.g. logs
+      # When using LOG_EXPORT_CONTAINER_OUTPUT=s3 add variables listed in docs/CONFIGURE_S3.md
