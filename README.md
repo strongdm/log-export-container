@@ -10,7 +10,7 @@ The container acts as a syslog concentrator. Customers that want to export their
 * [Support](#support)
 
 ## Getting Started
-The Log Export Container is a Docker Image you can use for spinning up multiple containers. For configuration details, please refer to [CONFIGURE_LOG_EXPORT_CONTAINER.md](docs/CONFIGURE_LOG_EXPORT_CONTAINER.md).
+The Log Export Container is a Docker Image you can use for spinning up multiple containers. For configuration details, please refer to [CONFIGURE_LOG_EXPORT_CONTAINER](docs/CONFIGURE_LOG_EXPORT_CONTAINER.md).
 
 You could use the container via plain `docker run` command, docker-compose, k8s, among others. For simplicity sake, you could clone the repo and quickly start using executing the following file: 
 ```
