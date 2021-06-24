@@ -5,17 +5,16 @@ The container acts as a syslog concentrator. Customers that want to export their
 
 ## Table of Contents
 * [Getting Started](#getting-started)
-* [Dev Setup](#dev-setup)
+* [Dev Setup](#dev-tools)
 * [Contributing](#contributing)
 * [Support](#support)
 
 ## Getting Started
-The Log Export Container is a Docker Image you can use for spinning up multiple containers. For configuration details, please refer to [CONFIGURE_LOG_EXPORT_CONTAINER](docs/CONFIGURE_LOG_EXPORT_CONTAINER.md).
+The Log Export Container is a Docker Image you can use for spinning up multiple containers. You could use the container via plain `docker run` command, docker-compose, k8s, among others. While we integrate with [quay.io](https://quay.io), you could find the docker-image under [releases](https://github.com/strongdm/log-export-container/releases)
 
-You could use the container via plain `docker run` command, docker-compose, k8s, among others. For simplicity sake, you could clone the repo and quickly start using it executing: 
-```
-./docker-start.sh
-```
+![image](docs/img/simple_demo.gif)
+
+For configuration details, please refer to [CONFIGURE_LOG_EXPORT_CONTAINER](docs/CONFIGURE_LOG_EXPORT_CONTAINER.md).
 
 ## Dev Tools
 If you want to modify the container and quickly see the changes in your local, you could start the container locally and forward the local port to your gateway using:
