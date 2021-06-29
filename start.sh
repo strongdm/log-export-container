@@ -28,6 +28,8 @@ get_output_conf() {
     conf=$(get_conf $LOG_EXPORT_CONTAINER_OUTPUT)
     if [ "$conf" == "s3" ]; then
         echo $ETC_DIR/output-s3.conf
+    elif [ "$conf" == "cloudwatch" ]; then
+        echo $ETC_DIR/output-cloudwatch.conf
     else
         echo $ETC_DIR/output-stdout.conf
     fi
