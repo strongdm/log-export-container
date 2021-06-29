@@ -10,7 +10,8 @@ services:
 
       # Required variables
       - LOG_EXPORT_CONTAINER_INPUT=json # possible values = json or csv
-      - LOG_EXPORT_CONTAINER_OUTPUT=stdout # possible values = stdout or s3
+      - LOG_EXPORT_CONTAINER_OUTPUT=stdout # possible values = stdout, s3 or cloudwatch
     
       # Optional variables
-      # When using LOG_EXPORT_CONTAINER_OUTPUT=s3 add variables listed in docs/CONFIGURE_S3.md
+      # For LOG_EXPORT_CONTAINER_OUTPUT=s3 refer to docs/CONFIGURE_S3.md
+      # For LOG_EXPORT_CONTAINER_OUTPUT=cloudwatch refer to docs/CONFIGURE_CLOUDWATCH.md
