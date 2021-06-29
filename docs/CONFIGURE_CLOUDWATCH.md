@@ -7,6 +7,28 @@ The Log Export Container uses a [fluentd cloudwatch output plugin](https://githu
 * **LOG_GROUP_NAME**. AWS CloudWatch Log Group Name to store logs: e.g. `aws/sdm-logs`
 * **LOG_STREAM_NAME**. AWS CloudWatch log stream name to store logs, for example: e.g. `test`
 
+## IAM permissions
+Add -at least- the following policy to your IAM user:
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "logs:PutLogEvents",
+                "logs:CreateLogGroup",
+                "logs:PutRetentionPolicy",
+                "logs:CreateLogStream",
+                "logs:DescribeLogGroups",
+                "logs:DescribeLogStreams"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        }
+    ]
+}
+```
+
 ## Plugin changes
 
 The cloudwatch output plugin supports multiple configurations. Please refer to [output-cloudwatch.conf](../fluentd/etc/output-cloudwatch.conf)
