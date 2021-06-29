@@ -14,7 +14,7 @@ The Log Export Container is a Docker Image you can use for spinning up multiple 
 
 ![image](docs/img/simple_demo.gif)
 
-For configuration details, please refer to [CONFIGURE_LOG_EXPORT_CONTAINER](docs/CONFIGURE_LOG_EXPORT_CONTAINER.md).
+For configuration details, please refer to [CONFIGURE_LOG_EXPORT_CONTAINER.md](docs/CONFIGURE_LOG_EXPORT_CONTAINER.md).
 
 ## Dev Tools
 If you want to modify the container and quickly see the changes in your local, you could start the container locally and forward the local port to your gateway using:
