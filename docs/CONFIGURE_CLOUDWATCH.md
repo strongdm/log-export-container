@@ -4,8 +4,8 @@ The Log Export Container uses a [fluentd cloudwatch output plugin](https://githu
 * **AWS_ACCESS_KEY_ID**. AWS Access Key
 * **AWS_SECRET_ACCESS_KEY**. AWS Access Secret
 * **AWS_REGION**. AWS Region Name, for example: e.g. `us-west-2`
-* **LOG_GROUP_NAME**. AWS CloudWatch Log Group Name to store logs: e.g. `aws/sdm-logs`
-* **LOG_STREAM_NAME**. AWS CloudWatch log stream name to store logs, for example: e.g. `test`
+* **CLOUDWATCH_LOG_GROUP_NAME**. AWS CloudWatch Log Group Name to store logs: e.g. `aws/sdm-logs`
+* **CLOUDWATCH_LOG_STREAM_NAME**. AWS CloudWatch Log Stream Name to store logs, for example: e.g. `test`
 
 ## IAM permissions
 Add -at least- the following policy to your IAM user:
@@ -42,6 +42,6 @@ docker run -p 5140:5140 \
   -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
   -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
   -e AWS_REGION=$AWS_REGION \
-  -e LOG_GROUP_NAME=$LOG_GROUP_NAME \
-  -e LOG_STREAM_NAME=$LOG_STREAM_NAME log-export-container 
+  -e CLOUDWATCH_LOG_GROUP_NAME=$CLOUDWATCH_LOG_GROUP_NAME \
+  -e CLOUDWATCH_LOG_STREAM_NAME=$CLOUDWATCH_LOG_STREAM_NAME log-export-container 
 ```

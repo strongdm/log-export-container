@@ -4,14 +4,18 @@
 
 ### Required configuration
 * **LOG_EXPORT_CONTAINER_INPUT**. Container input format (`json` or `csv`). Default: `json`
-* **LOG_EXPORT_CONTAINER_OUTPUT**. Container output storage (`stdout`, `s3` or `cloudwatch`). Default: `stdout`
+* **LOG_EXPORT_CONTAINER_OUTPUT**. Container output storage (`stdout`, `s3`, `cloudwatch` or `splunk-hec`). Default: `stdout`
 
 ### Optional configuration
 #### S3
 When using `LOG_EXPORT_CONTAINER_OUTPUT=s3` add variables listed in [CONFIGURE_S3.md](CONFIGURE_S3.md)
 
-#### S3
+#### CloudWatch
 When using `LOG_EXPORT_CONTAINER_OUTPUT=cloudwatch` add variables listed in [CONFIGURE_CLOUDWATCH.md](CONFIGURE_CLOUDWATCH.md)
+
+#### Splunk HEC
+When using `LOG_EXPORT_CONTAINER_OUTPUT=splunk-hec` add variables listed in [CONFIGURE_SPLUNK_HEC.md](CONFIGURE_SPLUNK_HEC.md)
+
 
 ## SDM
 The current version of the container only supports rsyslog, please refer to the image below to observe a typical configuration:
