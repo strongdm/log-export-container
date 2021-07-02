@@ -3,6 +3,8 @@ A docker container that can be easily deployed and configured to export strongDM
 
 The container acts as a syslog concentrator. Customers that want to export their strongDM query logs to a third party logging service can use the container to do so. They configure the container for the appropriate target. Deploy the container. Configure their strongDM gateways to logs to a syslog destination and set the destination to the address of the logging container.
 
+The container uses [fluentd](https://www.fluentd.org/) for processing and routing your logs. Currently supports routing to: stdout, [S3](https://aws.amazon.com/s3/), [CloudWatch](https://aws.amazon.com/cloudwatch/), [Splunk HEC](https://dev.splunk.com/enterprise/docs/devtools/httpeventcollector/) and [Datadog](https://www.datadoghq.com/).
+
 ## Table of Contents
 * [Getting Started](#getting-started)
 * [Dev Setup](#dev-tools)
