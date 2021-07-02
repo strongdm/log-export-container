@@ -1,4 +1,4 @@
 #!/bin/bash
 
-docker-compose build # --no-cache 
+docker build -t log-export-container .
 docker-compose up -d

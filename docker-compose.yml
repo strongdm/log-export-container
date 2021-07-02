@@ -1,8 +1,7 @@
-version: "3.9"
+version: "3.3"
 services:
   log-export-container:
-    build: .
-    # image: log-export-container:latest
+    image: log-export-container:latest
     ports:
       - "5140:5140"
     environment:
