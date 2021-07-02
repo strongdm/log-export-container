@@ -9,9 +9,10 @@ services:
 
       # Required variables
       - LOG_EXPORT_CONTAINER_INPUT=json # possible values = json or csv
-      - LOG_EXPORT_CONTAINER_OUTPUT=stdout # possible values = stdout, s3, cloudwatch or splunk-hec
+      - LOG_EXPORT_CONTAINER_OUTPUT=stdout # possible values = stdout, s3, cloudwatch, splunk-hec or datadog
     
       # Optional variables
       # For LOG_EXPORT_CONTAINER_OUTPUT=s3 refer to docs/CONFIGURE_S3.md
       # For LOG_EXPORT_CONTAINER_OUTPUT=cloudwatch refer to docs/CONFIGURE_CLOUDWATCH.md
       # For LOG_EXPORT_CONTAINER_OUTPUT=splunk-hec refer to docs/CONFIGURE_SPLUNK_HEC.md
+      # For LOG_EXPORT_CONTAINER_OUTPUT=datadog refer to docs/CONFIGURE_DATADOG.md

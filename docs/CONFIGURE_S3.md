@@ -4,7 +4,7 @@ The Log Export Container uses [fluentd s3 output plugin](https://docs.fluentd.or
 * **AWS_ACCESS_KEY_ID**. AWS Access Key
 * **AWS_SECRET_ACCESS_KEY**. AWS Access Secret
 * **S3_BUCKET**. AWS S3 Bucket Name, for example: `log-export-container`
-* **S3_REGION**. AWS S3 Bucket Region Name, for example: e.g. `us-west-2`
+* **S3_REGION**. AWS S3 Bucket Region Name, for example: `us-west-2`
 * **S3_PATH**. AWS S3 Path to Append to your Logs, for example: `logs`. The actual path on S3 will be: `{path}{container_id}{time_slice_format}_{sequential_index}.gz (see s3_object_key_format)`
 
 ## Plugin changes

@@ -32,6 +32,8 @@ get_output_conf() {
         echo $ETC_DIR/output-cloudwatch.conf
     elif [ "$conf" == "splunk-hec" ]; then
         echo $ETC_DIR/output-splunk-hec.conf
+    elif [ "$conf" == "datadog" ]; then
+        echo $ETC_DIR/output-datadog.conf
     else
         echo $ETC_DIR/output-stdout.conf
     fi
