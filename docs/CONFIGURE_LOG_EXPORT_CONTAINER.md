@@ -4,7 +4,7 @@
 
 ### Required configuration
 * **LOG_EXPORT_CONTAINER_INPUT**. Container input format (`json` or `csv`). Default: `json`
-* **LOG_EXPORT_CONTAINER_OUTPUT**. Container output storage (`stdout`, `s3`, `cloudwatch`, `splunk-hec` or `datadog`). Default: `stdout`
+* **LOG_EXPORT_CONTAINER_OUTPUT**. Container output storage (`stdout`, `s3`, `cloudwatch`, `splunk-hec` and/or `datadog`). Default: `stdout`. You could configure multiple storages, for example: `stdout s3 datadog`.
 
 ### Optional configuration
 #### S3

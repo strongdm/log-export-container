@@ -2,6 +2,7 @@
 FROM fluent/fluentd:edge
 
 USER root
+RUN apk add gettext
 RUN gem install fluent-plugin-rewrite-tag-filter
 RUN gem install fluent-plugin-s3
 RUN gem install fluent-plugin-cloudwatch-logs
