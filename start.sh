@@ -7,7 +7,7 @@ get_intput_conf_name() {
 }
 
 get_output_conf_stores() {
-    for s in stdout s3 cloudwatch splunk-hec datadog; do
+    for s in stdout s3 cloudwatch splunk-hec datadog azure-loganalytics; do
         contains=$(echo $LOG_EXPORT_CONTAINER_OUTPUT | grep -wq $s; echo $?)
         if [ $contains -eq 0 ]; then
             export conf="$conf $s"
