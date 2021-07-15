@@ -1,13 +1,14 @@
 #!/bin/sh
 
 ETC_DIR=/fluentd/etc
+SUPPORTED_STORES="stdout s3 cloudwatch splunk-hec datadog azure-loganalytics sumologic"
 
 get_intput_conf_name() {
     echo $1 | awk '{ gsub(/ /,""); print tolower($0) }'
 }
 
 get_output_conf_stores() {
-    for s in stdout s3 cloudwatch splunk-hec datadog azure-loganalytics; do
+    for s in $SUPPORTED_STORES; do
         contains=$(echo $LOG_EXPORT_CONTAINER_OUTPUT | grep -wq $s; echo $?)
         if [ $contains -eq 0 ]; then
             export conf="$conf $s"

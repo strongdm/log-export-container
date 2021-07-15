@@ -9,7 +9,7 @@ services:
 
       # Required variables
       - LOG_EXPORT_CONTAINER_INPUT=json # possible values = json or csv
-      - LOG_EXPORT_CONTAINER_OUTPUT=stdout # possible values = stdout, s3, cloudwatch, splunk-hec, datadog, azure-loganalytics
+      - LOG_EXPORT_CONTAINER_OUTPUT=stdout # possible values = stdout, s3, cloudwatch, splunk-hec, datadog, azure-loganalytics, sumologic
     
       # Optional variables
       # For LOG_EXPORT_CONTAINER_OUTPUT=s3 refer to docs/CONFIGURE_S3.md
@@ -17,3 +17,4 @@ services:
       # For LOG_EXPORT_CONTAINER_OUTPUT=splunk-hec refer to docs/CONFIGURE_SPLUNK_HEC.md
       # For LOG_EXPORT_CONTAINER_OUTPUT=datadog refer to docs/CONFIGURE_DATADOG.md
       # For LOG_EXPORT_CONTAINER_OUTPUT=azure-loganalytics refer to docs/CONFIGURE_AZURE_LOGANALYTICS.md
+      # For LOG_EXPORT_CONTAINER_OUTPUT=sumologic refer to docs/CONFIGURE_SUMOLOGIC.md
