@@ -4,7 +4,7 @@
 
 ### Required configuration
 * **LOG_EXPORT_CONTAINER_INPUT**. Container input format (`json` or `csv`). Default: `json`
-* **LOG_EXPORT_CONTAINER_OUTPUT**. Container output storage (`stdout`, `s3`, `cloudwatch`, `splunk-hec`, `datadog` and/or `azure-loganalytics`). Default: `stdout`. You could configure multiple storages, for example: `stdout s3 datadog`.
+* **LOG_EXPORT_CONTAINER_OUTPUT**. Container output storage (`stdout`, `s3`, `cloudwatch`, `splunk-hec`, `datadog`, `azure-loganalytics` and/or `sumologic`). Default: `stdout`. You could configure multiple storages, for example: `stdout s3 datadog`.
 
 ### Optional configuration
 #### AWS S3
@@ -21,6 +21,9 @@ When using `LOG_EXPORT_CONTAINER_OUTPUT=datadog` add variables listed in [CONFIG
 
 #### Azure Log Analytics
 When using `LOG_EXPORT_CONTAINER_OUTPUT=azure-loganalytics` add variables listed in [CONFIGURE_AZURE_LOGANALYTICS.md](CONFIGURE_AZURE_LOGANALYTICS.md)
+
+#### Sumo Logic
+When using `LOG_EXPORT_CONTAINER_OUTPUT=sumologic` add variables listed in [CONFIGURE_SUMOLOGIC.md](CONFIGURE_SUMOLOGIC.md)
 
 ## SDM
 The current version of the container only supports rsyslog, please refer to the image below to observe a typical configuration:
