@@ -21,7 +21,7 @@ get_output_conf_stores() {
     fi
 }
 
-get_input_conf_file() {
+get_input_conf_filename() {
     conf=$(get_intput_conf_name $LOG_EXPORT_CONTAINER_INPUT)
     if [ "$conf" == "csv" ]; then
         echo $ETC_DIR/input-rsyslog-csv.conf
@@ -30,12 +30,12 @@ get_input_conf_file() {
     fi
 }
 
-get_process_conf_file() {
+get_classify_conf_filename() {
     conf=$(get_intput_conf_name $LOG_EXPORT_CONTAINER_INPUT)
     if [ "$conf" == "csv" ]; then
-        echo $ETC_DIR/process-csv.conf
+        echo $ETC_DIR/classify-csv.conf
     else
-        echo $ETC_DIR/process-json.conf
+        echo $ETC_DIR/classify-json.conf
     fi
 }
 
@@ -50,6 +50,11 @@ get_output_conf() {
   envsubst < $ETC_DIR/output-template.conf
 }
 
-cat $(get_input_conf_file) $(get_process_conf_file) > $ETC_DIR/fluent.conf
-echo "$(get_output_conf)" >> $ETC_DIR/fluent.conf
+create_fluent_conf() {
+    cat $(get_input_conf_filename) $(get_classify_conf_filename) > $ETC_DIR/fluent.conf
+    cat $ETC_DIR/process.conf >> $ETC_DIR/fluent.conf
+    echo "$(get_output_conf)" >> $ETC_DIR/fluent.conf
+}
+
+create_fluent_conf
 exec fluentd -c $ETC_DIR/fluent.conf -p /fluentd/plugins

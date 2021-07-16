@@ -31,6 +31,10 @@ Log traces include: `sourceAddress` and `sourceHostname`. By default docker uses
 
 IMPORTANT: The host networking driver only works in Linux
 
+### Process log traces
+
+By default, the container just classifies the different log traces (e.g. start, chunk, postStart). There are no extra processing steps involved. However, you can include additional processing filters if needed. In order to do that, just override the `process.conf` file. For more details, please refer to [CONFIGURE_PROCESSING.md](CONFIGURE_PROCESSING.md).
+
 ## SDM
 The current version of the container only supports rsyslog, please refer to the image below to observe a typical configuration:
 
