@@ -25,6 +25,12 @@ When using `LOG_EXPORT_CONTAINER_OUTPUT=azure-loganalytics` add variables listed
 #### Sumo Logic
 When using `LOG_EXPORT_CONTAINER_OUTPUT=sumologic` add variables listed in [CONFIGURE_SUMOLOGIC.md](CONFIGURE_SUMOLOGIC.md)
 
+### Source Data
+
+Log traces include: `sourceAddress` and `sourceHostname`. By default docker uses `--net=bridge` networking. You need to enable `--net=host` networking driver in order to see the real client/gateway IP and hostname, otherwise you will see the Docker Gateway's info, for example: `"sourceAddress":"172.17.0.1"`
+
+IMPORTANT: The host networking driver only works in Linux
+
 ## SDM
 The current version of the container only supports rsyslog, please refer to the image below to observe a typical configuration:
 
