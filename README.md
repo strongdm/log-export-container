@@ -12,7 +12,29 @@ The container uses [fluentd](https://www.fluentd.org/) for processing and routin
 * [Support](#support)
 
 ## Getting Started
-The Log Export Container is a Docker Image you can use for spinning up multiple containers. You could use the container via plain `docker run` command, docker-compose, k8s, among others. While we integrate with [quay.io](https://quay.io), you could find the generated docker images under [releases](https://github.com/strongdm/log-export-container/releases)
+The Log Export Container is a Docker Image you can use for spinning up multiple containers. We are in the process of getting this image hosted on [quay.io](https://quay.io), in the meantime you can find the generated docker images under [Releases](https://github.com/strongdm/log-export-container/releases).
+
+1. Go to the [Releases](https://github.com/strongdm/log-export-container/releases) section and expand the "Assets" section for the latest release.
+![image](https://user-images.githubusercontent.com/7840034/127922971-2a91175f-6ae3-4043-8c02-da6ffb7ce1d1.png)
+
+2. Copy the URL for .gz file and use `wget` to download it onto the machine you will run the container on.
+3. After downloading, open the .gz file and load with Docker
+   - For Mac: `gzcat log-export-container-1.0.2.docker-image.tar.gz | docker load`
+   - For Linux: `zcat log-export-container-1.0.2.docker-image.tar.gz | sudo docker load`
+4. Download the `docker-compose.yml` file from the Github repo onto your machine (or copy-paste it's contents into a file you created directly on the machine with the same name).
+   - Make sure the `image` line of the .yml file is pointing to the name of the Docker image you downloaded ![image](https://user-images.githubusercontent.com/7840034/127932766-8bf59074-9f4f-4eac-a85f-a9fca1b9c75a.png)
+   - Also make sure that the 'Required variables' in the .yml file are set appropriately based on your desired log format and output destination.
+6. Add add the IP address of the machine running the Log Export Container to your `/etc/hosts`
+7. Run `sudo docker-compose up`
+8. Log into the strongDM Admin UI and go to the Settings page, then the Log Encryption & Storage tab.
+9. Set "Log locally on relays?" to 'Yes'
+10. Set "Local storage?" to "Syslog" and enter the IP address of the machine running the Log Export Container along with port 5140 ![image](https://user-images.githubusercontent.com/7840034/127934335-239b5e97-772c-4ac6-8e66-864ffaf4cccc.png)
+   - Make sure that port 5140 on the machine hosting the container is accesible from your gateways. You can also host the container on your gateways themselves.
+11. Set "Local format?" to match the input format you specified in the .yml file.
+12. Click "Update" and you're done!
+13. If you notice that your strongDM client is stuck in reconnecting mode after hitting update, then it's possible that something went wrong during the setup process. Check your docker settings, security settings, port availability, IP address, and that the Docker image is running correctly.
+
+Here's a gif demonstrating the setup process:
 
 ![image](docs/img/simple_demo.gif)
 
@@ -23,11 +45,6 @@ If you want to modify the container and quickly see the changes in your local, y
 ```
 ./dev-tools/start-container.sh
 ```
-
-Considerations:
-* Point strongDM syslog to: `mygateway:5140`
-* Add `mygateway 127.0.0.1` to your gateway `/etc/hosts`
-* For exiting the container: `^C` + `ENTER`
 
 ## Contributing
 Refer to the [contributing](CONTRIBUTING.md) guidelines or dump part of the information here.
