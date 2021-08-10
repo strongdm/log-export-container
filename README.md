@@ -21,7 +21,7 @@ The Log Export Container is a Docker Image you can use for spinning up multiple 
 3. After downloading, open the .gz file and load with Docker
    - For Mac: `gzcat log-export-container-1.0.2.docker-image.tar.gz | docker load`
    - For Linux: `zcat log-export-container-1.0.2.docker-image.tar.gz | sudo docker load`
-4. Download the `docker-compose.yml` file from the Github repo onto your machine (or copy-paste it's contents into a file you created directly on the machine with the same name).
+4. Download the `docker-compose.yml` file from the Github repo onto your machine (or copy-paste its contents into a file you created directly on the machine with the same name).
    - Make sure the `image` line of the .yml file is pointing to the name of the Docker image you downloaded ![image](https://user-images.githubusercontent.com/7840034/127932766-8bf59074-9f4f-4eac-a85f-a9fca1b9c75a.png)
    - Also make sure that the 'Required variables' in the .yml file are set appropriately based on your desired log format and output destination.
 5. Run `sudo docker-compose up`
