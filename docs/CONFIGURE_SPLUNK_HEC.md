@@ -2,7 +2,7 @@
 
 The Log Export Container uses [fluentd splunk hec output plugin](https://github.com/splunk/fluent-plugin-splunk-hec). In order to enable it you need to specify `LOG_EXPORT_CONTAINER_OUTPUT=splunk-hec` and provide the following variables:
 * **SPLUNK_HEC_HOST**. The hostname/IP for the HEC token or the HEC load balancer, for example: `prd-p-xxxxx.splunkcloud.com`
-* **SPLUNK_HEX_PORT**. The port number for the HEC token or the HEC load balancer, for example: `8088`
+* **SPLUNK_HEC_PORT**. The port number for the HEC token or the HEC load balancer, for example: `8088`
 * **SPLUNK_HEC_TOKEN**. Identifier for the HEC token, for example: `xxxxxxxx-yyyy-yyyy-yyyy-zzzzzzzzzzzz`
 
 IMPORTANT: SSL validation is disabled by default, you can pass different [SSL Params](https://github.com/splunk/fluent-plugin-splunk-hec#ssl-parameters) overriding the builtin configuration as commented below
@@ -18,7 +18,7 @@ docker run -p 5140:5140 \
   -e LOG_EXPORT_CONTAINER_INPUT=$LOG_EXPORT_CONTAINER_INPUT \
   -e LOG_EXPORT_CONTAINER_OUTPUT=splunk \
   -e SPLUNK_HEC_HOST=$SPLUNK_HEC_HOST \
-  -e SPLUNK_HEX_PORT=$SPLUNK_HEX_PORT \
+  -e SPLUNK_HEC_PORT=$SPLUNK_HEC_PORT \
   -e SPLUNK_HEC_TOKEN=$SPLUNK_HEC_TOKEN log-export-container 
 ```
 
