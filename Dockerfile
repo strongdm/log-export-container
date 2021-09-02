@@ -12,6 +12,7 @@ RUN gem install fluent-plugin-datadog
 RUN gem install fluent-plugin-azure-loganalytics
 RUN gem install fluent-plugin-sumologic_output
 RUN gem install fluent-plugin-sanitizer
+RUN gem install fluent-plugin-kafka
 
 COPY start.sh /start.sh
 COPY ./fluentd /fluentd
