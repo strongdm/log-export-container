@@ -4,7 +4,7 @@
 
 ### Required configuration
 * **LOG_EXPORT_CONTAINER_INPUT**. Container input format (`json` or `csv`). Default: `json`
-* **LOG_EXPORT_CONTAINER_OUTPUT**. Container output storage (`stdout`, `s3`, `cloudwatch`, `splunk-hec`, `datadog`, `azure-loganalytics` and/or `sumologic`). Default: `stdout`. You could configure multiple storages, for example: `stdout s3 datadog`.
+* **LOG_EXPORT_CONTAINER_OUTPUT**. Container output storage (`stdout`, `s3`, `cloudwatch`, `splunk-hec`, `datadog`, `azure-loganalytics`, `sumologic` and/or  `kafka`). Default: `stdout`. You could configure multiple storages, for example: `stdout s3 datadog`.
 
 ### Optional configuration
 #### AWS S3
@@ -24,6 +24,9 @@ When using `LOG_EXPORT_CONTAINER_OUTPUT=azure-loganalytics` add variables listed
 
 #### Sumo Logic
 When using `LOG_EXPORT_CONTAINER_OUTPUT=sumologic` add variables listed in [CONFIGURE_SUMOLOGIC.md](CONFIGURE_SUMOLOGIC.md)
+
+#### Kafka
+When using `LOG_EXPORT_CONTAINER_OUTPUT=kafka` add variables listed in [CONFIGURE_KAFKA.md](CONFIGURE_KAFKA.md)
 
 ### Source Data
 
