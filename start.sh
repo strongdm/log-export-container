@@ -23,32 +23,26 @@ get_output_conf_stores() {
 
 get_input_conf_filename() {
     conf=$(get_input_conf_name $LOG_EXPORT_CONTAINER_INPUT)
-    if [ "$conf" == "csv" ]; then
-        echo $ETC_DIR/input-rsyslog-csv.conf
-    elif [ "$conf" == "json" ]; then
-        echo $ETC_DIR/input-rsyslog-json.conf
-    elif [ "$conf" == "tcp-csv" ]; then
-        echo $ETC_DIR/input-tcp-csv.conf
+    if [ "$conf" != "" ]; then
+        echo $ETC_DIR/input-$conf.conf
     else
-        echo $ETC_DIR/input-tcp-json.conf
+        echo $ETC_DIR/input-syslog-json.conf
     fi
 }
 
 get_classify_conf_filename() {
     conf=$(get_input_conf_name $LOG_EXPORT_CONTAINER_INPUT)
-    if [ "$conf" == "csv" ] || [ "$conf" == "tcp-csv" ]; then
+    if [ "$conf" == "syslog-csv" ] || [ "$conf" == "tcp-csv" ]; then
         echo $ETC_DIR/classify-default-csv.conf
     else
-        echo $ETC_DIR/classify-json.conf
+        echo $ETC_DIR/classify-default-json.conf
     fi
 }
 
 get_custom_classify_conf_filename() {
     conf=$(get_input_conf_name $LOG_EXPORT_CONTAINER_INPUT)
-    if [ "$conf" == "csv" ]; then
-        echo $ETC_DIR/classify-rsyslog-csv.conf
-    elif [ "$conf" == "tcp-csv" ]; then
-        echo $ETC_DIR/classify-tcp-csv.conf
+    if [ "$conf" == "syslog-csv" ] || [ "$conf" == "tcp-csv" ]; then
+        echo $ETC_DIR/classify-$conf.conf
     fi
 }
 
@@ -64,7 +58,8 @@ get_output_conf() {
 }
 
 create_fluent_conf() {
-    cat $(get_input_conf_filename) $(get_classify_conf_filename) > $ETC_DIR/fluent.conf
+    cat $(get_input_conf_filename) > $ETC_DIR/fluent.conf
+    cat $(get_classify_conf_filename) >> $ETC_DIR/fluent.conf
     cat $(get_custom_classify_conf_filename) >> $ETC_DIR/fluent.conf
     cat $ETC_DIR/process.conf >> $ETC_DIR/fluent.conf
     echo "$(get_output_conf)" >> $ETC_DIR/fluent.conf
