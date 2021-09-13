@@ -3,7 +3,7 @@
 ETC_DIR=/fluentd/etc
 SUPPORTED_STORES="stdout s3 cloudwatch splunk-hec datadog azure-loganalytics sumologic kafka"
 
-get_intput_conf_name() {
+get_input_conf_name() {
     echo $1 | awk '{ gsub(/ /,""); print tolower($0) }'
 }
 
@@ -22,20 +22,33 @@ get_output_conf_stores() {
 }
 
 get_input_conf_filename() {
-    conf=$(get_intput_conf_name $LOG_EXPORT_CONTAINER_INPUT)
+    conf=$(get_input_conf_name $LOG_EXPORT_CONTAINER_INPUT)
     if [ "$conf" == "csv" ]; then
         echo $ETC_DIR/input-rsyslog-csv.conf
-    else
+    elif [ "$conf" == "json" ]; then
         echo $ETC_DIR/input-rsyslog-json.conf
+    elif [ "$conf" == "tcp-csv" ]; then
+        echo $ETC_DIR/input-tcp-csv.conf
+    else
+        echo $ETC_DIR/input-tcp-json.conf
     fi
 }
 
 get_classify_conf_filename() {
-    conf=$(get_intput_conf_name $LOG_EXPORT_CONTAINER_INPUT)
-    if [ "$conf" == "csv" ]; then
-        echo $ETC_DIR/classify-csv.conf
+    conf=$(get_input_conf_name $LOG_EXPORT_CONTAINER_INPUT)
+    if [ "$conf" == "csv" ] || [ "$conf" == "tcp-csv" ]; then
+        echo $ETC_DIR/classify-default-csv.conf
     else
         echo $ETC_DIR/classify-json.conf
+    fi
+}
+
+get_custom_classify_conf_filename() {
+    conf=$(get_input_conf_name $LOG_EXPORT_CONTAINER_INPUT)
+    if [ "$conf" == "csv" ]; then
+        echo $ETC_DIR/classify-rsyslog-csv.conf
+    elif [ "$conf" == "tcp-csv" ]; then
+        echo $ETC_DIR/classify-tcp-csv.conf
     fi
 }
 
@@ -52,6 +65,7 @@ get_output_conf() {
 
 create_fluent_conf() {
     cat $(get_input_conf_filename) $(get_classify_conf_filename) > $ETC_DIR/fluent.conf
+    cat $(get_custom_classify_conf_filename) >> $ETC_DIR/fluent.conf
     cat $ETC_DIR/process.conf >> $ETC_DIR/fluent.conf
     echo "$(get_output_conf)" >> $ETC_DIR/fluent.conf
 }
