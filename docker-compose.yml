@@ -1,7 +1,7 @@
 version: "3.3"
 services:
   log-export-container:
-    image: log-export-container:latest
+    image: public.ecr.aws/strongdm/log-export-container:latest
     ports:
       - "5140:5140"
     environment:
