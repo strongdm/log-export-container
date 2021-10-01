@@ -4,19 +4,19 @@ FROM fluent/fluentd:edge
 USER root
 RUN apk add gettext
 RUN apk add build-base ruby-dev
-RUN gem install fluent-plugin-rewrite-tag-filter
-RUN gem install fluent-plugin-s3
-RUN gem install fluent-plugin-cloudwatch-logs
-RUN gem install fluent-plugin-splunk-hec
-RUN gem install fluent-plugin-datadog
-RUN gem install fluent-plugin-azure-loganalytics
-RUN gem install fluent-plugin-sumologic_output
-RUN gem install fluent-plugin-sanitizer
-RUN gem install fluent-plugin-kafka
+
+RUN mkdir setup
+
+COPY configure_environment.sh /setup/
+COPY Gemfile /Gemfile
+
+RUN sh /setup/configure_environment.sh
 
 COPY start.sh /start.sh
 COPY ./fluentd /fluentd
 RUN chown fluent.fluent fluentd/etc/fluent.conf
 
+ENV FLUENTD_DIR=/fluentd
+
 USER fluent
-CMD ["/start.sh"]
+# CMD ["/start.sh"]
