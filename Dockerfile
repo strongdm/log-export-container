@@ -1,21 +1,18 @@
 # latest is very old
 FROM fluent/fluentd:edge
 
+ENV FLUENTD_DIR=fluentd
+
 USER root
 RUN apk add gettext
 RUN apk add build-base ruby-dev
-RUN gem install fluent-plugin-rewrite-tag-filter
-RUN gem install fluent-plugin-s3
-RUN gem install fluent-plugin-cloudwatch-logs
-RUN gem install fluent-plugin-splunk-hec
-RUN gem install fluent-plugin-datadog
-RUN gem install fluent-plugin-azure-loganalytics
-RUN gem install fluent-plugin-sumologic_output
-RUN gem install fluent-plugin-sanitizer
-RUN gem install fluent-plugin-kafka
 
+COPY configure-environment.sh /configure-environment.sh
+RUN sh /configure-environment.sh
+
+COPY fluentd /fluentd
+COPY create-conf-file.sh /create-conf-file.sh
 COPY start.sh /start.sh
-COPY ./fluentd /fluentd
 RUN chown fluent.fluent fluentd/etc/fluent.conf
 
 USER fluent
