@@ -7,15 +7,12 @@ USER root
 RUN apk add gettext
 RUN apk add build-base ruby-dev
 
-COPY configure_environment.sh /configure_environment.sh
-COPY Gemfile /Gemfile
+COPY configure-environment.sh /configure-environment.sh
+RUN sh /configure-environment.sh
 
-RUN sh /configure_environment.sh
-
-COPY create_conf_file.sh /create_conf_file.sh
-
+COPY fluentd /fluentd
+COPY create-conf-file.sh /create-conf-file.sh
 COPY start.sh /start.sh
-COPY ./fluentd /fluentd
 RUN chown fluent.fluent fluentd/etc/fluent.conf
 
 USER fluent

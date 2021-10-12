@@ -1,7 +1,6 @@
 set-env.sh
-
 venv/
-
 .pytest_cache/
 __pycache__/
-.bundle/
+fluentd/etc/fluent.conf
+

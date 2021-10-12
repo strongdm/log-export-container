@@ -37,6 +37,8 @@ If you want to modify the container and quickly see the changes in your local, y
 ./dev-tools/start-container.sh
 ```
 
+You could also run the project in your local without docker, please refer to [CONFIGURE_LOCAL_ENV](docs/CONFIGURE_LOCAL_ENV.md)
+
 ## Contributing
 Refer to the [contributing](CONTRIBUTING.md) guidelines or dump part of the information here.
 

@@ -1,5 +1,4 @@
-#! /bin/bash
+#!/bin/sh
 
-bash ./create_conf_file.sh
-
-fluentd -c $FLUENTD_DIR/etc/fluent.conf -p $FLUENTD_DIR/plugins
+sh ./create-conf-file.sh
+exec fluentd -c $FLUENTD_DIR/etc/fluent.conf -p $FLUENTD_DIR/plugins
