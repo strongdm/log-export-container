@@ -15,9 +15,9 @@ For Linux see: http://rvm.io/
 #### Configure RVM and dependencies
 ```
 rvm install 2.6.3
-rvm use 2.6.3
-rvm gemset create log-export-container
-./configure-environment.sh
+rvm use 2.6.3@log-export-container --create
+gem install bundler -v '~> 1.17.3'
+bundle install
 ```
 
 ### Python

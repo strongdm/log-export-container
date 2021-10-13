@@ -6,9 +6,11 @@ ENV FLUENTD_DIR=fluentd
 USER root
 RUN apk add gettext
 RUN apk add build-base ruby-dev
+RUN gem install bundler -v '~> 1.17.3'
 
-COPY configure-environment.sh /configure-environment.sh
-RUN sh /configure-environment.sh
+COPY Gemfile /Gemfile
+COPY Gemfile.lock /Gemfile.lock
+RUN bundle install
 
 COPY fluentd /fluentd
 COPY create-conf-file.sh /create-conf-file.sh

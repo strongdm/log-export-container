@@ -1,0 +1,188 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    activemodel (6.1.4.1)
+      activesupport (= 6.1.4.1)
+    activesupport (6.1.4.1)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      i18n (>= 1.6, < 2)
+      minitest (>= 5.1)
+      tzinfo (~> 2.0)
+      zeitwerk (~> 2.3)
+    aes_key_wrap (1.1.0)
+    attr_required (1.0.1)
+    aws-eventstream (1.2.0)
+    aws-partitions (1.514.0)
+    aws-sdk-cloudwatchlogs (1.45.0)
+      aws-sdk-core (~> 3, >= 3.120.0)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-core (3.121.1)
+      aws-eventstream (~> 1, >= 1.0.2)
+      aws-partitions (~> 1, >= 1.239.0)
+      aws-sigv4 (~> 1.1)
+      jmespath (~> 1.0)
+    aws-sdk-kms (1.49.0)
+      aws-sdk-core (~> 3, >= 3.120.0)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-s3 (1.103.0)
+      aws-sdk-core (~> 3, >= 3.120.0)
+      aws-sdk-kms (~> 1)
+      aws-sigv4 (~> 1.4)
+    aws-sdk-sqs (1.44.0)
+      aws-sdk-core (~> 3, >= 3.120.0)
+      aws-sigv4 (~> 1.1)
+    aws-sigv4 (1.4.0)
+      aws-eventstream (~> 1, >= 1.0.2)
+    azure-loganalytics-datacollector-api (0.5.0)
+      rest-client
+    bindata (2.4.10)
+    concurrent-ruby (1.1.9)
+    connection_pool (2.2.5)
+    cool.io (1.7.1)
+    digest-crc (0.6.4)
+      rake (>= 12.0.0, < 14.0.0)
+    domain_name (0.5.20190701)
+      unf (>= 0.0.5, < 1.0.0)
+    fluent-config-regexp-type (1.0.0)
+      fluentd (> 1.0.0, < 2)
+    fluent-plugin-azure-loganalytics (0.7.0)
+      azure-loganalytics-datacollector-api (>= 0.5.0)
+      fluentd (>= 0.14.15, < 2)
+      rest-client
+      yajl-ruby
+    fluent-plugin-cloudwatch-logs (0.14.2)
+      aws-sdk-cloudwatchlogs (~> 1.0)
+      fluentd (>= 1.8.0)
+    fluent-plugin-datadog (0.13.0)
+      fluentd (>= 1, < 2)
+      net-http-persistent (~> 3.1)
+    fluent-plugin-kafka (0.17.1)
+      fluentd (>= 0.10.58, < 2)
+      ltsv
+      ruby-kafka (>= 1.4.0, < 2)
+    fluent-plugin-rewrite-tag-filter (2.4.0)
+      fluent-config-regexp-type
+      fluentd (>= 0.14.2, < 2)
+    fluent-plugin-s3 (1.6.1)
+      aws-sdk-s3 (~> 1.60)
+      aws-sdk-sqs (~> 1.23)
+      fluentd (>= 0.14.22, < 2)
+    fluent-plugin-sanitizer (0.1.2)
+      fluentd (>= 0.14.10, < 2)
+    fluent-plugin-splunk-hec (1.2.7)
+      fluentd (>= 1.4)
+      multi_json (~> 1.13)
+      net-http-persistent (~> 3.1)
+      openid_connect (~> 1.1.8)
+      prometheus-client (>= 2.1.0)
+    fluent-plugin-sumologic_output (1.7.2)
+      fluentd (>= 0.14.12)
+      httpclient (~> 2.8.0)
+    fluentd (1.14.1)
+      bundler
+      cool.io (>= 1.4.5, < 2.0.0)
+      http_parser.rb (>= 0.5.1, < 0.8.0)
+      msgpack (>= 1.3.1, < 2.0.0)
+      serverengine (>= 2.2.2, < 3.0.0)
+      sigdump (~> 0.2.2)
+      strptime (>= 0.2.2, < 1.0.0)
+      tzinfo (>= 1.0, < 3.0)
+      tzinfo-data (~> 1.0)
+      webrick (>= 1.4.2, < 1.8.0)
+      yajl-ruby (~> 1.0)
+    http-accept (1.7.0)
+    http-cookie (1.0.4)
+      domain_name (~> 0.5)
+    http_parser.rb (0.7.0)
+    httpclient (2.8.3)
+    i18n (1.8.10)
+      concurrent-ruby (~> 1.0)
+    jmespath (1.4.0)
+    json-jwt (1.13.0)
+      activesupport (>= 4.2)
+      aes_key_wrap
+      bindata
+    ltsv (0.1.2)
+    mail (2.7.1)
+      mini_mime (>= 0.1.1)
+    mime-types (3.3.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2021.0901)
+    mini_mime (1.1.2)
+    minitest (5.14.4)
+    msgpack (1.4.2)
+    multi_json (1.15.0)
+    net-http-persistent (3.1.0)
+      connection_pool (~> 2.2)
+    netrc (0.11.0)
+    openid_connect (1.1.8)
+      activemodel
+      attr_required (>= 1.0.0)
+      json-jwt (>= 1.5.0)
+      rack-oauth2 (>= 1.6.1)
+      swd (>= 1.0.0)
+      tzinfo
+      validate_email
+      validate_url
+      webfinger (>= 1.0.1)
+    prometheus-client (2.1.0)
+    public_suffix (4.0.6)
+    rack (2.2.3)
+    rack-oauth2 (1.19.0)
+      activesupport
+      attr_required
+      httpclient
+      json-jwt (>= 1.11.0)
+      rack (>= 2.1.0)
+    rake (13.0.6)
+    rest-client (2.1.0)
+      http-accept (>= 1.7.0, < 2.0)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 4.0)
+      netrc (~> 0.8)
+    ruby-kafka (1.4.0)
+      digest-crc
+    serverengine (2.2.4)
+      sigdump (~> 0.2.2)
+    sigdump (0.2.4)
+    strptime (0.2.5)
+    swd (1.3.0)
+      activesupport (>= 3)
+      attr_required (>= 0.0.5)
+      httpclient (>= 2.4)
+    tzinfo (2.0.4)
+      concurrent-ruby (~> 1.0)
+    tzinfo-data (1.2021.3)
+      tzinfo (>= 1.0.0)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.8)
+    validate_email (0.1.6)
+      activemodel (>= 3.0)
+      mail (>= 2.2.5)
+    validate_url (1.0.13)
+      activemodel (>= 3.0.0)
+      public_suffix
+    webfinger (1.2.0)
+      activesupport
+      httpclient (>= 2.4)
+    webrick (1.7.0)
+    yajl-ruby (1.4.1)
+    zeitwerk (2.4.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  fluent-plugin-azure-loganalytics
+  fluent-plugin-cloudwatch-logs
+  fluent-plugin-datadog
+  fluent-plugin-kafka
+  fluent-plugin-rewrite-tag-filter
+  fluent-plugin-s3
+  fluent-plugin-sanitizer
+  fluent-plugin-splunk-hec
+  fluent-plugin-sumologic_output
+
+BUNDLED WITH
+   1.17.3
