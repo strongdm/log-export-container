@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'fluent/plugin/parser'
 require 'fluent/plugin/parser_json'
 
@@ -14,10 +16,10 @@ module Fluent::Plugin
     end
 
     def parse(text)
-      record = text.gsub(/^.*: /, '')
-      @parser.parse(record) { 
-        |_, r| record = r
-      }
+      record = text[text.index('{')..-1]
+      @parser.parse(record) do |_, r|
+        record = r
+      end
       yield Fluent::EventTime.now, record
     end
   end
