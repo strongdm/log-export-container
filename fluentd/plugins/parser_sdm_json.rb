@@ -16,11 +16,14 @@ module Fluent::Plugin
     end
 
     def parse(text)
-      record = text[text.index('{')..-1]
-      @parser.parse(record) do |_, r|
-        record = r
+      idx = text.index('{')
+      if idx
+        text = text[idx..-1]
       end
-      yield Fluent::EventTime.now, record
+      @parser.parse(text) do |_, r|
+        text = r
+      end
+      yield Fluent::EventTime.now, text
     end
   end
 end
