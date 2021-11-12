@@ -28,7 +28,14 @@ conda activate venv/
 pip install -r requirements/dev.txt
 ```
 
-## Run 
+## Run
+
+### Ruby tests
+```
+ruby test/run_test.rb
+```
+
+### Python tests
 ```
 pytest
 dev-tools/start-local.sh
