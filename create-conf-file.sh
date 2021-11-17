@@ -30,6 +30,15 @@ get_input_conf_filename() {
     fi
 }
 
+get_input_chunk_conf() {
+  conf=$(get_input_conf_name $LOG_EXPORT_CONTAINER_INPUT)
+  if [ "$conf" == "syslog-json" ]; then
+    echo $ETC_DIR/input-$conf-chunk.conf
+  else
+    echo "/dev/null"
+  fi
+}
+
 get_classify_conf_filename() {
     conf=$(get_input_conf_name $LOG_EXPORT_CONTAINER_INPUT)
     if [ "$conf" == "syslog-csv" ] || [ "$conf" == "tcp-csv" ]; then
@@ -61,6 +70,7 @@ get_output_conf() {
 
 create_fluent_conf() {
     cat $(get_input_conf_filename) > $ETC_DIR/fluent.conf
+    cat $(get_input_chunk_conf) >> $ETC_DIR/fluent.conf
     cat $(get_classify_conf_filename) >> $ETC_DIR/fluent.conf
     cat $(get_custom_classify_conf_filename) >> $ETC_DIR/fluent.conf
     cat $ETC_DIR/process.conf >> $ETC_DIR/fluent.conf
