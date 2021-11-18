@@ -12,138 +12,180 @@ module TestHelperModule
   def sample_chunk_log
     {
       'type' => 'chunk',
-      'timestamp' => '2021-11-17T18:22:54.558133946Z',
-      'uuid' => 's213cmKpvn5xRKQ3xSWcFRzBjTFh',
+      'timestamp' => '2021-11-18T18:36:50.186372557Z',
+      'uuid' => 's216TbEbcLXY7IkQ7P0Sdy5ihwpI',
       'chunkId' => 1,
       'events' => [
         {
-          'duration' => 186,
-          'data' => 'V2VsY29tZSB0byBVYnVudHUgMjAuMDQuMiBMVFMgKEdOVS9MaW51eCA1LjExLjAtMTAyMC1hd3MgeDg2XzY0KQ0KDQogKiBEb2N1bWVudGF0aW9uOiAgaHR0cHM6Ly9oZWxwLnVidW50dS5jb20NCiAqIE1hbmFnZW1lbnQ6ICAgICBodHRwczovL2xhbmRzY2FwZS5jYW5vbmljYWwuY29tDQogKiBTdXBwb3J0OiAgICAgICAgaHR0cHM6Ly91YnVudHUuY29tL2FkdmFudGFnZQ0KDQogIFN5c3RlbSBpbmZvcm1hdGlvbiBhcyBvZiBXZWQgTm92IDE3IDE4OjIyOjQ3IFVUQyAyMDIxDQoNCiAgU3lzdGVtIGxvYWQ6ICAwLjAgICAgICAgICAgICAgICBQcm9jZXNzZXM6ICAgICAgICAgICAgICAgIDEyMg0KICBVc2FnZSBvZiAvOiAgIDMuNiUgb2YgOTYuODhHQiAgIFVzZXJzIGxvZ2dlZCBpbjogICAgICAgICAgMA0KICBNZW1vcnkgdXNhZ2U6IDIyJSAgICAgICAgICAgICAgIElQdjQgYWRkcmVzcyBmb3IgZG9ja2VyMDogMTcyLjE3LjAuMQ0KICBTd2FwIHVzYWdlOiAgIDAlICAgICAgICAgICAgICAgIElQdjQgYWRkcmVzcyBmb3IgZXRoMDogICAgMTcyLjMxLjcuMTY3DQoNCiAqIFVidW50dSBQcm8gZGVsaXZlcnMgdGhlIG1vc3QgY29tcHJlaGVuc2l2ZSBvcGVuIHNvdXJjZSBzZWN1cml0eSBhbmQNCiAgIGNvbXBsaWFuY2UgZmVhdHVyZXMuDQoNCiAgIGh0dHBzOi8vdWJ1bnR1LmNvbS9hd3MvcHJvDQoNCjgzIHVwZGF0ZXMgY2FuIGJlIGFwcGxpZWQgaW1tZWRpYXRlbHkuDQoxIG9mIHRoZXNlIHVwZGF0ZXMgaXMgYSBzdGFuZGFyZCBzZWN1cml0eSB1cGRhdGUuDQpUbyBzZWUgdGhlc2UgYWRkaXRpb25hbCB1cGRhdGVzIHJ1bjogYXB0IGxpc3QgLS11cGdyYWRhYmxlDQoNCg0KKioqIFN5c3RlbSByZXN0YXJ0IHJlcXVpcmVkICoqKg0KTGFzdCBsb2dpbjogV2VkIE5vdiAxNyAxODoyMjozMyAyMDIxIGZyb20gMzQuMjEyLjIyOC44DQ0K'
-        },
-        {
-          'duration' => 35,
-          'data' => 'G10wO3VidW50dUBpcC0xNzItMzEtNy0xNjc6IH4HG1swMTszMm11YnVudHVAaXAtMTcyLTMxLTctMTY3G1swMG06G1swMTszNG1+G1swMG0kIA=='
-        },
-        {
-          'duration' => 600,
-          'data' => 'cA=='
-        },
-        {
-          'duration' => 159,
-          'data' => 'dw=='
+          'duration' => 180,
+          'data' => 'V2VsY29tZSB0byBVYnVudHUgMjAuMDQuMiBMVFMgKEdOVS9MaW51eCA1LjExLjAtMTAyMC1hd3MgeDg2XzY0KQ0KDQogKiBEb2N1bWVudGF0aW9uOiAgaHR0cHM6Ly9oZWxwLnVidW50dS5jb20NCiAqIE1hbmFnZW1lbnQ6ICAgICBodHRwczovL2xhbmRzY2FwZS5jYW5vbmljYWwuY29tDQogKiBTdXBwb3J0OiAgICAgICAgaHR0cHM6Ly91YnVudHUuY29tL2FkdmFudGFnZQ0KDQogIFN5c3RlbSBpbmZvcm1hdGlvbiBhcyBvZiBUaHUgTm92IDE4IDE4OjM2OjQ1IFVUQyAyMDIxDQoNCiAgU3lzdGVtIGxvYWQ6ICAwLjAxICAgICAgICAgICAgICBQcm9jZXNzZXM6ICAgICAgICAgICAgICAgIDEyMA0KICBVc2FnZSBvZiAvOiAgIDMuOCUgb2YgOTYuODhHQiAgIFVzZXJzIGxvZ2dlZCBpbjogICAgICAgICAgMA0KICBNZW1vcnkgdXNhZ2U6IDIzJSAgICAgICAgICAgICAgIElQdjQgYWRkcmVzcyBmb3IgZG9ja2VyMDogMTcyLjE3LjAuMQ0KICBTd2FwIHVzYWdlOiAgIDAlICAgICAgICAgICAgICAgIElQdjQgYWRkcmVzcyBmb3IgZXRoMDogICAgMTcyLjMxLjcuMTY3DQoNCg0KOTAgdXBkYXRlcyBjYW4gYmUgYXBwbGllZCBpbW1lZGlhdGVseS4NCjEgb2YgdGhlc2UgdXBkYXRlcyBpcyBhIHN0YW5kYXJkIHNlY3VyaXR5IHVwZGF0ZS4NClRvIHNlZSB0aGVzZSBhZGRpdGlvbmFsIHVwZGF0ZXMgcnVuOiBhcHQgbGlzdCAtLXVwZ3JhZGFibGUNCg0KDQoqKiogU3lzdGVtIHJlc3RhcnQgcmVxdWlyZWQgKioqDQpMYXN0IGxvZ2luOiBUaHUgTm92IDE4IDE4OjM2OjEwIDIwMjEgZnJvbSAzNC4yMTIuMjI4LjgNDQo='
         },
         {
           'duration' => 36,
-          'data' => 'ZA=='
-        },
-        {
-          'duration' => 138,
-          'data' => 'DQovaG9tZS91YnVudHUNChtdMDt1YnVudHVAaXAtMTcyLTMxLTctMTY3OiB+BxtbMDE7MzJtdWJ1bnR1QGlwLTE3Mi0zMS03LTE2NxtbMDBtOhtbMDE7MzRtfhtbMDBtJCA='
-        },
-        {
-          'duration' => 781,
-          'data' => 'bA=='
-        },
-        {
-          'duration' => 96,
-          'data' => 'cw=='
-        },
-        {
-          'duration' => 65,
-          'data' => 'IA=='
-        },
-        {
-          'duration' => 88,
-          'data' => 'LQ=='
-        },
-        {
-          'duration' => 53,
-          'data' => 'bA=='
-        },
-        {
-          'duration' => 266,
-          'data' => 'DQp0b3RhbCAxNDE2MA0KZHJ3eHJ3eHIteCAzIHVidW50dSB1YnVudHUgICAgIDQwOTYgT2N0IDI5IDE0OjM3IBtbMG0bWzAxOzM0bWdpdGh1YhtbMG0NCi1ydy1ydy1yLS0gMSB1YnVudHUgdWJ1bnR1IDE0NDkyNTkzIE9jdCAyMCAxODowNSAbWzAxOzMxbXNkbWNsaV8zMS4zNy4wX2xpbnV4X2FtZDY0LnppcBtbMG0NCg=='
-        },
-        {
-          'duration' => 0,
           'data' => 'G10wO3VidW50dUBpcC0xNzItMzEtNy0xNjc6IH4HG1swMTszMm11YnVudHVAaXAtMTcyLTMxLTctMTY3G1swMG06G1swMTszNG1+G1swMG0kIA=='
         },
         {
-          'duration' => 981,
-          'data' => 'Yw=='
-        },
-        {
-          'duration' => 81,
+          'duration' => 1937,
           'data' => 'bA=='
         },
         {
-          'duration' => 93,
+          'duration' => 70,
+          'data' => 'cw=='
+        },
+        {
+          'duration' => 37,
+          'data' => 'IA=='
+        },
+        {
+          'duration' => 72,
+          'data' => 'LQ=='
+        },
+        {
+          'duration' => 44,
+          'data' => 'bA=='
+        },
+        {
+          'duration' => 252,
+          'data' => 'DQp0b3RhbCAxNDE2MA0KZHJ3eHJ3eHIteCAzIHVidW50dSB1YnVudHUgICAgIDQwOTYgT2N0IDI5IDE0OjM3IBtbMG0bWzAxOzM0bWdpdGh1YhtbMG0NCi1ydy1ydy1yLS0gMSB1YnVudHUgdWJ1bnR1IDE0NDkyNTkzIE9jdCAyMCAxODowNSAbWzAxOzMxbXNkbWNsaV8zMS4zNy4wX2xpbnV4X2FtZDY0LnppcBtbMG0NChtdMDt1YnVudHVAaXAtMTcyLTMxLTctMTY3OiB+BxtbMDE7MzJtdWJ1bnR1QGlwLTE3Mi0zMS03LTE2NxtbMDBtOhtbMDE7MzRtfhtbMDBtJCA='
+        },
+        {
+          'duration' => 266,
           'data' => 'ZQ=='
         },
         {
-          'duration' => 64,
-          'data' => 'YQ=='
-        },
-        {
-          'duration' => 105,
-          'data' => 'cg=='
-        },
-        {
-          'duration' => 280,
-          'data' => 'DQobW0gbWzJKG1szShtdMDt1YnVudHVAaXAtMTcyLTMxLTctMTY3OiB+BxtbMDE7MzJtdWJ1bnR1QGlwLTE3Mi0zMS03LTE2NxtbMDBtOhtbMDE7MzRtfhtbMDBtJCA='
-        },
-        {
-          'duration' => 1150,
-          'data' => 'ZQ=='
-        },
-        {
-          'duration' => 190,
+          'duration' => 145,
           'data' => 'eA=='
         },
         {
-          'duration' => 56,
+          'duration' => 72,
           'data' => 'aQ=='
         },
         {
-          'duration' => 124,
+          'duration' => 101,
           'data' => 'dA=='
         },
         {
-          'duration' => 118,
+          'duration' => 74,
           'data' => 'DQpsb2dvdXQNCg=='
         }
       ],
-      'hash' => 'a068688cc2ccaaa4409d4a9d3c8551781073c60c',
+      'hash' => 'f6f78c5caf8b0e9fde6dfb5c6f396df088250048',
       'sourceAddress' => '172.20.0.1',
       'sourceHostname' => 'cosmos.local'
     }
   end
 
-  def sample_start_log
+  def sample_decoded_chunk_log
     {
-      'type' => 'start',
-      'timestamp' => '2021-11-17T17:21:39.351673907Z',
-      'uuid' => 's213cmKpvn5xRKQ3xSWcFRzBjTFh',
-      'datasourceId' => 'rs-249c99ea618e699f',
-      'datasourceName' => 'Quimbik Gateway',
-      'userId' => 'a-07a0dcc96140a424',
-      'userName' => 'Rony Neves',
-      'query' => "{\"version\":1,\"width\":80,\"height\":24,\"duration\":0,\"command\":\"\",\"title\":null,\"env\":{\"TERM\":\"xterm\"},\"type\":\"\",\"fileName\":null,\"fileSize\":0,\"stdout\":null,\"lastChunkId\":0,\"clientCommand\":null,\"pod\":null,\"container\":null,\"requestMethod\":\"\",\"requestURI\":\"\",\"requestBody\":null}\n",
-      'hash' => '1a300f2e5978e97ac7a93cf3cba221ad650541a7',
+      'type' => 'chunk',
+      'timestamp' => '2021-11-18T18:36:50.186372557Z',
+      'uuid' => 's216TbEbcLXY7IkQ7P0Sdy5ihwpI',
+      'chunkId' => 1,
+      'events' => [
+        {
+          'duration' => 180,
+          'data' => 'V2VsY29tZSB0byBVYnVudHUgMjAuMDQuMiBMVFMgKEdOVS9MaW51eCA1LjExLjAtMTAyMC1hd3MgeDg2XzY0KQ0KDQogKiBEb2N1bWVudGF0aW9uOiAgaHR0cHM6Ly9oZWxwLnVidW50dS5jb20NCiAqIE1hbmFnZW1lbnQ6ICAgICBodHRwczovL2xhbmRzY2FwZS5jYW5vbmljYWwuY29tDQogKiBTdXBwb3J0OiAgICAgICAgaHR0cHM6Ly91YnVudHUuY29tL2FkdmFudGFnZQ0KDQogIFN5c3RlbSBpbmZvcm1hdGlvbiBhcyBvZiBUaHUgTm92IDE4IDE4OjM2OjQ1IFVUQyAyMDIxDQoNCiAgU3lzdGVtIGxvYWQ6ICAwLjAxICAgICAgICAgICAgICBQcm9jZXNzZXM6ICAgICAgICAgICAgICAgIDEyMA0KICBVc2FnZSBvZiAvOiAgIDMuOCUgb2YgOTYuODhHQiAgIFVzZXJzIGxvZ2dlZCBpbjogICAgICAgICAgMA0KICBNZW1vcnkgdXNhZ2U6IDIzJSAgICAgICAgICAgICAgIElQdjQgYWRkcmVzcyBmb3IgZG9ja2VyMDogMTcyLjE3LjAuMQ0KICBTd2FwIHVzYWdlOiAgIDAlICAgICAgICAgICAgICAgIElQdjQgYWRkcmVzcyBmb3IgZXRoMDogICAgMTcyLjMxLjcuMTY3DQoNCg0KOTAgdXBkYXRlcyBjYW4gYmUgYXBwbGllZCBpbW1lZGlhdGVseS4NCjEgb2YgdGhlc2UgdXBkYXRlcyBpcyBhIHN0YW5kYXJkIHNlY3VyaXR5IHVwZGF0ZS4NClRvIHNlZSB0aGVzZSBhZGRpdGlvbmFsIHVwZGF0ZXMgcnVuOiBhcHQgbGlzdCAtLXVwZ3JhZGFibGUNCg0KDQoqKiogU3lzdGVtIHJlc3RhcnQgcmVxdWlyZWQgKioqDQpMYXN0IGxvZ2luOiBUaHUgTm92IDE4IDE4OjM2OjEwIDIwMjEgZnJvbSAzNC4yMTIuMjI4LjgNDQo='
+        },
+        {
+          'duration' => 36,
+          'data' => 'G10wO3VidW50dUBpcC0xNzItMzEtNy0xNjc6IH4HG1swMTszMm11YnVudHVAaXAtMTcyLTMxLTctMTY3G1swMG06G1swMTszNG1+G1swMG0kIA=='
+        },
+        {
+          'duration' => 1937,
+          'data' => 'bA=='
+        },
+        {
+          'duration' => 70,
+          'data' => 'cw=='
+        },
+        {
+          'duration' => 37,
+          'data' => 'IA=='
+        },
+        {
+          'duration' => 72,
+          'data' => 'LQ=='
+        },
+        {
+          'duration' => 44,
+          'data' => 'bA=='
+        },
+        {
+          'duration' => 252,
+          'data' => 'DQp0b3RhbCAxNDE2MA0KZHJ3eHJ3eHIteCAzIHVidW50dSB1YnVudHUgICAgIDQwOTYgT2N0IDI5IDE0OjM3IBtbMG0bWzAxOzM0bWdpdGh1YhtbMG0NCi1ydy1ydy1yLS0gMSB1YnVudHUgdWJ1bnR1IDE0NDkyNTkzIE9jdCAyMCAxODowNSAbWzAxOzMxbXNkbWNsaV8zMS4zNy4wX2xpbnV4X2FtZDY0LnppcBtbMG0NChtdMDt1YnVudHVAaXAtMTcyLTMxLTctMTY3OiB+BxtbMDE7MzJtdWJ1bnR1QGlwLTE3Mi0zMS03LTE2NxtbMDBtOhtbMDE7MzRtfhtbMDBtJCA='
+        },
+        {
+          'duration' => 266,
+          'data' => 'ZQ=='
+        },
+        {
+          'duration' => 145,
+          'data' => 'eA=='
+        },
+        {
+          'duration' => 72,
+          'data' => 'aQ=='
+        },
+        {
+          'duration' => 101,
+          'data' => 'dA=='
+        },
+        {
+          'duration' => 74,
+          'data' => 'DQpsb2dvdXQNCg=='
+        }
+      ],
+      'hash' => 'f6f78c5caf8b0e9fde6dfb5c6f396df088250048',
       'sourceAddress' => '172.20.0.1',
-      'sourceHostname' => 'cosmos.local'
-    }
-  end
-
-  def sample_complete_log
-    {
-      'type' => 'complete',
-      'timestamp' => '2021-11-17T17:21:50.739985029Z',
-      'uuid' => 's213cmKpvn5xRKQ3xSWcFRzBjTFh',
-      'duration' => 11_388,
-      'records' => 0,
-      'sourceAddress' => '172.20.0.1',
-      'sourceHostname' => 'cosmos.local'
+      'sourceHostname' => 'cosmos.local',
+      'decodedEvents' => [
+        {
+          'data' => [
+            'Welcome to Ubuntu 20.04.2 LTS (GNU/Linux 5.11.0-1020-aws x86_64)',
+            '',
+            ' * Documentation:  https://help.ubuntu.com',
+            ' * Management:     https://landscape.canonical.com',
+            ' * Support:        https://ubuntu.com/advantage',
+            '',
+            '  System information as of Thu Nov 18 18:36:45 UTC 2021',
+            '',
+            '  System load:  0.01              Processes:                120',
+            '  Usage of /:   3.8% of 96.88GB   Users logged in:          0',
+            '  Memory usage: 23%               IPv4 address for docker0: 172.17.0.1',
+            '  Swap usage:   0%                IPv4 address for eth0:    172.31.7.167',
+            '',
+            '',
+            '90 updates can be applied immediately.',
+            '1 of these updates is a standard security update.',
+            'To see these additional updates run: apt list --upgradable',
+            '',
+            '',
+            '*** System restart required ***',
+            'Last login: Thu Nov 18 18:36:10 2021 from 34.212.228.8'
+          ],
+          'startTimestamp' => '2021-11-18T18:36:50.186372557Z',
+          'endTimestamp' => '2021-11-18T18:36:50.366Z'
+        },
+        {
+          'data' => [
+            "\u001b]0;ubuntu@ip-172-31-7-167: ~\u0007\u001b[01;32mubuntu@ip-172-31-7-167\u001b[00m:\u001b[01;34m~\u001b[00m$ ls -l",
+            'total 14160',
+            "drwxrwxr-x 3 ubuntu ubuntu     4096 Oct 29 14:37 \u001b[0m\u001b[01;34mgithub\u001b[0m",
+            "-rw-rw-r-- 1 ubuntu ubuntu 14492593 Oct 20 18:05 \u001b[01;31msdmcli_31.37.0_linux_amd64.zip\u001b[0m",
+            "\u001b]0;ubuntu@ip-172-31-7-167: ~\u0007\u001b[01;32mubuntu@ip-172-31-7-167\u001b[00m:\u001b[01;34m~\u001b[00m$ "
+          ],
+          'startTimestamp' => '2021-11-18T18:36:50.366Z',
+          'endTimestamp' => '2021-11-18T18:36:52.813Z'
+        },
+        {
+          'data' => %w[
+            exit
+            logout
+          ],
+          'startTimestamp' => '2021-11-18T18:36:52.813Z',
+          'endTimestamp' => '2021-11-18T18:36:53.471Z'
+        }
+      ]
     }
   end
 end

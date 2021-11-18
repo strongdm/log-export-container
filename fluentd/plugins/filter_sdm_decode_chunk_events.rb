@@ -30,10 +30,8 @@ module Fluent::Plugin
       @_start_log_hash.delete(start_record['uuid'])
     end
 
-    def handle_chunk_log(record)
-      record = rich_record(record)
-
-      record['rawOutput'] = []
+    def decode_chunk_log(record)
+      decoded_events = []
 
       full_cmd_entry = ''
       total_elapsed_millis = 0
@@ -44,9 +42,9 @@ module Fluent::Plugin
         total_elapsed_millis += duration
         full_cmd_entry = "#{full_cmd_entry}#{one_line_cmd_entry}"
 
-        next unless end_of_line(one_line_cmd_entry)
+          next unless end_of_line(one_line_cmd_entry)
 
-        end_time_regular = add_millis(start_time_regular, total_elapsed_millis)
+          end_time_regular = add_millis(start_time_regular, total_elapsed_millis)
 
         item = {
           'texts' => full_cmd_entry.split("\n"),
@@ -56,21 +54,16 @@ module Fluent::Plugin
 
         record['rawOutput'] << item
 
-        full_cmd_entry = ''
-        total_elapsed_millis = 0
-        start_time_regular = end_time_regular
+          full_cmd_entry = ''
+          total_elapsed_millis = 0
+          start_time_regular = end_time_regular
+        end
+
+        record['decodedEvents'] = decoded_events unless record['decodedEvents']
+      rescue StandardError => _e
+        # Ignored
       end
 
-      record
-    end
-
-    def rich_record(record)
-      start_log = @_start_log_hash[record['uuid']]
-
-      record['userId'] = start_log['userId']
-      record['userName'] = start_log['userName']
-      record['datasourceId'] = start_log['datasourceId']
-      record['datasourceName'] = start_log['datasourceName']
       record
     end
 
