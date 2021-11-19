@@ -32,7 +32,8 @@ get_input_conf_filename() {
 
 get_input_chunk_conf() {
   conf=$(get_input_conf_name $LOG_EXPORT_CONTAINER_INPUT)
-  if [ "$conf" == "syslog-json" ]; then
+  decode_chunks_enabled=${LOG_EXPORT_CONTAINER_DECODE_CHUNK_EVENTS,,}
+  if [ "$conf" == "syslog-json" ] && [ "$decode_chunks_enabled" == "true" ]; then
     echo $ETC_DIR/input-$conf-chunk.conf
   else
     echo "/dev/null"
