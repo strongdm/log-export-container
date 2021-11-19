@@ -4,31 +4,18 @@ require 'fluent/plugin/parser'
 require 'fluent/plugin/parser_json'
 
 module Fluent::Plugin
-  class SDMSSHEventsFilter < Filter
-    Fluent::Plugin.register_filter('sdm_ssh_events', self)
-
-    def configure(conf)
-      super
-
-      @_start_log_hash = {}
-    end
+  class SDMDecodeChunkEventsFilter < Filter
+    Fluent::Plugin.register_filter('sdm_decode_chunk_events', self)
 
     def filter(tag, time, record)
-      handle_start_log(record) if record['type'] == 'start'
-      record = handle_chunk_log(record) if record['type'] == 'chunk'
-      handle_complete_log(record) if record['type'] == 'complete'
-      record
+      if ENV['LOG_EXPORT_CONTAINER_DECODE_CHUNK_EVENTS']&.downcase == 'true'
+        decode_chunk_log(record)
+      else
+        record
+      end
     end
 
     private
-
-    def handle_start_log(start_record)
-      @_start_log_hash[start_record['uuid']] = start_record
-    end
-
-    def handle_complete_log(start_record)
-      @_start_log_hash.delete(start_record['uuid'])
-    end
 
     def decode_chunk_log(record)
       decoded_events = []
@@ -36,23 +23,24 @@ module Fluent::Plugin
       full_cmd_entry = ''
       total_elapsed_millis = 0
       start_time_regular = zulu_date_to_regular(record['timestamp'])
-      record['events'].each do |event|
-        duration, command = extract_cmd_entry_info(event)
-        one_line_cmd_entry = command.gsub("\r", '')
-        total_elapsed_millis += duration
-        full_cmd_entry = "#{full_cmd_entry}#{one_line_cmd_entry}"
+      begin
+        record['events'].each do |event|
+          duration, command = extract_cmd_entry_info(event)
+          one_line_cmd_entry = command.gsub("\r", '')
+          total_elapsed_millis += duration
+          full_cmd_entry = "#{full_cmd_entry}#{one_line_cmd_entry}"
 
           next unless end_of_line(one_line_cmd_entry)
 
           end_time_regular = add_millis(start_time_regular, total_elapsed_millis)
 
-        item = {
-          'texts' => full_cmd_entry.split("\n"),
-          'startTimestamp' => start_time_regular,
-          'endTimestamp' => end_time_regular
-        }
+          item = {
+            'data' => full_cmd_entry.split("\n"),
+            'startTimestamp' => start_time_regular,
+            'endTimestamp' => end_time_regular
+          }
 
-        record['rawOutput'] << item
+          decoded_events << item
 
           full_cmd_entry = ''
           total_elapsed_millis = 0
