@@ -8,11 +8,7 @@ module Fluent::Plugin
     Fluent::Plugin.register_filter('sdm_decode_chunk_events', self)
 
     def filter(tag, time, record)
-      if ENV['LOG_EXPORT_CONTAINER_DECODE_CHUNK_EVENTS']&.downcase == 'true'
-        decode_chunk_log(record)
-      else
-        record
-      end
+      decode_chunk_log(record)
     end
 
     private
@@ -49,7 +45,7 @@ module Fluent::Plugin
 
         record['decodedEvents'] = decoded_events unless record['decodedEvents']
       rescue StandardError => _e
-        # Ignored
+        puts "An error ocurred: #{_e.message}"
       end
 
       record
