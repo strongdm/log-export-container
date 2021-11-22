@@ -28,6 +28,9 @@ When using `LOG_EXPORT_CONTAINER_OUTPUT=sumologic` add variables listed in [CONF
 #### Kafka
 When using `LOG_EXPORT_CONTAINER_OUTPUT=kafka` add variables listed in [CONFIGURE_KAFKA.md](CONFIGURE_KAFKA.md)
 
+### Decode Chunk Events
+When using `LOG_EXPORT_CONTAINER_DECODE_CHUNK_EVENTS=true` enable decode chunk events to plain text. Possible values: true or false. **It's not enabled by default**.
+
 ### Source Data
 
 Log traces include: `sourceAddress` and `sourceHostname`. By default docker uses `--net=bridge` networking. You need to enable `--net=host` networking driver in order to see the real client/gateway IP and hostname, otherwise you will see the Docker Gateway's info, for example: `"sourceAddress":"172.17.0.1"`
