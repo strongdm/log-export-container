@@ -1,6 +1,6 @@
 on:
   workflow_run:
-    workflows: ["main"]
+    workflows: ["tests"]
     branches: [ main ]
     types:
       - completed
@@ -45,7 +45,7 @@ jobs:
           IMAGE_TAG: ${{ steps.version.outputs.new_tag }}
         run: |
           # Adding version
-          echo _version_=\"$IMAGE_TAG\" > ./_version.rb
+          echo _version_=\"$IMAGE_TAG\" > fluentd/_version.rb
           # Building docker image
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           # Pushing image to ECR
