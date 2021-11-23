@@ -40,7 +40,7 @@ jobs:
       - name: Build, tag, and push the image to Amazon ECR
         id: build-image
         env:
-          ECR_REGISTRY: public.ecr.aws/strongdm
+          ECR_REGISTRY: 671496566364.dkr.ecr.us-west-2.amazonaws.com/garden
           ECR_REPOSITORY: log-export-container
           IMAGE_TAG: ${{ steps.version.outputs.new_tag }}
         run: |
@@ -49,9 +49,6 @@ jobs:
           # Building docker image
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           # Pushing image to ECR
-          echo ">>>>>>>>>>"
-          echo $ECR_REGISTRY
-          echo ">>>>>>>>>>"
           aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin $ECR_REGISTRY
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
