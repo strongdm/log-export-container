@@ -9,11 +9,56 @@ Test::Unit::TestCase.include(Fluent::Test::Helpers)
 Test::Unit::TestCase.extend(Fluent::Test::Helpers)
 
 module TestHelperModule
+  def sample_start_log
+    {
+      "type" => "start",
+      "timestamp" => "2021-06-23T00:00:00.000Z",
+      "uuid" => "xxx",
+      "datasourceId" => "rs-xxx",
+      "datasourceName" => "datasource",
+      "userId" => "a-000",
+      "userName" => "User Name",
+      "query" => "select 'b'",
+      "hash" => "8964394d39ccb9667a0642e176bac17000000000"
+    }
+  end
+
+  def sample_post_start_log
+    {
+      "type" => "postStart",
+      "timestamp" => "2021-01-01T00:00:00.000Z",
+      "uuid" => "xxx",
+      "query" => "{version:1,width:114,height:24,duration:5.173268588,command:,title:null,env:{TERM:xterm-256color},type:shell,fileName:null,fileSize:0,stdout:null,lastChunkId:0,clientCommand:null,pod:null,container:null,requestMethod:,requestURI:,requestBody:null}\n",
+      "hash" => "8964394d39ccb9667a0642e176bac17000000000"
+    }
+  end
+
+  def sample_unclass_log
+    {
+      "type" => "unclass",
+      "timestamp" => "2021-01-01T00:00:000Z",
+      "uuid" => "xxx",
+      "undef" => "1",
+      "duration" => "329",
+      "data" => "aGVsbG8gd29ybGQgaGVsbG8gd29ybGQgaGVsbG8gd29ybGQK"
+    }
+  end
+
+  def sample_complete_log
+    {
+      "type" => "complete",
+      "timestamp" => "2021-01-01T00:00:00.000Z",
+      "uuid" => "XXX",
+      "duration" => 0,
+      "records" => 1
+    }
+  end
+
   def sample_chunk_log
     {
       'type' => 'chunk',
       'timestamp' => '2021-11-18T18:36:50.186372557Z',
-      'uuid' => 's216TbEbcLXY7IkQ7P0Sdy5ihwpI',
+      'uuid' => 'xxx',
       'chunkId' => 1,
       'events' => [
         {
@@ -69,9 +114,7 @@ module TestHelperModule
           'data' => 'DQpsb2dvdXQNCg=='
         }
       ],
-      'hash' => 'f6f78c5caf8b0e9fde6dfb5c6f396df088250048',
-      'sourceAddress' => '172.20.0.1',
-      'sourceHostname' => 'cosmos.local'
+      'hash' => '8964394d39ccb9667a0642e176bac17000000000'
     }
   end
 
@@ -79,7 +122,7 @@ module TestHelperModule
     {
       'type' => 'chunk',
       'timestamp' => '2021-11-18T18:36:50.186372557Z',
-      'uuid' => 's216TbEbcLXY7IkQ7P0Sdy5ihwpI',
+      'uuid' => 'xxx',
       'chunkId' => 1,
       'events' => [
         {
@@ -135,9 +178,9 @@ module TestHelperModule
           'data' => 'DQpsb2dvdXQNCg=='
         }
       ],
-      'hash' => 'f6f78c5caf8b0e9fde6dfb5c6f396df088250048',
-      'sourceAddress' => '172.20.0.1',
-      'sourceHostname' => 'cosmos.local',
+      'hash' => '8964394d39ccb9667a0642e176bac17000000000',
+      'sourceAddress' => '0.0.0.0',
+      'sourceHostname' => 'localhost',
       'decodedEvents' => [
         {
           'data' => [
@@ -187,5 +230,69 @@ module TestHelperModule
         }
       ]
     }
+  end
+
+  def sample_start_log_csv
+    {
+      "1" => "2021-01-01T00:00:00Z",
+      "2" => "start",
+      "3" => "XXX",
+      "4" => "rs-XXX",
+      "5" => "datasourceName",
+      "6" => "a-0000000000000000",
+      "7" => "username",
+      "8" => "select 'b'",
+      "9" => "8964394d39ccb9667a0642e176bac17000000000"
+    }
+  end
+
+  def sample_chunk_log_csv
+    {
+      '1' => '2021-01-01T00:00:00Z',
+      '2' => 'chunk',
+      '3' => 'XXX',
+      '4' => '1',
+      '5' => '0000000000000000000000000000000000000000',
+      '6' => '8964394d39ccb9667a0642e176bac17000000000'
+    }
+  end
+
+  def sample_complete_log_csv
+    {
+      "1" => "2021-01-01T00:00:00Z",
+      "2" => "complete",
+      "3" => "XXX",
+      "4" => '0',
+      "5" => '1'
+    }
+  end
+
+  def sample_post_start_log_csv
+    {
+      "1" => "2021-01-01T00:00:00Z",
+      "2" => "postStart",
+      "3" => "XXX",
+      "4" => '"{version:1,width:111,height:11,duration:1.0,command:,title:null,env:{TERM:xterm-256color},type:shell,fileName:null,fileSize:0,stdout:null,lastChunkId:0,clientCommand:null,pod:null,container:null,requestMethod:,requestURI:,requestBody:null}"',
+      "5" => "8964394d39ccb9667a0642e176bac17000000000"
+    }
+  end
+
+  def sample_event_log_csv
+    {
+      "1" => '2021-01-01T00:00:00Z',
+      "2" => 'event',
+      "3" => 'XXX',
+      "4" => '1',
+      "5" => '000',
+      "6" => '8964394d39ccb9667a0642e176bac17000000000'
+    }
+  end
+
+  def create_log_message(json)
+    "<5>2021-11-25T00:00:00Z ip-0-0-0-0 strongDM[734548]: #{json.to_s.gsub('=>', ':')}"
+  end
+
+  def create_log_message_from_csv(json)
+    "<5>#{json.values.join(',')}"
   end
 end
