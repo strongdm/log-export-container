@@ -29,7 +29,7 @@ When using `LOG_EXPORT_CONTAINER_OUTPUT=sumologic` add variables listed in [CONF
 When using `LOG_EXPORT_CONTAINER_OUTPUT=kafka` add variables listed in [CONFIGURE_KAFKA.md](CONFIGURE_KAFKA.md)
 
 ### Decode Chunk Events
-When using `syslog-json` or `tcp-json` specify `LOG_EXPORT_CONTAINER_DECODE_CHUNK_EVENTS=true` to decode chunk events. Possible values: true or false. **It's not enabled by default**.
+When using `syslog-json` or `tcp-json` specify `LOG_EXPORT_CONTAINER_DECODE_CHUNK_EVENTS=true` to decode chunk events. Possible values: true or false. **It's not enabled by default**. Please refer to [CONFIGURE_SSH_DECODE](CONFIGURE_SSH_DECODE.md) for more information.
 
 ### Source Data
 
