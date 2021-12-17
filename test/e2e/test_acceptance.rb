@@ -6,6 +6,7 @@ require 'open3'
 require_relative '../helper'
 
 ETC_DIR = './fluentd/etc'
+SIGTERM = 15
 
 class TestFluentAcceptance < Test::Unit::TestCase
   include Fluent::Test::Helpers
@@ -17,44 +18,21 @@ class TestFluentAcceptance < Test::Unit::TestCase
 
     generate_fluent_conf('syslog-json', 'stdout')
     _, @stdout, _, @fluent_thread = Open3.popen3("fluentd -c #{ETC_DIR}/fluent.conf -p ./fluentd/plugins")
-    while line = @stdout.gets do
-      break if line.include?('is now running worker')
-    end
-
-    next_line_output_message
-    next_line_output_message
-    next_line_output_message
+    wait_for_fluent(@stdout)
+    clear_buffer(@stdout)
   end
 
   def cleanup
     super
 
-    Process.kill(15, @fluent_thread.pid)
-  end
-
-  def next_line_output_message
-    @stdout.gets
-  end
-
-  def send_message(message)
-    client = TCPSocket.open('localhost', 5140)
-    client.puts message
-    client.close
-  end
-
-  def extract_log_json(log)
-    idx = log.index('{')
-    if idx
-      log = log[idx..-1]
-    end
-    JSON.parse log.gsub('=>', ':')
+    Process.kill(SIGTERM, @fluent_thread.pid)
   end
 
   def test_json_start_log
     log = sample_start_log
-    send_message(create_log_message(log))
-    output = next_line_output_message
-    output = extract_log_json(output)
+    send_socket_message(create_log_message(log))
+    output = @stdout.gets
+    output = extract_valid_json_from_log(output)
     assert_equal(log['type'], output['type'])
     assert_equal(log['timestamp'], output['timestamp'])
     assert_equal(log['uuid'], output['uuid'])
@@ -70,9 +48,9 @@ class TestFluentAcceptance < Test::Unit::TestCase
 
   def test_json_chunk_log
     log = sample_chunk_log
-    send_message(create_log_message(log))
-    output = next_line_output_message
-    output = extract_log_json(output)
+    send_socket_message(create_log_message(log))
+    output = @stdout.gets
+    output = extract_valid_json_from_log(output)
     assert_equal(log['type'], output['type'])
     assert_equal(log['timestamp'], output['timestamp'])
     assert_equal(log['uuid'], output['uuid'])
@@ -85,9 +63,9 @@ class TestFluentAcceptance < Test::Unit::TestCase
 
   def test_json_post_start_log
     log = sample_post_start_log
-    send_message(create_log_message(log))
-    output = next_line_output_message
-    output = extract_log_json(output)
+    send_socket_message(create_log_message(log))
+    output = @stdout.gets
+    output = extract_valid_json_from_log(output)
     assert_equal(log['type'], output['type'])
     assert_equal(log['timestamp'], output['timestamp'])
     assert_equal(log['uuid'], output['uuid'])
@@ -99,9 +77,9 @@ class TestFluentAcceptance < Test::Unit::TestCase
 
   def test_json_unclass_log
     log = sample_unclass_log
-    send_message(create_log_message(log))
-    output = next_line_output_message
-    output = extract_log_json(output)
+    send_socket_message(create_log_message(log))
+    output = @stdout.gets
+    output = extract_valid_json_from_log(output)
     assert_equal(log['type'], output['type'])
     assert_equal(log['timestamp'], output['timestamp'])
     assert_equal(log['uuid'], output['uuid'])
@@ -114,9 +92,9 @@ class TestFluentAcceptance < Test::Unit::TestCase
 
   def test_json_complete_log
     log = sample_complete_log
-    send_message(create_log_message(log))
-    output = next_line_output_message
-    output = extract_log_json(output)
+    send_socket_message(create_log_message(log))
+    output = @stdout.gets
+    output = extract_valid_json_from_log(output)
     assert_equal(log['type'], output['type'])
     assert_equal(log['timestamp'], output['timestamp'])
     assert_equal(log['uuid'], output['uuid'])
@@ -137,44 +115,21 @@ class TestFluentCSVAcceptance < Test::Unit::TestCase
 
     generate_fluent_conf('syslog-csv', 'stdout')
     _, @stdout, _, @fluent_thread = Open3.popen3("fluentd -c #{ETC_DIR}/fluent.conf -p ./fluentd/plugins")
-    while line = @stdout.gets do
-      break if line.include?('is now running worker')
-    end
-
-    next_line_output_message
-    next_line_output_message
-    next_line_output_message
+    wait_for_fluent(@stdout)
+    clear_buffer(@stdout)
   end
 
   def cleanup
     super
 
-    Process.kill(15, @fluent_thread.pid)
-  end
-
-  def send_message(message)
-    client = TCPSocket.open('localhost', 5140)
-    client.puts message
-    client.close
-  end
-
-  def extract_log_json(log)
-    idx = log.index('{')
-    if idx
-      log = log[idx..-1]
-    end
-    JSON.parse log.gsub('=>', ':').gsub('nil', 'null')
-  end
-
-  def next_line_output_message
-    @stdout.gets
+    Process.kill(SIGTERM, @fluent_thread.pid)
   end
 
   def test_csv_start_log
     log = sample_start_log_csv
-    send_message(create_log_message_from_csv(log))
-    output = next_line_output_message
-    output = extract_log_json(output)
+    send_socket_message(create_log_message_from_csv(log))
+    output = @stdout.gets
+    output = extract_valid_json_from_log(output)
     assert_equal(log['1'], output['timestamp'])
     assert_equal(log['2'], output['type'])
     assert_equal(log['3'], output['uuid'])
@@ -190,9 +145,9 @@ class TestFluentCSVAcceptance < Test::Unit::TestCase
 
   def test_csv_chunk_log
     log = sample_chunk_log_csv
-    send_message(create_log_message_from_csv(log))
-    output = next_line_output_message
-    output = extract_log_json(output)
+    send_socket_message(create_log_message_from_csv(log))
+    output = @stdout.gets
+    output = extract_valid_json_from_log(output)
     assert_equal(log['1'], output['timestamp'])
     assert_equal(log['2'], output['type'])
     assert_equal(log['3'], output['uuid'])
@@ -205,9 +160,9 @@ class TestFluentCSVAcceptance < Test::Unit::TestCase
 
   def test_csv_post_start_log
     log = sample_post_start_log_csv
-    send_message(create_log_message_from_csv(log))
-    output = next_line_output_message
-    output = extract_log_json(output)
+    send_socket_message(create_log_message_from_csv(log))
+    output = @stdout.gets
+    output = extract_valid_json_from_log(output)
     assert_equal(log['1'], output['timestamp'])
     assert_equal(log['2'], output['type'])
     assert_equal(log['3'], output['uuid'])
@@ -219,9 +174,9 @@ class TestFluentCSVAcceptance < Test::Unit::TestCase
 
   def test_csv_unclass_log
     log = sample_event_log_csv
-    send_message(create_log_message_from_csv(log))
-    output = next_line_output_message
-    output = extract_log_json(output)
+    send_socket_message(create_log_message_from_csv(log))
+    output = @stdout.gets
+    output = extract_valid_json_from_log(output)
     assert_equal(log['1'], output['timestamp'])
     assert_equal(log['2'], output['type'])
     assert_equal(log['3'], output['uuid'])
@@ -234,9 +189,9 @@ class TestFluentCSVAcceptance < Test::Unit::TestCase
 
   def test_csv_complete_log
     log = sample_complete_log_csv
-    send_message(create_log_message_from_csv(log))
-    output = next_line_output_message
-    output = extract_log_json(output)
+    send_socket_message(create_log_message_from_csv(log))
+    output = @stdout.gets
+    output = extract_valid_json_from_log(output)
     assert_equal(log['1'], output['timestamp'])
     assert_equal(log['2'], output['type'])
     assert_equal(log['3'], output['uuid'])
@@ -258,4 +213,139 @@ end
 def read_fluentd_file(path)
   file = File.open(format("%s/%s", ETC_DIR, path))
   file.read
+end
+
+def wait_for_fluent(stdout)
+  while (line = stdout.gets) do
+    break if line.include?('is now running worker')
+  end
+end
+
+def clear_buffer(stdout)
+  stdout.gets
+  stdout.gets
+  stdout.gets
+end
+
+def send_socket_message(message)
+  client = TCPSocket.open('localhost', 5140)
+  client.puts message
+  client.close
+end
+
+def extract_valid_json_from_log(log)
+  idx = log.index('{')
+  if idx
+    log = log[idx..-1]
+  end
+  JSON.parse(log)
+end
+
+def sample_start_log
+  {
+    "type" => "start",
+    "timestamp" => "2021-06-23T00:00:00.000Z",
+    "uuid" => "xxx",
+    "datasourceId" => "rs-xxx",
+    "datasourceName" => "datasource",
+    "userId" => "a-000",
+    "userName" => "User Name",
+    "query" => "select 'b'",
+    "hash" => "8964394d39ccb9667a0642e176bac17000000000"
+  }
+end
+
+def sample_post_start_log
+  {
+    "type" => "postStart",
+    "timestamp" => "2021-01-01T00:00:00.000Z",
+    "uuid" => "xxx",
+    "query" => "{version:1,width:114,height:24,duration:5.173268588,command:,title:null,env:{TERM:xterm-256color},type:shell,fileName:null,fileSize:0,stdout:null,lastChunkId:0,clientCommand:null,pod:null,container:null,requestMethod:,requestURI:,requestBody:null}\n",
+    "hash" => "8964394d39ccb9667a0642e176bac17000000000"
+  }
+end
+
+def sample_unclass_log
+  {
+    "type" => "unclass",
+    "timestamp" => "2021-01-01T00:00:000Z",
+    "uuid" => "xxx",
+    "undef" => "1",
+    "duration" => "329",
+    "data" => "aGVsbG8gd29ybGQgaGVsbG8gd29ybGQgaGVsbG8gd29ybGQK"
+  }
+end
+
+def sample_complete_log
+  {
+    "type" => "complete",
+    "timestamp" => "2021-01-01T00:00:00.000Z",
+    "uuid" => "XXX",
+    "duration" => 0,
+    "records" => 1
+  }
+end
+
+def sample_start_log_csv
+  {
+    "1" => "2021-01-01T00:00:00Z",
+    "2" => "start",
+    "3" => "XXX",
+    "4" => "rs-XXX",
+    "5" => "datasourceName",
+    "6" => "a-0000000000000000",
+    "7" => "username",
+    "8" => "select 'b'",
+    "9" => "8964394d39ccb9667a0642e176bac17000000000"
+  }
+end
+
+def sample_chunk_log_csv
+  {
+    '1' => '2021-01-01T00:00:00Z',
+    '2' => 'chunk',
+    '3' => 'XXX',
+    '4' => '1',
+    '5' => '0000000000000000000000000000000000000000',
+    '6' => '8964394d39ccb9667a0642e176bac17000000000'
+  }
+end
+
+def sample_complete_log_csv
+  {
+    "1" => "2021-01-01T00:00:00Z",
+    "2" => "complete",
+    "3" => "XXX",
+    "4" => '0',
+    "5" => '1'
+  }
+end
+
+def sample_post_start_log_csv
+  {
+    "1" => "2021-01-01T00:00:00Z",
+    "2" => "postStart",
+    "3" => "XXX",
+    "4" => '"{version:1,width:111,height:11,duration:1.0,command:,title:null,env:{TERM:xterm-256color},type:shell,fileName:null,fileSize:0,stdout:null,lastChunkId:0,clientCommand:null,pod:null,container:null,requestMethod:,requestURI:,requestBody:null}"',
+    "5" => "8964394d39ccb9667a0642e176bac17000000000"
+  }
+end
+
+def sample_event_log_csv
+  {
+    "1" => '2021-01-01T00:00:00Z',
+    "2" => 'event',
+    "3" => 'XXX',
+    "4" => '1',
+    "5" => '000',
+    "6" => '8964394d39ccb9667a0642e176bac17000000000'
+  }
+end
+
+def create_log_message(hash)
+  "<5>2021-11-25T00:00:00Z ip-0-0-0-0 strongDM[734548]: #{JSON.generate(hash)}"
+end
+
+def create_log_message_from_csv(hash)
+  "<5>#{hash.values.join(',')}"
 end
