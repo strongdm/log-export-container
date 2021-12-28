@@ -18,6 +18,6 @@ jobs:
         with:
           ruby-version: 2.6
       - name: Install dependencies
-        run: ./configure-environment.sh
+        run: bundle install
       - name: Run tests
         run: ruby test/run_test.rb

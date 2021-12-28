@@ -5,8 +5,8 @@ ENV FLUENTD_DIR=fluentd
 
 USER root
 RUN apk add gettext
-RUN apk add build-base ruby-dev
-RUN gem install bundler -v '~> 1.17.3'
+RUN apk add build-base ruby-dev zlib-dev
+RUN gem install bundler -v '~> 2.3.3'
 
 COPY Gemfile /Gemfile
 COPY Gemfile.lock /Gemfile.lock
