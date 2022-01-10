@@ -1,15 +1,17 @@
 version: "3.3"
 services:
   log-export-container:
-    image: public.ecr.aws/strongdm/log-export-container:latest
-    ports:
-      - "5140:5140"
+#    image: public.ecr.aws/strongdm/log-export-container:latest
+    build: .
+#    ports:
+#      - "5140:5140"
+    network_mode: host
     environment:
       # IMPORTANT: Do not enclose values in double or single quotes 
 
       # Required variables
       - LOG_EXPORT_CONTAINER_INPUT=syslog-json # possible values = syslog-json, syslog-csv, tcp-json or tcp-csv
-      - LOG_EXPORT_CONTAINER_OUTPUT=stdout # possible values = stdout, s3, cloudwatch, splunk-hec, datadog, azure-loganalytics, sumologic, kafka
+      - LOG_EXPORT_CONTAINER_OUTPUT=stdout # possible values = stdout, s3, cloudwatch, splunk-hec, datadog, azure-loganalytics, sumologic, kafka, mongo
     
       # Optional variables
       # For LOG_EXPORT_CONTAINER_OUTPUT=s3 refer to docs/CONFIGURE_S3.md
@@ -19,3 +21,4 @@ services:
       # For LOG_EXPORT_CONTAINER_OUTPUT=azure-loganalytics refer to docs/CONFIGURE_AZURE_LOGANALYTICS.md
       # For LOG_EXPORT_CONTAINER_OUTPUT=sumologic refer to docs/CONFIGURE_SUMOLOGIC.md
       # For LOG_EXPORT_CONTAINER_OUTPUT=kafka refer to docs/CONFIGURE_KAFKA.md
+      # For LOG_EXPORT_CONTAINER_OUTPUT=mongo refer to docs/CONFIGURE_MONGO.md

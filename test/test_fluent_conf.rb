@@ -141,6 +141,20 @@ class TestCreateFluentConfChangingOutput < Test::Unit::TestCase
     assert_includes(fluent_conf, output_conf('sumologic'))
     assert(is_valid_fluent_conf)
   end
+
+  def test_mongo_output_conf
+    ENV['MONGO_USER'] = 'MONGO_USER'
+    ENV['MONGO_PASSWORD'] = 'MONGO_PASSWORD'
+    ENV['MONGO_HOST'] = 'MONGO_HOST'
+    ENV['MONGO_PORT'] = 'MONGO_PORT'
+    ENV['MONGO_DB'] = 'MONGO_DB'
+    fluent_conf_content = generate_fluent_conf('tcp-json', 'mongo')
+    assert_includes(fluent_conf_content, input_conf('tcp-json'))
+    assert_includes(fluent_conf_content, default_classify_conf('json'))
+    assert_includes(fluent_conf_content, process_conf)
+    assert_includes(fluent_conf_content, output_conf('mongo'))
+    assert(is_valid_fluent_conf)
+  end
 end
 
 def generate_fluent_conf(input_type, output_type)
