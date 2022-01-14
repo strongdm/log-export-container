@@ -1,11 +1,9 @@
 version: "3.3"
 services:
   log-export-container:
-#    image: public.ecr.aws/strongdm/log-export-container:latest
-    build: .
-#    ports:
-#      - "5140:5140"
-    network_mode: host
+    image: public.ecr.aws/strongdm/log-export-container:latest
+    ports:
+      - "5140:5140"
     environment:
       # IMPORTANT: Do not enclose values in double or single quotes 
 
