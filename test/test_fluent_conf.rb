@@ -143,11 +143,7 @@ class TestCreateFluentConfChangingOutput < Test::Unit::TestCase
   end
 
   def test_mongo_output_conf
-    ENV['MONGO_USER'] = 'MONGO_USER'
-    ENV['MONGO_PASSWORD'] = 'MONGO_PASSWORD'
-    ENV['MONGO_HOST'] = 'MONGO_HOST'
-    ENV['MONGO_PORT'] = 'MONGO_PORT'
-    ENV['MONGO_DB'] = 'MONGO_DB'
+    ENV['MONGO_URI'] = 'mongodb://user:pass@localhost:27017/db'
     fluent_conf_content = generate_fluent_conf('tcp-json', 'mongo')
     assert_includes(fluent_conf_content, input_conf('tcp-json'))
     assert_includes(fluent_conf_content, default_classify_conf('json'))
