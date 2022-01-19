@@ -34,6 +34,9 @@ When using `LOG_EXPORT_CONTAINER_OUTPUT=mongo` add variables listed in [CONFIGUR
 ### Decode Chunk Events
 When using `syslog-json` or `tcp-json` specify `LOG_EXPORT_CONTAINER_DECODE_CHUNK_EVENTS=true` to decode chunk events. Possible values: true or false. **It's not enabled by default**. Please refer to [CONFIGURE_SSH_DECODE](CONFIGURE_SSH_DECODE.md) for more information.
 
+### Audit Activities
+When using `LOG_EXPORT_CONTAINER_OUTPUT=mongo` specify `LOG_EXPORT_CONTAINER_AUDIT_ACTIVITIES=true` to store the activity logs from SDM CLI Audit in your MongoDB. Possible values: true or false. **It's not enabled by default**. Please refer to [CONFIGURE_AUDIT_ACTIVITIES](CONFIGURE_AUDIT_ACTIVITIES.md) for more information.
+
 ### Source Data
 
 Log traces include: `sourceAddress` and `sourceHostname`. By default docker uses `--net=bridge` networking. You need to enable `--net=host` networking driver in order to see the real client/gateway IP and hostname, otherwise you will see the Docker Gateway's info, for example: `"sourceAddress":"172.17.0.1"`

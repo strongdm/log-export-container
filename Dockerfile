@@ -12,10 +12,22 @@ COPY Gemfile /Gemfile
 COPY Gemfile.lock /Gemfile.lock
 RUN bundle install
 
+RUN apk --no-cache add curl unzip jq ca-certificates wget
+RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
+RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.28-r0/glibc-2.28-r0.apk
+RUN apk add glibc-2.28-r0.apk
+
+RUN curl -J -O -L https://app.strongdm.com/releases/cli/linux
+RUN unzip -x sdm*.zip
+RUN rm sdm*.zip
+RUN mv sdm /home/fluent
+
 COPY fluentd /fluentd
 COPY create-conf-file.sh /create-conf-file.sh
 COPY start.sh /start.sh
 RUN chown fluent.fluent fluentd/etc/fluent.conf
 
-USER fluent
+RUN chown fluent.fluent /home/fluent/sdm
+
+USER root
 CMD ["/start.sh"]
