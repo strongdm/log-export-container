@@ -1,7 +1,7 @@
 # Support new Output
 
 In order to support new output types you need to:
-1. Add the required plugin gem to the [Dockerfile](../Dockerfile)
+1. Add the required plugin gem to the [Gemfile](../Gemfile)
 2. Add the new supported type to the [start.sh](../start.sh) script
 3. Write a new output file following the plugin's documentation, e.g. [output-s3.conf](../fluentd/etc/output-s3.conf). Ideally just keep the plugin required variables.
 4. Update [start-container.sh](../dev-tools/start-container.sh)

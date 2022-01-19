@@ -4,7 +4,7 @@
 
 ### Required configuration
 * **LOG_EXPORT_CONTAINER_INPUT**. Container input format (`syslog-json`, `syslog-csv`, `tcp-json` or `tcp-csv`). Default: `syslog-json`
-* **LOG_EXPORT_CONTAINER_OUTPUT**. Container output storage (`stdout`, `s3`, `cloudwatch`, `splunk-hec`, `datadog`, `azure-loganalytics`, `sumologic` and/or  `kafka`). Default: `stdout`. You could configure multiple storages, for example: `stdout s3 datadog`.
+* **LOG_EXPORT_CONTAINER_OUTPUT**. Container output storage (`stdout`, `s3`, `cloudwatch`, `splunk-hec`, `datadog`, `azure-loganalytics`, `sumologic`, `kafka` and/or  `mongo`). Default: `stdout`. You could configure multiple storages, for example: `stdout s3 datadog`.
 
 ### Optional configuration
 #### AWS S3
@@ -27,6 +27,9 @@ When using `LOG_EXPORT_CONTAINER_OUTPUT=sumologic` add variables listed in [CONF
 
 #### Kafka
 When using `LOG_EXPORT_CONTAINER_OUTPUT=kafka` add variables listed in [CONFIGURE_KAFKA.md](CONFIGURE_KAFKA.md)
+
+#### Mongo
+When using `LOG_EXPORT_CONTAINER_OUTPUT=mongo` add variables listed in [CONFIGURE_MONGO.md](CONFIGURE_MONGO.md)
 
 ### Decode Chunk Events
 When using `syslog-json` or `tcp-json` specify `LOG_EXPORT_CONTAINER_DECODE_CHUNK_EVENTS=true` to decode chunk events. Possible values: true or false. **It's not enabled by default**. Please refer to [CONFIGURE_SSH_DECODE](CONFIGURE_SSH_DECODE.md) for more information.
