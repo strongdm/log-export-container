@@ -40,10 +40,10 @@ get_input_chunk_conf() {
   fi
 }
 
-get_input_exec_audit() {
-  exec_audit_enabled=$(echo $LOG_EXPORT_CONTAINER_AUDIT_ACTIVITIES | tr '[:upper:]' '[:lower:]')
-  if [ "$LOG_EXPORT_CONTAINER_AUDIT_ACTIVITIES" == "true" ]; then
-    echo $ETC_DIR/input-exec-audit.conf
+get_input_extract_audit_activities() {
+  extract_audit_activities_enabled=$(echo $LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES | tr '[:upper:]' '[:lower:]')
+  if [ "$extract_audit_activities_enabled" == "true" ]; then
+    echo $ETC_DIR/input-extract-audit-activities.conf
   else
     echo "/dev/null"
   fi
@@ -80,7 +80,7 @@ get_output_conf() {
 
 create_fluent_conf() {
     cat $(get_input_conf_filename) > $ETC_DIR/fluent.conf
-    cat $(get_input_exec_audit) >> $ETC_DIR/fluent.conf
+    cat $(get_input_extract_audit_activities) >> $ETC_DIR/fluent.conf
     cat $(get_classify_conf_filename) >> $ETC_DIR/fluent.conf
     cat $(get_custom_classify_conf_filename) >> $ETC_DIR/fluent.conf
     cat $ETC_DIR/process.conf >> $ETC_DIR/fluent.conf
