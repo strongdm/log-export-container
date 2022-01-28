@@ -31,6 +31,9 @@ When using `LOG_EXPORT_CONTAINER_OUTPUT=kafka` add variables listed in [CONFIGUR
 #### Mongo
 When using `LOG_EXPORT_CONTAINER_OUTPUT=mongo` add variables listed in [CONFIGURE_MONGO.md](CONFIGURE_MONGO.md)
 
+#### Logz
+When using `LOG_EXPORT_CONTAINER_OUTPUT=logz` add variables listed in [CONFIGURE_LOGZ.md](CONFIGURE_LOGZ.md)
+
 ### Decode Chunk Events
 When using `syslog-json` or `tcp-json` specify `LOG_EXPORT_CONTAINER_DECODE_CHUNK_EVENTS=true` to decode chunk events. Possible values: true or false. **It's not enabled by default**. Please refer to [CONFIGURE_SSH_DECODE](CONFIGURE_SSH_DECODE.md) for more information.
 
