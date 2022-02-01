@@ -3,9 +3,6 @@ FROM fluent/fluentd:edge
 
 ENV FLUENTD_DIR=fluentd
 
-# Setting default values
-ENV LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL=${LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL:-15}
-
 USER root
 RUN apk add gettext
 RUN apk add build-base ruby-dev zlib-dev

@@ -2,7 +2,7 @@ require 'json'
 require 'date'
 
 def get_audit_activities
-  extract_interval = ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'].to_i
+  extract_interval = (ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] || '15').to_i
   datetime_from = DateTime.now - (extract_interval + 1.0)/(24*60)
   datetime_to = DateTime.now - 1.0/(24*60)
   output = `/home/fluent/sdm audit activities -j -e --from "#{datetime_from.to_s}" --to "#{datetime_to.to_s}"`
