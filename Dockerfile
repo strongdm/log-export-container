@@ -2,6 +2,7 @@
 FROM fluent/fluentd:edge
 
 ENV FLUENTD_DIR=fluentd
+ENV PATH="/home/fluent:$PATH"
 
 USER root
 RUN apk add gettext
