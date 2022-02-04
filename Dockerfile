@@ -24,7 +24,7 @@ RUN mv sdm /home/fluent
 RUN apk del curl ca-certificates wget
 
 COPY fluentd /fluentd
-COPY create-conf-file.sh /create-conf-file.sh
+COPY create-conf.rb /create-conf.rb
 COPY start.sh /start.sh
 
 USER root
