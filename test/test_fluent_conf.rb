@@ -151,6 +151,28 @@ class TestCreateFluentConfChangingOutput < Test::Unit::TestCase
     assert_includes(fluent_conf_content, output_conf('mongo'))
     assert(is_valid_fluent_conf)
   end
+
+  def test_logz_output_conf
+    ENV['LOGZ_ENDPOINT'] = 'https://listener.logz.io:8071?token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&type=my_type'
+    fluent_conf_content = generate_fluent_conf('tcp-json', 'logz')
+    assert_includes(fluent_conf_content, input_conf('tcp-json'))
+    assert_includes(fluent_conf_content, default_classify_conf('json'))
+    assert_includes(fluent_conf_content, process_conf)
+    assert_includes(fluent_conf_content, output_conf('logz'))
+    assert(is_valid_fluent_conf)
+  end
+
+  def test_loki_output_conf
+    ENV['LOKI_URL'] = 'http://localhost:3100'
+    ENV['LOKI_USERNAME'] = 'admin'
+    ENV['LOKI_PASSWORD'] = 'admin'
+    fluent_conf_content = generate_fluent_conf('tcp-json', 'loki')
+    assert_includes(fluent_conf_content, input_conf('tcp-json'))
+    assert_includes(fluent_conf_content, default_classify_conf('json'))
+    assert_includes(fluent_conf_content, process_conf)
+    assert_includes(fluent_conf_content, output_conf('loki'))
+    assert(is_valid_fluent_conf)
+  end
 end
 
 def generate_fluent_conf(input_type, output_type)

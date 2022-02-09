@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ETC_DIR=$FLUENTD_DIR/etc
-SUPPORTED_STORES="stdout s3 cloudwatch splunk-hec datadog azure-loganalytics sumologic kafka mongo logz"
+SUPPORTED_STORES="stdout s3 cloudwatch splunk-hec datadog azure-loganalytics sumologic kafka mongo logz loki"
 
 get_input_conf_name() {
     echo $1 | awk '{ gsub(/ /,""); print tolower($0) }'
