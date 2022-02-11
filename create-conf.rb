@@ -2,7 +2,7 @@
 ETC_DIR="#{ENV['FLUENTD_DIR']}/etc"
 SUPPORTED_STORES="stdout s3 cloudwatch splunk-hec datadog azure-loganalytics sumologic kafka mongo logz"
 
-def extract_value(str = "")
+def extract_value(str)
   unless str
     str = ""
   end
@@ -11,7 +11,7 @@ end
 
 def output_stores_conf
   conf = ""
-  output_types = ENV['LOG_EXPORT_CONTAINER_OUTPUT'] || ""
+  output_types = extract_value(ENV['LOG_EXPORT_CONTAINER_OUTPUT'])
   stores = SUPPORTED_STORES.split(' ')
   stores.each do |store|
     if output_types.include?(store)
@@ -50,7 +50,7 @@ def input_extract_audit_activities_conf
 end
 
 def default_classify_conf
-  conf = extract_value ENV['LOG_EXPORT_CONTAINER_INPUT']
+  conf = extract_value(ENV['LOG_EXPORT_CONTAINER_INPUT'])
   if conf == "syslog-csv" || conf == "tcp-csv"
     filename = "#{ETC_DIR}/classify-default-csv.conf"
   else
