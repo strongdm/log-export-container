@@ -3,8 +3,6 @@ require 'fluent/test'
 require 'fluent/test/helpers'
 require 'fluent/test/driver/output'
 
-ETC_DIR = './fluentd/etc'
-
 class TestCreateFluentConfChangingInput < Test::Unit::TestCase
   include Fluent::Test::Helpers
 

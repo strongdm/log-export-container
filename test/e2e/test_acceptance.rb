@@ -5,7 +5,6 @@ require 'fluent/test/driver/output'
 require 'open3'
 require_relative '../helper'
 
-ETC_DIR = './fluentd/etc'
 SIGTERM = 15
 
 class TestFluentAcceptance < Test::Unit::TestCase
