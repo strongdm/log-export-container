@@ -35,7 +35,7 @@ def input_conf
 end
 
 def decode_chunk_events_conf
-  conf = extract_value ENV['LOG_EXPORT_CONTAINER_INPUT']
+  conf = extract_value(ENV['LOG_EXPORT_CONTAINER_INPUT'])
   decode_chunks_enabled = extract_value(ENV['LOG_EXPORT_CONTAINER_DECODE_CHUNK_EVENTS']) == "true"
   if (conf == "syslog-json" || conf == "tcp-json") && decode_chunks_enabled
     File.read("#{ETC_DIR}/input-json-chunk.conf")
@@ -60,7 +60,7 @@ def default_classify_conf
 end
 
 def custom_classify_conf
-  conf = extract_value ENV['LOG_EXPORT_CONTAINER_INPUT']
+  conf = extract_value(ENV['LOG_EXPORT_CONTAINER_INPUT'])
   if conf == "syslog-csv" || conf == "tcp-csv"
     File.read("#{ETC_DIR}/classify-#{conf}.conf")
   end
