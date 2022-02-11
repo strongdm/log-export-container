@@ -5,7 +5,6 @@ require 'fluent/test/driver/output'
 require 'open3'
 require_relative '../helper'
 
-ETC_DIR = './fluentd/etc'
 SIGTERM = 15
 
 class TestFluentAcceptance < Test::Unit::TestCase
@@ -206,7 +205,7 @@ def generate_fluent_conf(input_type, output_type)
   ENV['LOG_EXPORT_CONTAINER_INPUT'] = input_type
   ENV['LOG_EXPORT_CONTAINER_OUTPUT'] = output_type
   ENV['FLUENTD_DIR'] = './fluentd'
-  system('bash ./create-conf-file.sh')
+  system('ruby ./create-conf.rb')
   read_fluentd_file('fluent.conf')
 end
 
