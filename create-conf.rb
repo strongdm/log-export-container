@@ -1,6 +1,6 @@
 
 ETC_DIR="#{ENV['FLUENTD_DIR']}/etc"
-SUPPORTED_STORES="stdout s3 cloudwatch splunk-hec datadog azure-loganalytics sumologic kafka mongo logz"
+SUPPORTED_STORES="stdout s3 cloudwatch splunk-hec datadog azure-loganalytics sumologic kafka mongo logz loki"
 
 def extract_value(str)
   unless str
