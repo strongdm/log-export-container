@@ -162,8 +162,6 @@ class TestCreateFluentConfChangingOutput < Test::Unit::TestCase
 
   def test_loki_output_conf
     ENV['LOKI_URL'] = 'http://localhost:3100'
-    ENV['LOKI_USERNAME'] = 'admin'
-    ENV['LOKI_PASSWORD'] = 'admin'
     fluent_conf_content = generate_fluent_conf('tcp-json', 'loki')
     assert_includes(fluent_conf_content, input_conf('tcp-json'))
     assert_includes(fluent_conf_content, default_classify_conf('json'))
