@@ -3,8 +3,6 @@ require 'fluent/test'
 require 'fluent/test/helpers'
 require 'fluent/test/driver/output'
 
-ETC_DIR = './fluentd/etc'
-
 class TestCreateFluentConfChangingInput < Test::Unit::TestCase
   include Fluent::Test::Helpers
 
@@ -179,7 +177,7 @@ def generate_fluent_conf(input_type, output_type)
   ENV['LOG_EXPORT_CONTAINER_INPUT'] = input_type
   ENV['LOG_EXPORT_CONTAINER_OUTPUT'] = output_type
   ENV['FLUENTD_DIR'] = './fluentd'
-  system('bash ./create-conf-file.sh')
+  system('ruby ./create-conf.rb')
   read_fluentd_file('fluent.conf')
 end
 
