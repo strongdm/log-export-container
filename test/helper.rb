@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+ETC_DIR = './fluentd/etc'
+
 $LOAD_PATH.unshift(File.expand_path('..', __dir__))
 require 'json'
 require 'test-unit'
