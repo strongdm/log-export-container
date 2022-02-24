@@ -1,0 +1,12 @@
+[Unit]
+Description=log export container daemon
+After=network.target
+
+[Service]
+User=ubuntu
+EnvironmentFile=-/etc/sysconfig/log-export-container
+WorkingDirectory=/opt/log-export-container
+ExecStart=/opt/log-export-container/start.sh
+
+[Install]
+WantedBy=multi-user.target
