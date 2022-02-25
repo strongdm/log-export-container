@@ -1,0 +1,65 @@
+---
+- name: "Installing Log Export Container with Ansible"
+  hosts: localhost
+  connection: local
+
+tasks:
+
+- name: Install Git
+  shell: apt install --yes git
+
+- name: Clone Log Export Container
+  shell: git clone https://github.com/devlucassantos/log-export-container.git /opt/log-export-container/
+
+- name: REMOVEME
+  shell: git fetch && git checkout feat/ansible
+  args:
+    chdir: /opt/log-export-container
+
+- name: Update PATH variable
+  shell: export PATH=/home/fluent:$PATH
+
+- name: Modify install-dependencies.sh permissions
+  file: dest=/opt/log-export-container/build-utils owner=root group=root mode=777 recurse=yes
+
+- name: Configure Ubuntu
+  shell: /opt/log-export-container/build-utils/setup-os-ubuntu.sh
+
+- name: Install Ubuntu packages
+  shell: /opt/log-export-container/build-utils/install-fluentd-dependencies-ubuntu.sh
+
+- name: Install Ruby and Gem dependencies
+  shell: /opt/log-export-container/build-utils/install-ruby-dependencies.sh
+  args:
+    chdir: /opt/log-export-container
+
+- name: Install StrongDM CLI
+  shell: /opt/log-export-container/build-utils/install-sdm-cli.sh
+
+- name: Modify start.sh permissions
+  ansible.builtin.file:
+    path: /opt/log-export-container/start.sh
+    owner: root
+    group: root
+    mode: '777'
+
+- name: Create /etc/sysconfig directory if it does not exist
+  ansible.builtin.file:
+    path: /etc/sysconfig
+    state: directory
+    mode: '777'
+
+- name: Copy Log Export Container env file
+  ansible.builtin.copy:
+    src: env-file
+    dest: /etc/sysconfig/log-export-container
+    mode: '777'
+
+- name: Copy Log Export Container service file
+  ansible.builtin.copy:
+    src: /opt/log-export-container/build-utils/log-export-container.service
+    dest: /etc/systemd/system/
+    mode: '777'
+
+- name: Enable and start Log Export Container service
+  shell: systemctl enable log-export-container.service && systemctl start log-export-container.service
