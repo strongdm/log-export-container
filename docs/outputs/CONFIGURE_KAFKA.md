@@ -1,3 +1,9 @@
+---
+layout: default
+title: Splunk HEC
+parent: Outputs
+nav_order: 1
+---
 # Configure AWS CloudWatch
 
 The Log Export Container uses a [fluentd kafka output plugin](https://github.com/fluent/fluent-plugin-kafka). In order to enable it you need to specify `LOG_EXPORT_CONTAINER_OUTPUT=kafka` and provide the following variables:
