@@ -1,3 +1,11 @@
+---
+layout: default
+title: Splunk HEC
+parent: Outputs
+nav_order: 1
+---
+
+
 # Configure Splunk HEC
 
 The Log Export Container uses [fluentd splunk hec output plugin](https://github.com/splunk/fluent-plugin-splunk-hec). In order to enable it you need to specify `LOG_EXPORT_CONTAINER_OUTPUT=splunk-hec` and provide the following variables:
