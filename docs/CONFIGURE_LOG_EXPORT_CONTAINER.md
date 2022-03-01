@@ -1,4 +1,8 @@
-
+---
+layout: default
+title: Configure Log Export Container
+nav_order: 2
+---
 # Configure Log Export Container
 
 ## The container
