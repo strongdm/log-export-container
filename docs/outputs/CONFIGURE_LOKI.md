@@ -1,3 +1,9 @@
+---
+layout: default
+title: Loki
+parent: Outputs
+nav_order: 7
+---
 # Configure Loki
 
 The Log Export Container uses [fluent plugin grafana loki](https://grafana.com/docs/loki/latest/clients/fluentd/).
