@@ -1,3 +1,9 @@
+---
+layout: default
+title: Azure Log Analytics
+parent: Outputs
+nav_order: 1
+---
 # Configure Azure Log Analytics
 
 The Log Export Container uses a [fluentd azure-loganalytics output plugin](https://github.com/yokawasa/fluent-plugin-azure-loganalytics). In order to enable it you need to specify `LOG_EXPORT_CONTAINER_OUTPUT=azure-loganalytics` and provide the following variables:
