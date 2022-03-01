@@ -1,3 +1,9 @@
+---
+layout: default
+title: Cloudwatch
+parent: Outputs
+nav_order: 1
+---
 # Configure AWS CloudWatch
 
 The Log Export Container uses a [fluentd cloudwatch output plugin](https://github.com/fluent-plugins-nursery/fluent-plugin-cloudwatch-logs). In order to enable it you need to specify `LOG_EXPORT_CONTAINER_OUTPUT=cloudwatch` and provide the following variables:
