@@ -1,5 +1,5 @@
 ---
-title: Getting Started with Log Export Container
+title: Log Export Container
 nav_order: 1
 ---
 
