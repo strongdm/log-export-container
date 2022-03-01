@@ -1,7 +1,3 @@
----
-title: Log Export Container
-nav_order: 1
----
 
 # Log Export Container
 A docker container that can be easily deployed and configured to export strongDM query logs.
