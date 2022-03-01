@@ -1,8 +1,8 @@
 ---
 layout: default
-title: Splunk HEC
+title: Kafka
 parent: Outputs
-nav_order: 1
+nav_order: 2
 ---
 # Configure AWS CloudWatch
 
