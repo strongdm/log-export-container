@@ -1,3 +1,9 @@
+---
+layout: default
+title: Datadog
+parent: Outputs
+nav_order: 1
+---
 # Configure Datadog
 
 The Log Export Container uses a [fluentd datadog output plugin](https://github.com/DataDog/fluent-plugin-datadog). In order to enable it you need to specify `LOG_EXPORT_CONTAINER_OUTPUT=datadog` and provide the following variables:
