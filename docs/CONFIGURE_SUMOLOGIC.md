@@ -1,3 +1,9 @@
+---
+layout: default
+title: Sumologic
+parent: Outputs
+nav_order: 9
+---
 # Configure Sumo Logic
 
 The Log Export Container uses a [fluentd sumologic output plugin](https://github.com/SumoLogic/fluentd-output-sumologic). In order to enable it you need to specify `LOG_EXPORT_CONTAINER_OUTPUT=sumologic` and provide the following variables:
