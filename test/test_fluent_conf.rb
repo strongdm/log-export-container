@@ -3,8 +3,6 @@ require 'fluent/test'
 require 'fluent/test/helpers'
 require 'fluent/test/driver/output'
 
-ETC_DIR = './fluentd/etc'
-
 class TestCreateFluentConfChangingInput < Test::Unit::TestCase
   include Fluent::Test::Helpers
 
@@ -151,13 +149,33 @@ class TestCreateFluentConfChangingOutput < Test::Unit::TestCase
     assert_includes(fluent_conf_content, output_conf('mongo'))
     assert(is_valid_fluent_conf)
   end
+
+  def test_logz_output_conf
+    ENV['LOGZ_ENDPOINT'] = 'https://listener.logz.io:8071?token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&type=my_type'
+    fluent_conf_content = generate_fluent_conf('tcp-json', 'logz')
+    assert_includes(fluent_conf_content, input_conf('tcp-json'))
+    assert_includes(fluent_conf_content, default_classify_conf('json'))
+    assert_includes(fluent_conf_content, process_conf)
+    assert_includes(fluent_conf_content, output_conf('logz'))
+    assert(is_valid_fluent_conf)
+  end
+
+  def test_loki_output_conf
+    ENV['LOKI_URL'] = 'http://localhost:3100'
+    fluent_conf_content = generate_fluent_conf('tcp-json', 'loki')
+    assert_includes(fluent_conf_content, input_conf('tcp-json'))
+    assert_includes(fluent_conf_content, default_classify_conf('json'))
+    assert_includes(fluent_conf_content, process_conf)
+    assert_includes(fluent_conf_content, output_conf('loki'))
+    assert(is_valid_fluent_conf)
+  end
 end
 
 def generate_fluent_conf(input_type, output_type)
   ENV['LOG_EXPORT_CONTAINER_INPUT'] = input_type
   ENV['LOG_EXPORT_CONTAINER_OUTPUT'] = output_type
   ENV['FLUENTD_DIR'] = './fluentd'
-  system('bash ./create-conf-file.sh')
+  system('ruby ./create-conf.rb')
   read_fluentd_file('fluent.conf')
 end
 

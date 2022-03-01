@@ -9,7 +9,7 @@ if [ "$SDM_ADMIN_TOKEN" != "" ]; then
 fi
 
 echo "Creating Fluentd conf file"
-sh ./create-conf-file.sh
+ruby ./create-conf.rb
 
 echo "Starting Fluentd"
 exec fluentd -c $FLUENTD_DIR/etc/fluent.conf -p $FLUENTD_DIR/plugins
