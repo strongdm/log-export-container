@@ -1,3 +1,9 @@
+---
+layout: default
+title: S3
+parent: Outputs
+nav_order: 11
+---
 # Configure AWS S3
 
 The Log Export Container uses [fluentd s3 output plugin](https://docs.fluentd.org/output/s3). In order to enable it you need to specify `LOG_EXPORT_CONTAINER_OUTPUT=s3` and provide the following variables:
