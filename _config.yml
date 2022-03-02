@@ -3,4 +3,4 @@ logo: "/docs/img/logo.svg"
 color_scheme: strongdm
 domain: tonylokko.github.io       # if you want to force HTTPS, specify the domain without the http at the start, e.g. example.com
 url: https://tonylokko.github.io/log-export-container/  # the base hostname and protocol for your site, e.g. http://example.com
-baseurl: /docs/
+baseurl: docs/
