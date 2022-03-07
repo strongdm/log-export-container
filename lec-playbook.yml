@@ -9,7 +9,7 @@
       shell: apt install --yes git
 
     - name: Clone Log Export Container
-      shell: git clone https://github.com/devlucassantos/log-export-container.git /opt/log-export-container/
+      shell: git clone https://github.com/strongdm/log-export-container.git /opt/log-export-container/
 
     - name: REMOVEME
       shell: git fetch && git checkout feat/ansible
