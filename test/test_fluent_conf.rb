@@ -55,6 +55,18 @@ class TestCreateFluentConfChangingOutput < Test::Unit::TestCase
     Fluent::Test.setup
   end
 
+  def test_remote_syslog_output_conf
+    ENV['REMOTE_SYSLOG_HOST'] = '127.0.0.1'
+    ENV['REMOTE_SYSLOG_PORT'] = '5140'
+    ENV['REMOTE_SYSLOG_PROTOCOL'] = 'udp'
+    fluent_conf_content = generate_fluent_conf('tcp-json', 'remote-syslog')
+    assert_includes(fluent_conf_content, input_conf('tcp-json'))
+    assert_includes(fluent_conf_content, default_classify_conf('json'))
+    assert_includes(fluent_conf_content, process_conf)
+    assert_includes(fluent_conf_content, output_conf('remote-syslog'))
+    assert(is_valid_fluent_conf)
+  end
+
   def test_azure_loganalytics_output_conf
     ENV['AZURE_LOGANALYTICS_CUSTOMER_ID'] = 'AZURE_LOGANALYTICS_CUSTOMER_ID'
     ENV['AZURE_LOGANALYTICS_SHARED_KEY'] = 'AZURE_LOGANALYTICS_SHARED_KEY'

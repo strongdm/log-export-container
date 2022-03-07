@@ -9,9 +9,10 @@ services:
 
       # Required variables
       - LOG_EXPORT_CONTAINER_INPUT=syslog-json # possible values = syslog-json, syslog-csv, tcp-json or tcp-csv
-      - LOG_EXPORT_CONTAINER_OUTPUT=stdout # possible values = stdout, s3, cloudwatch, splunk-hec, datadog, azure-loganalytics, sumologic, kafka, mongo, loki
-    
+      - LOG_EXPORT_CONTAINER_OUTPUT=stdout # possible values = stdout, remote-syslog, s3, cloudwatch, splunk-hec, datadog, azure-loganalytics, sumologic, kafka, mongo, loki
+      
       # Optional variables
+      # For LOG_EXPORT_CONTAINER_OUTPUT=remote-syslog refer to docs/CONFIGURE_REMOTE_SYSLOG.md
       # For LOG_EXPORT_CONTAINER_OUTPUT=s3 refer to docs/CONFIGURE_S3.md
       # For LOG_EXPORT_CONTAINER_OUTPUT=cloudwatch refer to docs/CONFIGURE_CLOUDWATCH.md
       # For LOG_EXPORT_CONTAINER_OUTPUT=splunk-hec refer to docs/CONFIGURE_SPLUNK_HEC.md
