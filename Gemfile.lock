@@ -18,7 +18,7 @@ GEM
     aws-sdk-cloudwatchlogs (1.52.0)
       aws-sdk-core (~> 3, >= 3.127.0)
       aws-sigv4 (~> 1.1)
-    aws-sdk-core (3.125.3)
+    aws-sdk-core (3.128.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.525.0)
       aws-sigv4 (~> 1.1)
@@ -43,7 +43,6 @@ GEM
     concurrent-ruby (1.1.9)
     connection_pool (2.2.5)
     cool.io (1.7.1)
-    cool.io (1.7.1-x64-mingw32)
     diff-lcs (1.5.0)
     digest-crc (0.6.4)
       rake (>= 12.0.0, < 14.0.0)
@@ -259,7 +258,6 @@ DEPENDENCIES
   fluent-plugin-sanitizer
   fluent-plugin-splunk-hec
   fluent-plugin-sumologic_output
-  nokogiri (>= 1.13.2)
   test-unit
 
 BUNDLED WITH
