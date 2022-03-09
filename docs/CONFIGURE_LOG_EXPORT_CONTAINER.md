@@ -3,8 +3,10 @@
 ## The container
 
 ### Required configuration
-* **LOG_EXPORT_CONTAINER_INPUT**. Container input format (`syslog-json`, `syslog-csv`, `tcp-json` or `tcp-csv`). Default: `syslog-json`
+* **LOG_EXPORT_CONTAINER_INPUT**. Container input format (`syslog-json`, `syslog-csv`, `tcp-json`, `tcp-csv`, `tail-json` or `tail-csv`). Default: `syslog-json`
 * **LOG_EXPORT_CONTAINER_OUTPUT**. Container output storage (`stdout`, `remote-syslog`, `s3`, `cloudwatch`, `splunk-hec`, `datadog`, `azure-loganalytics`, `sumologic`, `kafka`,  `mongo`, `logz` and/or `loki`). Default: `stdout`. You could configure multiple storages, for example: `stdout s3 datadog`.
+
+When using `LOG_EXPORT_CONTAINER_INPUT=tail-json` or `LOG_EXPORT_CONTAINER_INPUT=tail-csv` add variables listed in [CONFIGURE_TAIL_INPUT.md](CONFIGURE_TAIL_INPUT.md)
 
 ### Optional configuration
 #### Remote Syslog
