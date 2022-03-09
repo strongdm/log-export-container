@@ -46,6 +46,16 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
     assert_includes(fluent_conf, output_conf('stdout'))
     assert(is_valid_fluent_conf)
   end
+
+  def test_tail_csv_input_conf
+    ENV['TAIL_FILE_PATH'] = '/var/logs'
+    fluent_conf = generate_fluent_conf('tail-csv', 'stdout')
+    assert_includes(fluent_conf, input_conf('tail-csv'))
+    assert_includes(fluent_conf, default_classify_conf('csv'))
+    assert_includes(fluent_conf, process_conf)
+    assert_includes(fluent_conf, output_conf('stdout'))
+    assert(is_valid_fluent_conf)
+  end
 end
 
 class TestCreateFluentConfChangingOutput < Test::Unit::TestCase
