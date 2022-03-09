@@ -47,6 +47,16 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
     assert(is_valid_fluent_conf)
   end
 
+  def test_tail_json_input_conf
+    ENV['TAIL_FILE_PATH'] = '/var/logs'
+    fluent_conf = generate_fluent_conf('tail-json', 'stdout')
+    assert_includes(fluent_conf, input_conf('tail-json'))
+    assert_includes(fluent_conf, default_classify_conf('json'))
+    assert_includes(fluent_conf, process_conf)
+    assert_includes(fluent_conf, output_conf('stdout'))
+    assert(is_valid_fluent_conf)
+  end
+
   def test_tail_csv_input_conf
     ENV['TAIL_FILE_PATH'] = '/var/logs'
     fluent_conf = generate_fluent_conf('tail-csv', 'stdout')
