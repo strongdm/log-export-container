@@ -4,7 +4,7 @@
 
 ### Required configuration
 * **LOG_EXPORT_CONTAINER_INPUT**. Container input format (`syslog-json`, `syslog-csv`, `tcp-json` or `tcp-csv`). Default: `syslog-json`
-* **LOG_EXPORT_CONTAINER_OUTPUT**. Container output storage (`stdout`, `remote-syslog`, `s3`, `cloudwatch`, `splunk-hec`, `datadog`, `azure-loganalytics`, `sumologic`, `kafka`,  `mongo`, `logz` and/or `loki`). Default: `stdout`. You could configure multiple storages, for example: `stdout s3 datadog`.
+* **LOG_EXPORT_CONTAINER_OUTPUT**. Container output storage (`stdout`, `remote-syslog`, `s3`, `cloudwatch`, `splunk-hec`, `datadog`, `azure-loganalytics`, `sumologic`, `kafka`,  `mongo`, `logz`, `loki` and/or `elasticsearch`). Default: `stdout`. You could configure multiple storages, for example: `stdout s3 datadog`.
 
 ### Optional configuration
 #### Remote Syslog
@@ -39,6 +39,9 @@ When using `LOG_EXPORT_CONTAINER_OUTPUT=logz` add variables listed in [CONFIGURE
 
 #### Grafana Loki
 When using `LOG_EXPORT_CONTAINER_OUTPUT=loki` add variables listed in [CONFIGURE_LOKI.md](CONFIGURE_LOKI.md)
+
+#### ElasticSearch
+When using `LOG_EXPORT_CONTAINER_OUTPUT=elasticsearch` add variables listed in [CONFIGURE_ELASTICSEARCH.md](CONFIGURE_ELASTICSEARCH.md)
 
 ### Decode Chunk Events
 When using `syslog-json` or `tcp-json` specify `LOG_EXPORT_CONTAINER_DECODE_CHUNK_EVENTS=true` to decode chunk events. Possible values: true or false. **It's not enabled by default**. Please refer to [CONFIGURE_SSH_DECODE](CONFIGURE_SSH_DECODE.md) for more information.
