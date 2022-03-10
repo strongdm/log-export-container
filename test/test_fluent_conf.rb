@@ -46,6 +46,26 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
     assert_includes(fluent_conf, output_conf('stdout'))
     assert(is_valid_fluent_conf)
   end
+
+  def test_tail_json_input_conf
+    ENV['LOG_FILE_PATH'] = '/var/logs'
+    fluent_conf = generate_fluent_conf('file-json', 'stdout')
+    assert_includes(fluent_conf, input_conf('file-json'))
+    assert_includes(fluent_conf, default_classify_conf('json'))
+    assert_includes(fluent_conf, process_conf)
+    assert_includes(fluent_conf, output_conf('stdout'))
+    assert(is_valid_fluent_conf)
+  end
+
+  def test_tail_csv_input_conf
+    ENV['LOG_FILE_PATH'] = '/var/logs'
+    fluent_conf = generate_fluent_conf('file-csv', 'stdout')
+    assert_includes(fluent_conf, input_conf('file-csv'))
+    assert_includes(fluent_conf, default_classify_conf('csv'))
+    assert_includes(fluent_conf, process_conf)
+    assert_includes(fluent_conf, output_conf('stdout'))
+    assert(is_valid_fluent_conf)
+  end
 end
 
 class TestCreateFluentConfChangingOutput < Test::Unit::TestCase
