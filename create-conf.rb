@@ -51,7 +51,7 @@ end
 
 def default_classify_conf
   conf = extract_value(ENV['LOG_EXPORT_CONTAINER_INPUT'])
-  if conf == "syslog-csv" || conf == "tcp-csv" || conf == "tail-csv"
+  if conf == "syslog-csv" || conf == "tcp-csv" || conf == "file-csv"
     filename = "#{ETC_DIR}/classify-default-csv.conf"
   else
     filename = "#{ETC_DIR}/classify-default-json.conf"
@@ -61,8 +61,10 @@ end
 
 def custom_classify_conf
   conf = extract_value(ENV['LOG_EXPORT_CONTAINER_INPUT'])
-  if conf == "syslog-csv" || conf == "tcp-csv" || conf == "tail-csv"
-    File.read("#{ETC_DIR}/classify-#{conf}.conf")
+  if conf == "syslog-csv"
+    File.read("#{ETC_DIR}/classify-syslog-csv.conf")
+  elsif conf == "tcp-csv" || conf == "file-csv"
+    File.read("#{ETC_DIR}/classify-tcp-csv.conf")
   end
 end
 
