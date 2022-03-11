@@ -60,7 +60,7 @@
       shell: systemctl enable log-export-container.service && systemctl start log-export-container.service
 
     - name: Copy clean-up-credentials.sh script
-        ansible.builtin.copy:
-          src: /opt/log-export-container/build-utils/clean-up-credentials.sh
-          dest: /
-          mode: '777'
+      ansible.builtin.copy:
+        src: /opt/log-export-container/build-utils/clean-up-credentials.sh
+        dest: /
+        mode: '777'

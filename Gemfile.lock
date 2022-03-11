@@ -1,24 +1,23 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activemodel (6.1.4.6)
-      activesupport (= 6.1.4.6)
-    activesupport (6.1.4.6)
+    activemodel (7.0.2.3)
+      activesupport (= 7.0.2.3)
+    activesupport (7.0.2.3)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
-      zeitwerk (~> 2.3)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
     aes_key_wrap (1.1.0)
     attr_required (1.0.1)
     aws-eventstream (1.2.0)
-    aws-partitions (1.563.0)
+    aws-partitions (1.566.0)
     aws-sdk-cloudwatchlogs (1.52.0)
       aws-sdk-core (~> 3, >= 3.127.0)
       aws-sigv4 (~> 1.1)
-    aws-sdk-core (3.128.0)
+    aws-sdk-core (3.129.1)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.525.0)
       aws-sigv4 (~> 1.1)
@@ -177,7 +176,6 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2022.0105)
     mini_mime (1.1.2)
-    mini_portile2 (2.8.0)
     minitest (5.15.0)
     mongo (2.6.4)
       bson (>= 4.3.0, < 5.0.0)
@@ -188,8 +186,7 @@ GEM
     net-http-persistent (3.1.0)
       connection_pool (~> 2.2)
     netrc (0.11.0)
-    nokogiri (1.13.3)
-      mini_portile2 (~> 2.8.0)
+    nokogiri (1.13.3-x86_64-linux)
       racc (~> 1.4)
     openid_connect (1.1.8)
       activemodel
@@ -276,10 +273,9 @@ GEM
     webrobots (0.1.2)
     websocket (1.0.7)
     yajl-ruby (1.4.1)
-    zeitwerk (2.5.4)
 
 PLATFORMS
-  -darwin-20
+  x86_64-linux
 
 DEPENDENCIES
   fluent
@@ -300,4 +296,4 @@ DEPENDENCIES
   test-unit
 
 BUNDLED WITH
-   2.3.4
+   2.3.8

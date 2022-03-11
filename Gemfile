@@ -5,7 +5,6 @@ source 'https://rubygems.org'
 git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
 gem 'fluent'
-gem 'fluentd'
 gem 'fluent-plugin-rewrite-tag-filter'
 gem 'fluent-plugin-s3'
 gem 'fluent-plugin-cloudwatch-logs'
