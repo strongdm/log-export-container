@@ -17,18 +17,23 @@ After adding your environment variables, click on **Next: Add Storage**.
 
 6. Add tags if you want and click on **Next: Configure Security Group**.
 
-7. In this step you can select an existing security group (if you have already created one from the previous tutorial on [How to create an AMI](docs/HOW_TO_CREATE_AMI.md)) or you can create a new security group as follows:
+7. In this step you can select an existing security group (as long there is a TCP port accessible on 5140) or create a new one as follows:
 
-With the option "Create a new security group" selected, click on **Add Rule** and configure it as follows:
+With the option "Create a new security group" selected, click on **Add Rule** and enter:
 - Type: Custom TCP Rule
 - Port range: 5140
-- Source: here you need to enter the IP address from the host that will send logs to your instance, but in this example we're going to configure it as "Anywhere", so anyone could send logs to this instance (not recommended).
+- Source: here you need to enter the IP address from the machine that will send logs to your instance, but in this example we're going to configure it as "Anywhere", so anyone could send logs to this instance (not recommended).
 ![image](https://user-images.githubusercontent.com/20745533/158177046-5ef48134-6bf4-49c8-a90e-2d8bf84a1704.png)
+
+Also be aware that the SSH Rule by default allows connections from anywhere, and you might want to change that to a specific IP address.
 
  After that click on **Review and Launch**.
  
 8. Take a look at everything and if it seems fine just click on the **Launch** button.
 
 9. Configure your key pair for accessing the instance and click on **Launch instances**.
+
+10. Now you can SSH into the created instance and take a look at the incoming logs by entering the following command:
+> $ journalctl -u log-export-container.service -f
 
 And that's it. You have successfully created and configured a Log Export Container instance from the Log Export Container AMI.
