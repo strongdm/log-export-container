@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Template:
+# echo "MY_VAR=value" >> /etc/sysconfig/log-export-container
+
 echo "LOG_EXPORT_CONTAINER_OUTPUT=mongo" >> /etc/sysconfig/log-export-container
 echo "MONGO_URI=mongodb://username:password@hostname.com" >> /etc/sysconfig/log-export-container
 
