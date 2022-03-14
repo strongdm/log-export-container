@@ -13,11 +13,7 @@
 
 6. Add tags if you want and click on **Next: Configure Security Group**.
 
-7. Now, with the option "Create a new security group" selected, click on **Add Rule** and configure it as follows:
-- Type: Custom TCP Rule
-- Port range: 5140
-- Source: here you need to enter the IP address from the host that will send logs to your instance, but in this example we're going to configure it as "Anywhere", so anyone could send logs to this instance (not recommended). After that click on **Review and Launch**.
-![image](https://user-images.githubusercontent.com/20745533/158177046-5ef48134-6bf4-49c8-a90e-2d8bf84a1704.png)
+7. Now you can configure a new security group or select an existing one. After that click on **Review and Launch**.
 
 8. Take a look at everything and if it seems fine just click on the **Launch** button.
 
@@ -31,7 +27,7 @@
 This step will take a while and you will know that it has finished when the "PLAY RECAP" message appears (see image below).
 ![image](https://user-images.githubusercontent.com/20745533/158178473-e57209a0-32c5-48a1-99e2-8a455e7f4f16.png)
 
-After that Log Export Container should be up and running.
+After that Log Export Container should be up and running. And you can test it if you like, you just need to make the proper log configuration in StrongDM.
 
 12. Now we need to clean the container in order to generate the AMI. We need to get rid of any credentials and disable root login. To do that you need to run the [clean-up-credentials.sh](build-utils/clean-up-credentials.sh) script inside the container:
 > $ sudo /clean-up-credentials.sh
