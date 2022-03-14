@@ -1,7 +1,10 @@
 #!/bin/bash
 
-echo "LOG_EXPORT_CONTAINER_OUTPUT=mongo" >> /etc/sysconfig/log-export-container
-echo "MONGO_URI=mongodb://username:password@hostname.com" >> /etc/sysconfig/log-export-container
+# Template:
+# echo "MY_VAR=value" >> /etc/sysconfig/log-export-container
+
+echo "LOG_EXPORT_CONTAINER_INPUT=syslog-json" >> /etc/sysconfig/log-export-container
+echo "LOG_EXPORT_CONTAINER_OUTPUT=stdout" >> /etc/sysconfig/log-export-container
 
 # Needed for applying the new variables configured above
 systemctl restart log-export-container
