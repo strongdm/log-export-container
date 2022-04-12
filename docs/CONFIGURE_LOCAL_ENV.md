@@ -20,14 +20,6 @@ gem install bundler -v '~> 1.17.3'
 bundle install
 ```
 
-### Python
-```
-conda create --prefix venv
-conda install --prefix venv pip
-conda activate venv/
-pip install -r requirements/dev.txt
-```
-
 ## Run
 
 ### Ruby tests
