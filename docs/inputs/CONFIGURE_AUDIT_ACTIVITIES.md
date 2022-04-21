@@ -1,3 +1,9 @@
+---
+layout: default
+title: Audit Activities
+parent: Inputs
+nav_order: 9
+---
 # Configure Audit Activities
 
 The Log Export Container uses [fluentd input exec plugin](https://docs.fluentd.org/input/exec) to extract the activity logs from SDM CLI Audit.

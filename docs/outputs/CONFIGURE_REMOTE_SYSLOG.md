@@ -1,3 +1,9 @@
+---
+layout: default
+title: Remote Syslog
+parent: Outputs
+nav_order: 9
+---
 # Configure Remote Syslog
 
 The Log Export Container uses [fluent remote_syslog plugin](https://github.com/fluent-plugins-nursery/fluent-plugin-remote_syslog). In order to enable it you need to specify `LOG_EXPORT_CONTAINER_OUTPUT=remote-syslog` and provide the following variables:

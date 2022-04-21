@@ -1,3 +1,9 @@
+---
+layout: default
+title: Local deployment
+parent: Deploy LEC
+nav_order: 9
+---
 # Local environment
 
 ## Environment configuration

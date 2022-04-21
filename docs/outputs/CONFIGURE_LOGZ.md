@@ -1,3 +1,9 @@
+---
+layout: default
+title: Logz
+parent: Outputs
+nav_order: 6
+---
 # Configure Logz
 
 The Log Export Container uses [fluent plugin logzio](https://github.com/logzio/fluent-plugin-logzio).

@@ -1,3 +1,9 @@
+---
+layout: default
+title: File Input
+parent: Inputs
+nav_order: 9
+---
 # Configure File
 
 The Log Export Container uses [fluent plugin tail](https://docs.fluentd.org/input/tail).

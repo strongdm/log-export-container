@@ -1,3 +1,9 @@
+---
+layout: default
+title: How to use Custom AMI
+parent: Deploy LEC
+nav_order: 5
+---
 ## Creating a Log Export Container AWS AMI
 1. Go to the EC2 management panel and click on **Launch instances**.
 

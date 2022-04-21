@@ -1,3 +1,9 @@
+---
+layout: default
+title: SSH Decode
+parent: Processing
+nav_order: 9
+---
 # Configuring SSH Decoding 
 
 If you want the LEC to decode SSH parameters, you need to add **LOG_EXPORT_CONTAINER_DECODE_CHUNK_EVENTS=true** to your container. 
