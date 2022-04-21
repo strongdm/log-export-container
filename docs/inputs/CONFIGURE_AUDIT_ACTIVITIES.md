@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Audit Activities
-parent: Additional Configuration
+parent: Inputs
 nav_order: 9
 ---
 # Configure Audit Activities

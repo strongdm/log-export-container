@@ -12,7 +12,7 @@ nav_order: 2
 - **LOG_EXPORT_CONTAINER_INPUT**. Container input format (`syslog-json`, `syslog-csv`, `tcp-json`, `tcp-csv`, `file-json` or `file-csv`). Default: `syslog-json`
 - **LOG_EXPORT_CONTAINER_OUTPUT**. Container output storage (`stdout`, `remote-syslog`, `s3`, `cloudwatch`, `splunk-hec`, `datadog`, `azure-loganalytics`, `sumologic`, `kafka`, `mongo`, `logz`, `loki` and/or `elasticsearch`). Default: `stdout`. You could configure multiple storages, for example: `stdout s3 datadog`.
 
-When using `LOG_EXPORT_CONTAINER_INPUT=file-json` or `LOG_EXPORT_CONTAINER_INPUT=file-csv` add variables listed in [CONFIGURE_FILE_INPUT.md](Additional Configuration/CONFIGURE_FILE_INPUT.md)
+When using `LOG_EXPORT_CONTAINER_INPUT=file-json` or `LOG_EXPORT_CONTAINER_INPUT=file-csv` add variables listed in [CONFIGURE_FILE_INPUT.md](inputs/CONFIGURE_ELASTICSEARCH.md)CONFIGURE_FILE_INPUT.md)
 
 ### Optional configuration
 
@@ -66,11 +66,11 @@ When using `LOG_EXPORT_CONTAINER_OUTPUT=elasticsearch` add variables listed in [
 
 ### Decode Chunk Events
 
-When using `syslog-json` or `tcp-json` specify `LOG_EXPORT_CONTAINER_DECODE_CHUNK_EVENTS=true` to decode chunk events. Possible values: true or false. **It's not enabled by default**. Please refer to [CONFIGURE_SSH_DECODE](Additional Configuration/CONFIGURE_ELASTICSEARCH.md) for more information.
+When using `syslog-json` or `tcp-json` specify `LOG_EXPORT_CONTAINER_DECODE_CHUNK_EVENTS=true` to decode chunk events. Possible values: true or false. **It's not enabled by default**. Please refer to [CONFIGURE_SSH_DECODE](processing/CONFIGURE_SSH_DECODE.md) for more information.
 
 ### Audit Activities
 
-When using `LOG_EXPORT_CONTAINER_OUTPUT=mongo` specify `LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES=true` to store the activity logs from SDM CLI Audit in your MongoDB. Possible values: true or false. **It's not enabled by default**. Please refer to [CONFIGURE_AUDIT_ACTIVITIES](CONFIGURE_AUDIT_ACTIVITIES.md) for more information.
+When using `LOG_EXPORT_CONTAINER_OUTPUT=mongo` specify `LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES=true` to store the activity logs from SDM CLI Audit in your MongoDB. Possible values: true or false. **It's not enabled by default**. Please refer to [CONFIGURE_AUDIT_ACTIVITIES](inputs/CONFIGURE_AUDIT_ACTIVITIES.md) for more information.
 
 ### Source Data
 
@@ -80,7 +80,7 @@ IMPORTANT: The host networking driver only works in Linux
 
 ### Process log traces
 
-By default, the container just classifies the different log traces (e.g. start, chunk, postStart). There are no extra processing steps involved. However, you can include additional processing filters if needed. In order to do that, just override the `process.conf` file. For more details, please refer to [CONFIGURE_PROCESSING.md](CONFIGURE_PROCESSING.md).
+By default, the container just classifies the different log traces (e.g. start, chunk, postStart). There are no extra processing steps involved. However, you can include additional processing filters if needed. In order to do that, just override the `process.conf` file. For more details, please refer to [CONFIGURE_PROCESSING.md](processing/CONFIGURE_PROCESSING.md).
 
 ## SDM
 

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Local deployment
-parent: Inputs
+parent: Deploy LEC
 nav_order: 9
 ---
 # Local environment
