@@ -10,7 +10,6 @@ RUN apk add build-base ruby-dev zlib-dev
 RUN gem install bundler -v '~> 2.3.3'
 
 COPY Gemfile /Gemfile
-COPY Gemfile.lock /Gemfile.lock
 RUN bundle install
 
 RUN apk --no-cache add curl ca-certificates wget
