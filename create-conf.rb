@@ -1,6 +1,6 @@
 
 ETC_DIR="#{ENV['FLUENTD_DIR']}/etc"
-SUPPORTED_STORES="stdout s3 cloudwatch splunk-hec datadog azure-loganalytics sumologic kafka mongo logz loki"
+SUPPORTED_STORES="stdout remote-syslog s3 cloudwatch splunk-hec datadog azure-loganalytics sumologic kafka mongo logz loki elasticsearch"
 
 def extract_value(str)
   unless str
@@ -51,7 +51,7 @@ end
 
 def default_classify_conf
   conf = extract_value(ENV['LOG_EXPORT_CONTAINER_INPUT'])
-  if conf == "syslog-csv" || conf == "tcp-csv"
+  if conf == "syslog-csv" || conf == "tcp-csv" || conf == "file-csv"
     filename = "#{ETC_DIR}/classify-default-csv.conf"
   else
     filename = "#{ETC_DIR}/classify-default-json.conf"
@@ -61,8 +61,10 @@ end
 
 def custom_classify_conf
   conf = extract_value(ENV['LOG_EXPORT_CONTAINER_INPUT'])
-  if conf == "syslog-csv" || conf == "tcp-csv"
-    File.read("#{ETC_DIR}/classify-#{conf}.conf")
+  if conf == "syslog-csv"
+    File.read("#{ETC_DIR}/classify-syslog-csv.conf")
+  elsif conf == "tcp-csv" || conf == "file-csv"
+    File.read("#{ETC_DIR}/classify-tcp-csv.conf")
   end
 end
 

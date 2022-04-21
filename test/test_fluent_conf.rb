@@ -46,6 +46,26 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
     assert_includes(fluent_conf, output_conf('stdout'))
     assert(is_valid_fluent_conf)
   end
+
+  def test_tail_json_input_conf
+    ENV['LOG_FILE_PATH'] = '/var/logs'
+    fluent_conf = generate_fluent_conf('file-json', 'stdout')
+    assert_includes(fluent_conf, input_conf('file-json'))
+    assert_includes(fluent_conf, default_classify_conf('json'))
+    assert_includes(fluent_conf, process_conf)
+    assert_includes(fluent_conf, output_conf('stdout'))
+    assert(is_valid_fluent_conf)
+  end
+
+  def test_tail_csv_input_conf
+    ENV['LOG_FILE_PATH'] = '/var/logs'
+    fluent_conf = generate_fluent_conf('file-csv', 'stdout')
+    assert_includes(fluent_conf, input_conf('file-csv'))
+    assert_includes(fluent_conf, default_classify_conf('csv'))
+    assert_includes(fluent_conf, process_conf)
+    assert_includes(fluent_conf, output_conf('stdout'))
+    assert(is_valid_fluent_conf)
+  end
 end
 
 class TestCreateFluentConfChangingOutput < Test::Unit::TestCase
@@ -53,6 +73,18 @@ class TestCreateFluentConfChangingOutput < Test::Unit::TestCase
 
   def setup
     Fluent::Test.setup
+  end
+
+  def test_remote_syslog_output_conf
+    ENV['REMOTE_SYSLOG_HOST'] = '127.0.0.1'
+    ENV['REMOTE_SYSLOG_PORT'] = '5140'
+    ENV['REMOTE_SYSLOG_PROTOCOL'] = 'udp'
+    fluent_conf_content = generate_fluent_conf('tcp-json', 'remote-syslog')
+    assert_includes(fluent_conf_content, input_conf('tcp-json'))
+    assert_includes(fluent_conf_content, default_classify_conf('json'))
+    assert_includes(fluent_conf_content, process_conf)
+    assert_includes(fluent_conf_content, output_conf('remote-syslog'))
+    assert(is_valid_fluent_conf)
   end
 
   def test_azure_loganalytics_output_conf
@@ -167,6 +199,18 @@ class TestCreateFluentConfChangingOutput < Test::Unit::TestCase
     assert_includes(fluent_conf_content, default_classify_conf('json'))
     assert_includes(fluent_conf_content, process_conf)
     assert_includes(fluent_conf_content, output_conf('loki'))
+    assert(is_valid_fluent_conf)
+  end
+
+  def test_elasticsearch_output_conf
+    ENV['ELASTICSEARCH_HOST'] = '192.168.0.1'
+    ENV['ELASTICSEARCH_PORT'] = '9201'
+    ENV['ELASTICSEARCH_INDEX_NAME'] = 'my-index'
+    fluent_conf_content = generate_fluent_conf('tcp-json', 'elasticsearch')
+    assert_includes(fluent_conf_content, input_conf('tcp-json'))
+    assert_includes(fluent_conf_content, default_classify_conf('json'))
+    assert_includes(fluent_conf_content, process_conf)
+    assert_includes(fluent_conf_content, output_conf('elasticsearch'))
     assert(is_valid_fluent_conf)
   end
 end
