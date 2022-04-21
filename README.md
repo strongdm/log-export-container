@@ -5,6 +5,8 @@ The container acts as a syslog concentrator. Customers that want to export their
 
 The container uses [fluentd](https://www.fluentd.org/) for processing and routing your logs. Currently supports routing to: stdout, remote syslog, [S3](https://aws.amazon.com/s3/), [CloudWatch](https://aws.amazon.com/cloudwatch/), [Splunk HEC](https://dev.splunk.com/enterprise/docs/devtools/httpeventcollector/), [Datadog](https://www.datadoghq.com/), [Azure Log Analytics](https://docs.microsoft.com/en-us/azure/azure-monitor/logs/log-analytics-tutorial), [Sumo Logic](https://www.sumologic.com/), [Kafka](https://kafka.apache.org/), [Mongo](https://www.mongodb.com/), [Logz](https://logz.io/) and [ElasticSearch](https://www.elastic.co/). You could configure multiple storages in one container, for example: `stdout s3`.
 
+A curated version of the documentation can be found [here](https://strongdm.github.io/log-export-container/)
+
 ## Table of Contents
 * [Getting Started](#getting-started)
 * [Dev Setup](#dev-tools)
