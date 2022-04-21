@@ -1,7 +1,7 @@
 ---
 layout: default
 title: SSH Decode
-parent: processing
+parent: Processing
 nav_order: 9
 ---
 # Configuring SSH Decoding 

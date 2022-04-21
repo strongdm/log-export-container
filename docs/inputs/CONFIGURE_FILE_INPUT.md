@@ -1,7 +1,7 @@
 ---
 layout: default
 title: File Input
-parent: inputs
+parent: Inputs
 nav_order: 9
 ---
 # Configure File
