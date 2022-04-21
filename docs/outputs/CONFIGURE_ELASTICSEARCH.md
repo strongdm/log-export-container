@@ -1,3 +1,9 @@
+---
+layout: default
+title: Elasticsearch
+parent: Outputs
+nav_order: 9
+---
 # Configure ElasticSearch
 
 The Log Export Container uses [fluentd elasticsearch output plugin](https://docs.fluentd.org/output/elasticsearch/).

@@ -1,3 +1,9 @@
+---
+layout: default
+title: Add new output
+parent: Outputs
+nav_order: 9
+---
 # Support new Output
 
 In order to support new output types you need to:

@@ -1,3 +1,9 @@
+---
+layout: default
+title: Log Processing
+parent: Outputs
+nav_order: 9
+---
 # Configure Extra Processing
 
 The container includes all plugins provided by the [fluent/fluentd/alpine:edge](https://hub.docker.com/r/fluent/fluentd/) docker image and custom additions. Check out the full list in the [Dockerfile](../Dockerfile).
