@@ -18,55 +18,55 @@ When using `LOG_EXPORT_CONTAINER_INPUT=file-json` or `LOG_EXPORT_CONTAINER_INPUT
 
 #### Remote Syslog
 
-When using `LOG_EXPORT_CONTAINER_OUTPUT=remote-syslog` add variables listed in [CONFIGURE_REMOTE_SYSLOG.md](CONFIGURE_REMOTE_SYSLOG.md)
+When using `LOG_EXPORT_CONTAINER_OUTPUT=remote-syslog` add variables listed in [CONFIGURE_REMOTE_SYSLOG.md](outputs/CONFIGURE_FILE_INPUT.md)
 
 #### AWS S3
 
-When using `LOG_EXPORT_CONTAINER_OUTPUT=s3` add variables listed in [CONFIGURE_S3.md](CONFIGURE_S3.md)
+When using `LOG_EXPORT_CONTAINER_OUTPUT=s3` add variables listed in [CONFIGURE_S3.md](outputs/CONFIGURE_S3.md)
 
 #### AWS CloudWatch
 
-When using `LOG_EXPORT_CONTAINER_OUTPUT=cloudwatch` add variables listed in [CONFIGURE_CLOUDWATCH.md](CONFIGURE_CLOUDWATCH.md)
+When using `LOG_EXPORT_CONTAINER_OUTPUT=cloudwatch` add variables listed in [CONFIGURE_CLOUDWATCH.md](outputs/CONFIGURE_CLOUDWATCH.md)
 
 #### Splunk HEC
 
-When using `LOG_EXPORT_CONTAINER_OUTPUT=splunk-hec` add variables listed in [CONFIGURE_SPLUNK_HEC.md](CONFIGURE_SPLUNK_HEC.md)
+When using `LOG_EXPORT_CONTAINER_OUTPUT=splunk-hec` add variables listed in [CONFIGURE_SPLUNK_HEC.md](outputs/CONFIGURE_SPLUNK_HEC.md)
 
 #### Datadog
 
-When using `LOG_EXPORT_CONTAINER_OUTPUT=datadog` add variables listed in [CONFIGURE_DATADOG.md](CONFIGURE_DATADOG.md)
+When using `LOG_EXPORT_CONTAINER_OUTPUT=datadog` add variables listed in [CONFIGURE_DATADOG.md](outputs/CONFIGURE_DATADOG.md)
 
 #### Azure Log Analytics
 
-When using `LOG_EXPORT_CONTAINER_OUTPUT=azure-loganalytics` add variables listed in [CONFIGURE_AZURE_LOGANALYTICS.md](CONFIGURE_AZURE_LOGANALYTICS.md)
+When using `LOG_EXPORT_CONTAINER_OUTPUT=azure-loganalytics` add variables listed in [CONFIGURE_AZURE_LOGANALYTICS.md](outputs/CONFIGURE_AZURE_LOGANALYTICS.md)
 
 #### Sumo Logic
 
-When using `LOG_EXPORT_CONTAINER_OUTPUT=sumologic` add variables listed in [CONFIGURE_SUMOLOGIC.md](CONFIGURE_SUMOLOGIC.md)
+When using `LOG_EXPORT_CONTAINER_OUTPUT=sumologic` add variables listed in [CONFIGURE_SUMOLOGIC.md](outputs/CONFIGURE_SUMOLOGIC.md)
 
 #### Kafka
 
-When using `LOG_EXPORT_CONTAINER_OUTPUT=kafka` add variables listed in [CONFIGURE_KAFKA.md](CONFIGURE_KAFKA.md)
+When using `LOG_EXPORT_CONTAINER_OUTPUT=kafka` add variables listed in [CONFIGURE_KAFKA.md](outputs/CONFIGURE_KAFKA.md)
 
 #### Mongo
 
-When using `LOG_EXPORT_CONTAINER_OUTPUT=mongo` add variables listed in [CONFIGURE_MONGO.md](CONFIGURE_MONGO.md)
+When using `LOG_EXPORT_CONTAINER_OUTPUT=mongo` add variables listed in [CONFIGURE_MONGO.md](outputs/CONFIGURE_MONGO.md)
 
 #### Logz
 
-When using `LOG_EXPORT_CONTAINER_OUTPUT=logz` add variables listed in [CONFIGURE_LOGZ.md](CONFIGURE_LOGZ.md)
+When using `LOG_EXPORT_CONTAINER_OUTPUT=logz` add variables listed in [CONFIGURE_LOGZ.md](outputs/CONFIGURE_LOGZ.md)
 
 #### Grafana Loki
 
-When using `LOG_EXPORT_CONTAINER_OUTPUT=loki` add variables listed in [CONFIGURE_LOKI.md](CONFIGURE_LOKI.md)
+When using `LOG_EXPORT_CONTAINER_OUTPUT=loki` add variables listed in [CONFIGURE_LOKI.md](outputs/CONFIGURE_LOKI.md)
 
 #### ElasticSearch
 
-When using `LOG_EXPORT_CONTAINER_OUTPUT=elasticsearch` add variables listed in [CONFIGURE_ELASTICSEARCH.md](CONFIGURE_ELASTICSEARCH.md)
+When using `LOG_EXPORT_CONTAINER_OUTPUT=elasticsearch` add variables listed in [CONFIGURE_ELASTICSEARCH.md](outputs/CONFIGURE_ELASTICSEARCH.md)
 
 ### Decode Chunk Events
 
-When using `syslog-json` or `tcp-json` specify `LOG_EXPORT_CONTAINER_DECODE_CHUNK_EVENTS=true` to decode chunk events. Possible values: true or false. **It's not enabled by default**. Please refer to [CONFIGURE_SSH_DECODE](CONFIGURE_SSH_DECODE.md) for more information.
+When using `syslog-json` or `tcp-json` specify `LOG_EXPORT_CONTAINER_DECODE_CHUNK_EVENTS=true` to decode chunk events. Possible values: true or false. **It's not enabled by default**. Please refer to [CONFIGURE_SSH_DECODE](Additional Configuration/CONFIGURE_ELASTICSEARCH.md) for more information.
 
 ### Audit Activities
 

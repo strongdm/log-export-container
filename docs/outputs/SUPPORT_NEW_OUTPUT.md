@@ -12,7 +12,7 @@ In order to support new output types you need to:
 3. Write a new output file following the plugin's documentation, e.g. [output-s3.conf](../fluentd/etc/output-s3.conf). Ideally just keep the plugin required variables.
 4. Update [start-container.sh](../dev-tools/start-container.sh)
 5. Update docs:
-    * Create a new document, e.g. [CONFIGURE_S3](CONFIGURE_S3.md)
+    * Create a new document, e.g. [CONFIGURE_S3](OUTPUTS/CONFIGURE_S3.md)
     * Add the new output type to [CONFIGURE_LOG_EXPORT_CONTAINER.md](CONFIGURE_LOG_EXPORT_CONTAINER.md)
     * Update [docker-compose.yml](../docker-compose.yml)
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Additional Configuration
+title: inputs
 nav_order: 9
 has_children: true
 ---

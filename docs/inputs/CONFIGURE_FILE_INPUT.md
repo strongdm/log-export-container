@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Add new output
-parent: Additional Configuration
+title: File Input
+parent: inputs
 nav_order: 9
 ---
 # Configure File

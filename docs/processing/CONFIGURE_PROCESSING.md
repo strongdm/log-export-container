@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Log Processing
-parent: Additional Configuration
+parent: processing
 nav_order: 9
 ---
 # Configure Extra Processing
