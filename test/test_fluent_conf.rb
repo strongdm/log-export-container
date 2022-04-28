@@ -213,6 +213,20 @@ class TestCreateFluentConfChangingOutput < Test::Unit::TestCase
     assert_includes(fluent_conf_content, output_conf('elasticsearch'))
     assert(is_valid_fluent_conf)
   end
+
+  def test_bigquery_output_conf
+    ENV['BIGQUERY_PRIVATE_KEY'] = '-----BEGIN PRIVATE KEY-----\n...'
+    ENV['BIGQUERY_CLIENT_EMAIL'] = 'xxx@developer.gserviceaccount.com'
+    ENV['BIGQUERY_PROJECT_ID'] = 'project-id'
+    ENV['BIGQUERY_DATASET_ID'] = 'dataset_id'
+    ENV['BIGQUERY_TABLE_ID'] = 'table_id'
+    fluent_conf_content = generate_fluent_conf('tcp-json', 'bigquery')
+    assert_includes(fluent_conf_content, input_conf('tcp-json'))
+    assert_includes(fluent_conf_content, default_classify_conf('json'))
+    assert_includes(fluent_conf_content, process_conf)
+    assert_includes(fluent_conf_content, output_conf('bigquery'))
+    assert(is_valid_fluent_conf)
+  end
 end
 
 def generate_fluent_conf(input_type, output_type)
