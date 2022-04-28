@@ -1,0 +1,92 @@
+[
+  {
+    "name": "timestamp",
+    "type": "TIMESTAMP",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "actorUserID",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "actorName",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "activity",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "description",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "ip_address",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "type",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "sourceAddress",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "sourceHostname",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "uuid",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "undef",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "duration",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "data",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "chunkId",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "events",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "hash",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "query",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "records",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  }
+]

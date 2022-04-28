@@ -1,0 +1,136 @@
+[
+  {
+    "name": "timestamp",
+    "type": "TIMESTAMP",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "actorUserID",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "actorName",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "activity",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "description",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "ip_address",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "type",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "uuid",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "datasourceId",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "datasourceName",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "userId",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "userName",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "query",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "hash",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "sourceAddress",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "sourceHostname",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "chunkId",
+    "type": "INTEGER",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "events",
+    "type": "RECORD",
+    "mode": "REPEATED",
+    "fields": [
+      {
+        "name": "duration",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "data",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  {
+    "name": "duration",
+    "type": "INTEGER",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "records",
+    "type": "INTEGER",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "decodedEvents",
+    "type": "RECORD",
+    "mode": "REPEATED",
+    "fields": [
+      {
+        "name": "data",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "startTimestamp",
+        "type": "TIMESTAMP",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "endTimestamp",
+        "type": "TIMESTAMP",
+        "mode": "NULLABLE"
+      }
+    ]
+  }
+]
