@@ -25,6 +25,7 @@ RUN apk del curl ca-certificates wget
 
 COPY fluentd /fluentd
 COPY create-conf.rb /create-conf.rb
+COPY conf-utils.rb /conf-utils.rb
 COPY start.sh /start.sh
 
 USER root
