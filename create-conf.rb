@@ -49,6 +49,13 @@ def input_extract_audit_activities_conf
   end
 end
 
+def monitoring_conf
+  monitoring_enabled = extract_value(ENV['LOG_EXPORT_CONTAINER_ENABLE_MONITORING']) == "true"
+  if monitoring_enabled
+    File.read("#{ETC_DIR}/monitoring.conf")
+  end
+end
+
 def default_classify_conf
   conf = extract_value(ENV['LOG_EXPORT_CONTAINER_INPUT'])
   if conf == "syslog-csv" || conf == "tcp-csv" || conf == "file-csv"
@@ -83,6 +90,7 @@ def create_file
   File.open("#{ETC_DIR}/fluent.conf", "w") do |f|
     f.write(input_conf)
     f.write(input_extract_audit_activities_conf)
+    f.write(monitoring_conf)
     f.write(default_classify_conf)
     f.write(custom_classify_conf)
     f.write(File.read("#{ETC_DIR}/process.conf"))
