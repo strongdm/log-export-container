@@ -26,6 +26,14 @@ Here's a gif demonstrating the setup process:
 Then you can access the `Log Export Container Metrics` dashboard in Grafana (in the port `3000`) and see how it's used. There we have the following panels:
 
 1. `Received Logs` - count of the received logs per tag in the last 5 minutes
-2. `Forwarded Logs` - count of the forwarded logs to the defined output plugins in the last 5 minutes
-3. `Total Errors Count` - total count of errors in the last 5 minutes
-4. `Last Execution Status By Output` - Last Execution Status by output. It'll show `1` if the last forward try failed, otherwise it'll show `0`.
+![Captura de Tela 2022-05-09 às 16 07 37](https://user-images.githubusercontent.com/49597325/167483022-a9138ab5-fded-43c4-8fd1-4b8bba658fad.png)
+
+3. `Forwarded Logs` - count of the forwarded logs to the defined output plugins in the last 5 minutes
+![Captura de Tela 2022-05-09 às 16 07 50](https://user-images.githubusercontent.com/49597325/167483062-f7ca0b9e-49fe-4510-8771-1975b6b528e0.png)
+
+5. `Total Errors Count` - total count of errors in the last 5 minutes
+![Captura de Tela 2022-05-09 às 16 08 00](https://user-images.githubusercontent.com/49597325/167483095-2f761777-4d23-4ccc-8bb3-291e90af2336.png)
+
+7. `Last Execution Status By Output` - Last Execution Status by output. It'll show `1` if the last forward try failed, otherwise it'll show `0`.
+![Captura de Tela 2022-05-09 às 16 08 08](https://user-images.githubusercontent.com/49597325/167483112-7e5111c4-987c-48e8-b161-9c59296b87c5.png)
+
