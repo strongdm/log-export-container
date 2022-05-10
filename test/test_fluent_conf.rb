@@ -2,6 +2,7 @@ require 'test/unit'
 require 'fluent/test'
 require 'fluent/test/helpers'
 require 'fluent/test/driver/output'
+require_relative '../conf-utils'
 
 class TestCreateFluentConfChangingInput < Test::Unit::TestCase
   include Fluent::Test::Helpers
@@ -12,58 +13,169 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
 
   def test_syslog_json_input_conf
     fluent_conf = generate_fluent_conf('syslog-json', 'stdout')
-    assert_includes(fluent_conf, input_conf('syslog-json'))
-    assert_includes(fluent_conf, default_classify_conf('json'))
+    assert_includes(fluent_conf, input_conf)
+    assert_includes(fluent_conf, default_classify_conf)
     assert_includes(fluent_conf, process_conf)
-    assert_includes(fluent_conf, output_conf('stdout'))
+    assert_includes(fluent_conf, output_conf)
     assert(is_valid_fluent_conf)
   end
 
   def test_syslog_csv_input_conf
     fluent_conf_content = generate_fluent_conf('syslog-csv', 'stdout')
-    assert_includes(fluent_conf_content, input_conf('syslog-csv'))
-    assert_includes(fluent_conf_content, default_classify_conf('csv'))
-    assert_includes(fluent_conf_content, classify_conf('syslog-csv'))
+    assert_includes(fluent_conf_content, input_conf)
+    assert_includes(fluent_conf_content, default_classify_conf)
+    assert_includes(fluent_conf_content, custom_classify_conf)
     assert_includes(fluent_conf_content, process_conf)
-    assert_includes(fluent_conf_content, output_conf('stdout'))
+    assert_includes(fluent_conf_content, output_conf)
     assert(is_valid_fluent_conf)
   end
 
   def test_tcp_json_input_conf
     fluent_conf = generate_fluent_conf('tcp-json', 'stdout')
-    assert_includes(fluent_conf, input_conf('tcp-json'))
-    assert_includes(fluent_conf, default_classify_conf('json'))
+    assert_includes(fluent_conf, input_conf)
+    assert_includes(fluent_conf, default_classify_conf)
     assert_includes(fluent_conf, process_conf)
-    assert_includes(fluent_conf, output_conf('stdout'))
+    assert_includes(fluent_conf, output_conf)
     assert(is_valid_fluent_conf)
   end
 
   def test_tcp_csv_input_conf
     fluent_conf = generate_fluent_conf('tcp-csv', 'stdout')
-    assert_includes(fluent_conf, input_conf('tcp-csv'))
-    assert_includes(fluent_conf, default_classify_conf('csv'))
+    assert_includes(fluent_conf, input_conf)
+    assert_includes(fluent_conf, default_classify_conf)
     assert_includes(fluent_conf, process_conf)
-    assert_includes(fluent_conf, output_conf('stdout'))
+    assert_includes(fluent_conf, output_conf)
     assert(is_valid_fluent_conf)
   end
 
   def test_tail_json_input_conf
     ENV['LOG_FILE_PATH'] = '/var/logs'
     fluent_conf = generate_fluent_conf('file-json', 'stdout')
-    assert_includes(fluent_conf, input_conf('file-json'))
-    assert_includes(fluent_conf, default_classify_conf('json'))
+    assert_includes(fluent_conf, input_conf)
+    assert_includes(fluent_conf, default_classify_conf)
     assert_includes(fluent_conf, process_conf)
-    assert_includes(fluent_conf, output_conf('stdout'))
+    assert_includes(fluent_conf, output_conf)
     assert(is_valid_fluent_conf)
   end
 
   def test_tail_csv_input_conf
     ENV['LOG_FILE_PATH'] = '/var/logs'
     fluent_conf = generate_fluent_conf('file-csv', 'stdout')
-    assert_includes(fluent_conf, input_conf('file-csv'))
-    assert_includes(fluent_conf, default_classify_conf('csv'))
+    assert_includes(fluent_conf, input_conf)
+    assert_includes(fluent_conf, default_classify_conf)
     assert_includes(fluent_conf, process_conf)
-    assert_includes(fluent_conf, output_conf('stdout'))
+    assert_includes(fluent_conf, output_conf)
+    assert(is_valid_fluent_conf)
+  end
+
+  def test_audit_when_generate_activity_logs_using_the_default_interval
+    reset_environment_variables
+    ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = 'true'
+    expected = activities_conf("15")
+    actual = input_extract_audit_activities_conf
+    assert_equal(expected, actual)
+
+    fluent_conf = generate_fluent_conf('syslog-json', 'stdout')
+    assert_includes(fluent_conf, input_conf)
+    assert_includes(fluent_conf, default_classify_conf)
+    assert_includes(fluent_conf, process_conf)
+    assert_includes(fluent_conf, output_conf)
+    assert(is_valid_fluent_conf)
+  end
+
+  def test_audit_when_generate_activity_logs_using_a_custom_interval
+    reset_environment_variables
+    ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = 'true'
+    ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] = '20'
+    expected = activities_conf("20")
+    actual = input_extract_audit_activities_conf
+    assert_equal(expected, actual)
+
+    fluent_conf = generate_fluent_conf('syslog-json', 'stdout')
+    assert_includes(fluent_conf, input_conf)
+    assert_includes(fluent_conf, default_classify_conf)
+    assert_includes(fluent_conf, process_conf)
+    assert_includes(fluent_conf, output_conf)
+    assert(is_valid_fluent_conf)
+  end
+
+  def test_audit_when_activity_settings_overwrite_audit_settings
+    reset_environment_variables
+    ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = 'true'
+    ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] = '20'
+    ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = 'activities/10 resources/30 users/50 roles/60'
+
+    expected_activities_conf = activities_conf("20")
+    expected_resources_conf = entity_conf("resource", "30", "resources")
+    expected_users_conf = entity_conf("user", "50", "users")
+    expected_roles_conf = entity_conf("role", "60", "roles")
+    actual_activities_conf = input_extract_audit_activities_conf
+    actual_resources_conf = input_extract_audit_entity_conf("resources")
+    actual_users_conf = input_extract_audit_entity_conf("users")
+    actual_roles_conf = input_extract_audit_entity_conf("roles")
+
+    assert_equal(expected_activities_conf, actual_activities_conf)
+    assert_equal(expected_resources_conf, actual_resources_conf)
+    assert_equal(expected_users_conf, actual_users_conf)
+    assert_equal(expected_roles_conf, actual_roles_conf)
+
+    fluent_conf = generate_fluent_conf('syslog-json', 'stdout')
+    assert_includes(fluent_conf, input_conf)
+    assert_includes(fluent_conf, default_classify_conf)
+    assert_includes(fluent_conf, process_conf)
+    assert_includes(fluent_conf, output_conf)
+    assert(is_valid_fluent_conf)
+  end
+
+  def test_audit_when_there_are_multiple_entities_to_get_the_logs
+    reset_environment_variables
+    ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = 'activities/10 resources/20 users/30 roles/40'
+
+    actual_activities_conf = input_extract_audit_activities_conf
+    actual_resources_conf = input_extract_audit_entity_conf("resources")
+    actual_users_conf = input_extract_audit_entity_conf("users")
+    actual_roles_conf = input_extract_audit_entity_conf("roles")
+    expected_activities_conf = activities_conf("10")
+    expected_resources_conf = entity_conf("resource", "20", "resources")
+    expected_users_conf = entity_conf("user", "30", "users")
+    expected_roles_conf = entity_conf("role", "40", "roles")
+
+    assert_equal(expected_activities_conf, actual_activities_conf)
+    assert_equal(expected_resources_conf, actual_resources_conf)
+    assert_equal(expected_users_conf, actual_users_conf)
+    assert_equal(expected_roles_conf, actual_roles_conf)
+
+    fluent_conf = generate_fluent_conf('syslog-json', 'stdout')
+    assert_includes(fluent_conf, input_conf)
+    assert_includes(fluent_conf, default_classify_conf)
+    assert_includes(fluent_conf, process_conf)
+    assert_includes(fluent_conf, output_conf)
+    assert(is_valid_fluent_conf)
+  end
+
+  def test_audit_when_all_intervals_are_empty
+    reset_environment_variables
+    ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = 'activities/ resources/ users/ roles/'
+
+    expected_activities_conf = activities_conf("15")
+    expected_resources_conf = entity_conf("resource", "480", "resources")
+    expected_users_conf = entity_conf("user", "480", "users")
+    expected_roles_conf = entity_conf("role", "480", "roles")
+    actual_activities_conf = input_extract_audit_activities_conf
+    actual_resources_conf = input_extract_audit_entity_conf("resources")
+    actual_users_conf = input_extract_audit_entity_conf("users")
+    actual_roles_conf = input_extract_audit_entity_conf("roles")
+
+    assert_equal(expected_activities_conf, actual_activities_conf)
+    assert_equal(expected_resources_conf, actual_resources_conf)
+    assert_equal(expected_users_conf, actual_users_conf)
+    assert_equal(expected_roles_conf, actual_roles_conf)
+
+    fluent_conf = generate_fluent_conf('syslog-json', 'stdout')
+    assert_includes(fluent_conf, input_conf)
+    assert_includes(fluent_conf, default_classify_conf)
+    assert_includes(fluent_conf, process_conf)
+    assert_includes(fluent_conf, output_conf)
     assert(is_valid_fluent_conf)
   end
 end
@@ -80,10 +192,10 @@ class TestCreateFluentConfChangingOutput < Test::Unit::TestCase
     ENV['REMOTE_SYSLOG_PORT'] = '5140'
     ENV['REMOTE_SYSLOG_PROTOCOL'] = 'udp'
     fluent_conf_content = generate_fluent_conf('tcp-json', 'remote-syslog')
-    assert_includes(fluent_conf_content, input_conf('tcp-json'))
-    assert_includes(fluent_conf_content, default_classify_conf('json'))
+    assert_includes(fluent_conf_content, input_conf)
+    assert_includes(fluent_conf_content, default_classify_conf)
     assert_includes(fluent_conf_content, process_conf)
-    assert_includes(fluent_conf_content, output_conf('remote-syslog'))
+    assert_includes(fluent_conf_content, output_conf)
     assert(is_valid_fluent_conf)
   end
 
@@ -91,10 +203,10 @@ class TestCreateFluentConfChangingOutput < Test::Unit::TestCase
     ENV['AZURE_LOGANALYTICS_CUSTOMER_ID'] = 'AZURE_LOGANALYTICS_CUSTOMER_ID'
     ENV['AZURE_LOGANALYTICS_SHARED_KEY'] = 'AZURE_LOGANALYTICS_SHARED_KEY'
     fluent_conf = generate_fluent_conf('tcp-json', 'azure-loganalytics')
-    assert_includes(fluent_conf, input_conf('tcp-json'))
-    assert_includes(fluent_conf, default_classify_conf('json'))
+    assert_includes(fluent_conf, input_conf)
+    assert_includes(fluent_conf, default_classify_conf)
     assert_includes(fluent_conf, process_conf)
-    assert_includes(fluent_conf, output_conf('azure-loganalytics'))
+    assert_includes(fluent_conf, output_conf)
     assert(is_valid_fluent_conf)
   end
 
@@ -105,10 +217,10 @@ class TestCreateFluentConfChangingOutput < Test::Unit::TestCase
     ENV['CLOUDWATCH_LOG_GROUP_NAME'] = 'CLOUDWATCH_LOG_GROUP_NAME'
     ENV['CLOUDWATCH_LOG_STREAM_NAME'] = 'CLOUDWATCH_LOG_STREAM_NAME'
     fluent_conf_content = generate_fluent_conf('tcp-json', 'cloudwatch')
-    assert_includes(fluent_conf_content, input_conf('tcp-json'))
-    assert_includes(fluent_conf_content, default_classify_conf('json'))
+    assert_includes(fluent_conf_content, input_conf)
+    assert_includes(fluent_conf_content, default_classify_conf)
     assert_includes(fluent_conf_content, process_conf)
-    assert_includes(fluent_conf_content, output_conf('cloudwatch'))
+    assert_includes(fluent_conf_content, output_conf)
     assert(is_valid_fluent_conf)
   end
 
@@ -116,10 +228,10 @@ class TestCreateFluentConfChangingOutput < Test::Unit::TestCase
     ENV['HOSTNAME'] = 'HOSTNAME'
     ENV['DATADOG_API_KEY'] = 'DATADOG_API_KEY'
     fluent_conf = generate_fluent_conf('tcp-json', 'datadog')
-    assert_includes(fluent_conf, input_conf('tcp-json'))
-    assert_includes(fluent_conf, default_classify_conf('json'))
+    assert_includes(fluent_conf, input_conf)
+    assert_includes(fluent_conf, default_classify_conf)
     assert_includes(fluent_conf, process_conf)
-    assert_includes(fluent_conf, output_conf('datadog'))
+    assert_includes(fluent_conf, output_conf)
     assert(is_valid_fluent_conf)
   end
 
@@ -128,10 +240,10 @@ class TestCreateFluentConfChangingOutput < Test::Unit::TestCase
     ENV['KAFKA_TOPIC'] = 'KAFKA_TOPIC'
     ENV['KAFKA_FORMAT_TYPE'] = 'json'
     fluent_conf = generate_fluent_conf('tcp-json', 'kafka')
-    assert_includes(fluent_conf, input_conf('tcp-json'))
-    assert_includes(fluent_conf, default_classify_conf('json'))
+    assert_includes(fluent_conf, input_conf)
+    assert_includes(fluent_conf, default_classify_conf)
     assert_includes(fluent_conf, process_conf)
-    assert_includes(fluent_conf, output_conf('kafka'))
+    assert_includes(fluent_conf, output_conf)
     assert(is_valid_fluent_conf)
   end
 
@@ -142,10 +254,10 @@ class TestCreateFluentConfChangingOutput < Test::Unit::TestCase
     ENV['S3_REGION'] = 'S3_REGION'
     ENV['S3_PATH'] = 'S3_PATH'
     fluent_conf_content = generate_fluent_conf('tcp-json', 's3')
-    assert_includes(fluent_conf_content, input_conf('tcp-json'))
-    assert_includes(fluent_conf_content, default_classify_conf('json'))
+    assert_includes(fluent_conf_content, input_conf)
+    assert_includes(fluent_conf_content, default_classify_conf)
     assert_includes(fluent_conf_content, process_conf)
-    assert_includes(fluent_conf_content, output_conf('s3'))
+    assert_includes(fluent_conf_content, output_conf)
     assert(is_valid_fluent_conf)
   end
 
@@ -154,10 +266,10 @@ class TestCreateFluentConfChangingOutput < Test::Unit::TestCase
     ENV['SPLUNK_HEC_PORT'] = 'SPLUNK_HEC_PORT'
     ENV['SPLUNK_HEC_TOKEN'] = 'SPLUNK_HEC_TOKEN'
     fluent_conf = generate_fluent_conf('tcp-json', 'splunk-hec')
-    assert_includes(fluent_conf, input_conf('tcp-json'))
-    assert_includes(fluent_conf, default_classify_conf('json'))
+    assert_includes(fluent_conf, input_conf)
+    assert_includes(fluent_conf, default_classify_conf)
     assert_includes(fluent_conf, process_conf)
-    assert_includes(fluent_conf, output_conf('splunk-hec'))
+    assert_includes(fluent_conf, output_conf)
     assert(is_valid_fluent_conf)
   end
 
@@ -165,40 +277,40 @@ class TestCreateFluentConfChangingOutput < Test::Unit::TestCase
     ENV['SUMOLOGIC_ENDPOINT'] = 'http://0.0.0.0'
     ENV['SUMOLOGIC_SOURCE_CATEGORY'] = 'SUMOLOGIC_SOURCE_CATEGORY'
     fluent_conf = generate_fluent_conf('tcp-json', 'sumologic')
-    assert_includes(fluent_conf, input_conf('tcp-json'))
-    assert_includes(fluent_conf, default_classify_conf('json'))
+    assert_includes(fluent_conf, input_conf)
+    assert_includes(fluent_conf, default_classify_conf)
     assert_includes(fluent_conf, process_conf)
-    assert_includes(fluent_conf, output_conf('sumologic'))
+    assert_includes(fluent_conf, output_conf)
     assert(is_valid_fluent_conf)
   end
 
   def test_mongo_output_conf
     ENV['MONGO_URI'] = 'mongodb://user:pass@localhost:27017/db'
     fluent_conf_content = generate_fluent_conf('tcp-json', 'mongo')
-    assert_includes(fluent_conf_content, input_conf('tcp-json'))
-    assert_includes(fluent_conf_content, default_classify_conf('json'))
+    assert_includes(fluent_conf_content, input_conf)
+    assert_includes(fluent_conf_content, default_classify_conf)
     assert_includes(fluent_conf_content, process_conf)
-    assert_includes(fluent_conf_content, output_conf('mongo'))
+    assert_includes(fluent_conf_content, output_conf)
     assert(is_valid_fluent_conf)
   end
 
   def test_logz_output_conf
     ENV['LOGZ_ENDPOINT'] = 'https://listener.logz.io:8071?token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&type=my_type'
     fluent_conf_content = generate_fluent_conf('tcp-json', 'logz')
-    assert_includes(fluent_conf_content, input_conf('tcp-json'))
-    assert_includes(fluent_conf_content, default_classify_conf('json'))
+    assert_includes(fluent_conf_content, input_conf)
+    assert_includes(fluent_conf_content, default_classify_conf)
     assert_includes(fluent_conf_content, process_conf)
-    assert_includes(fluent_conf_content, output_conf('logz'))
+    assert_includes(fluent_conf_content, output_conf)
     assert(is_valid_fluent_conf)
   end
 
   def test_loki_output_conf
     ENV['LOKI_URL'] = 'http://localhost:3100'
     fluent_conf_content = generate_fluent_conf('tcp-json', 'loki')
-    assert_includes(fluent_conf_content, input_conf('tcp-json'))
-    assert_includes(fluent_conf_content, default_classify_conf('json'))
+    assert_includes(fluent_conf_content, input_conf)
+    assert_includes(fluent_conf_content, default_classify_conf)
     assert_includes(fluent_conf_content, process_conf)
-    assert_includes(fluent_conf_content, output_conf('loki'))
+    assert_includes(fluent_conf_content, output_conf)
     assert(is_valid_fluent_conf)
   end
 
@@ -207,10 +319,10 @@ class TestCreateFluentConfChangingOutput < Test::Unit::TestCase
     ENV['ELASTICSEARCH_PORT'] = '9201'
     ENV['ELASTICSEARCH_INDEX_NAME'] = 'my-index'
     fluent_conf_content = generate_fluent_conf('tcp-json', 'elasticsearch')
-    assert_includes(fluent_conf_content, input_conf('tcp-json'))
-    assert_includes(fluent_conf_content, default_classify_conf('json'))
+    assert_includes(fluent_conf_content, input_conf)
+    assert_includes(fluent_conf_content, default_classify_conf)
     assert_includes(fluent_conf_content, process_conf)
-    assert_includes(fluent_conf_content, output_conf('elasticsearch'))
+    assert_includes(fluent_conf_content, output_conf)
     assert(is_valid_fluent_conf)
   end
 
@@ -221,10 +333,10 @@ class TestCreateFluentConfChangingOutput < Test::Unit::TestCase
     ENV['BIGQUERY_DATASET_ID'] = 'dataset_id'
     ENV['BIGQUERY_TABLE_ID'] = 'table_id'
     fluent_conf_content = generate_fluent_conf('tcp-json', 'bigquery')
-    assert_includes(fluent_conf_content, input_conf('tcp-json'))
-    assert_includes(fluent_conf_content, default_classify_conf('json'))
+    assert_includes(fluent_conf_content, input_conf)
+    assert_includes(fluent_conf_content, default_classify_conf)
     assert_includes(fluent_conf_content, process_conf)
-    assert_includes(fluent_conf_content, output_conf('bigquery'))
+    assert_includes(fluent_conf_content, output_conf)
     assert(is_valid_fluent_conf)
   end
 end
@@ -237,24 +349,8 @@ def generate_fluent_conf(input_type, output_type)
   read_fluentd_file('fluent.conf')
 end
 
-def input_conf(type)
-  read_fluentd_file(format("input-%s.conf", type))
-end
-
-def default_classify_conf(type)
-  read_fluentd_file(format("classify-default-%s.conf", type))
-end
-
-def classify_conf(type)
-  read_fluentd_file(format("classify-%s.conf", type))
-end
-
 def process_conf
   read_fluentd_file('process.conf')
-end
-
-def output_conf(type)
-  read_fluentd_file(format("output-%s.conf", type))
 end
 
 def read_fluentd_file(path)
@@ -264,4 +360,34 @@ end
 
 def is_valid_fluent_conf
   system("fluentd --dry-run -c #{ETC_DIR}/fluent.conf -p ./fluentd/plugins", :out => :close)
+end
+
+def reset_environment_variables
+  ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = nil
+  ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] = nil
+  ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = nil
+end
+
+def activities_conf(interval)
+  "<source>\n" \
+  "  @type exec\n" \
+  "  <parse>\n" \
+  "    @type json\n" \
+  "  </parse>\n" \
+  "  tag activity\n" \
+  "  run_interval #{interval}m\n" \
+  "  command ruby /fluentd/scripts/dump_activities.rb\n" \
+  "</source>\n"
+end
+
+def entity_conf(tag, interval, entity)
+  "<source>\n" \
+  "  @type exec\n" \
+  "  <parse>\n" \
+  "    @type json\n" \
+  "  </parse>\n" \
+  "  tag #{tag}\n" \
+  "  run_interval #{interval}m\n" \
+  "  command ruby /fluentd/scripts/dump_sdm_entity.rb #{entity}\n" \
+  "</source>\n"
 end
