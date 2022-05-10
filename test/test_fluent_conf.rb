@@ -68,7 +68,7 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
     assert(is_valid_fluent_conf)
   end
 
-  def test_audit_when_it_is_to_generate_activities_logs_using_the_default_interval
+  def test_audit_when_generate_activity_logs_using_the_default_interval
     reset_environment_variables
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = 'true'
     expected = activities_conf("15")
@@ -83,7 +83,7 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
     assert(is_valid_fluent_conf)
   end
 
-  def test_audit_when_it_is_to_generate_activities_logs_using_a_custom_interval
+  def test_audit_when_generate_activity_logs_using_a_custom_interval
     reset_environment_variables
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = 'true'
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] = '20'
@@ -99,19 +99,19 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
     assert(is_valid_fluent_conf)
   end
 
-  def test_audit_when_activities_settings_overwrite_audit_setting
+  def test_audit_when_activity_settings_overwrite_audit_settings
     reset_environment_variables
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = 'true'
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] = '20'
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = 'activities/10 resources/30 users/50 roles/60'
 
     expected_activities_conf = activities_conf("20")
-    actual_activities_conf = input_extract_audit_activities_conf
     expected_resources_conf = entity_conf("resource", "30", "resources")
-    actual_resources_conf = input_extract_audit_entity_conf("resources")
     expected_users_conf = entity_conf("user", "50", "users")
-    actual_users_conf = input_extract_audit_entity_conf("users")
     expected_roles_conf = entity_conf("role", "60", "roles")
+    actual_activities_conf = input_extract_audit_activities_conf
+    actual_resources_conf = input_extract_audit_entity_conf("resources")
+    actual_users_conf = input_extract_audit_entity_conf("users")
     actual_roles_conf = input_extract_audit_entity_conf("roles")
 
     assert_equal(expected_activities_conf, actual_activities_conf)
@@ -131,14 +131,14 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
     reset_environment_variables
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = 'activities/10 resources/20 users/30 roles/40'
 
-    expected_activities_conf = activities_conf("10")
     actual_activities_conf = input_extract_audit_activities_conf
-    expected_resources_conf = entity_conf("resource", "20", "resources")
     actual_resources_conf = input_extract_audit_entity_conf("resources")
-    expected_users_conf = entity_conf("user", "30", "users")
     actual_users_conf = input_extract_audit_entity_conf("users")
-    expected_roles_conf = entity_conf("role", "40", "roles")
     actual_roles_conf = input_extract_audit_entity_conf("roles")
+    expected_activities_conf = activities_conf("10")
+    expected_resources_conf = entity_conf("resource", "20", "resources")
+    expected_users_conf = entity_conf("user", "30", "users")
+    expected_roles_conf = entity_conf("role", "40", "roles")
 
     assert_equal(expected_activities_conf, actual_activities_conf)
     assert_equal(expected_resources_conf, actual_resources_conf)
@@ -153,17 +153,17 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
     assert(is_valid_fluent_conf)
   end
 
-  def test_audit_when_the_intervals_are_empty
+  def test_audit_when_all_intervals_are_empty
     reset_environment_variables
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = 'activities/ resources/ users/ roles/'
 
     expected_activities_conf = activities_conf("15")
-    actual_activities_conf = input_extract_audit_activities_conf
     expected_resources_conf = entity_conf("resource", "480", "resources")
-    actual_resources_conf = input_extract_audit_entity_conf("resources")
     expected_users_conf = entity_conf("user", "480", "users")
-    actual_users_conf = input_extract_audit_entity_conf("users")
     expected_roles_conf = entity_conf("role", "480", "roles")
+    actual_activities_conf = input_extract_audit_activities_conf
+    actual_resources_conf = input_extract_audit_entity_conf("resources")
+    actual_users_conf = input_extract_audit_entity_conf("users")
     actual_roles_conf = input_extract_audit_entity_conf("roles")
 
     assert_equal(expected_activities_conf, actual_activities_conf)
