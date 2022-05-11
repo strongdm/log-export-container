@@ -9,12 +9,13 @@ To enable it, you need to set the variable `LOG_EXPORT_CONTAINER_ENABLE_MONITORI
 
 To see an example, follow these steps:
 1. Download the file [docker-compose-prometheus.yml](../../docker-compose-prometheus.yml);
-  - Make sure that the 'Required variables' in the `log-export-container` service in the .yml file are set appropriately based on your desired log format and output destination.
-2. Run with your preferred container orchestrator (with docker, you can simply run `docker-compose up`)
+  - Make sure that the 'Required variables' in the `log-export-container` service in the .yml file are defined appropriately based on your desired log format and output destination.
+2. Run with your preferred container orchestrator (with docker, you can simply run `docker-compose -f docker-compose-prometheus.yml up`)
 3. Log into the strongDM Admin UI and go to the Settings page, then the Log Encryption & Storage tab.
 4. Set "Log locally on relays?" to 'Yes'
-5. Set "Local storage?" to "Syslog" and enter the IP address of the machine running the Log Export Container along with port 5140 ![image](https://user-images.githubusercontent.com/7840034/127934335-239b5e97-772c-4ac6-8e66-864ffaf4cccc.png)
-   - Make sure that port 5140 on the machine hosting the container is accesible from your gateways. You can also host the container on your gateways themselves.
+5. Set "Local storage?" to "Syslog" and enter the IP address of the machine running the Log Export Container along with port 5140
+  - ![image](https://user-images.githubusercontent.com/7840034/127934335-239b5e97-772c-4ac6-8e66-864ffaf4cccc.png)
+  - Make sure that port 5140 on the machine hosting the container is accesible from your gateways. You can also host the container on your gateways themselves.
 6. Set "Local format?" to match the input format you specified in the .yml file.
 7. Click "Update" and you're done!
 8. If you notice that your strongDM client is stuck in reconnecting mode after hitting update, then it's possible that something went wrong during the setup process. Check your docker settings, security settings, port availability, IP address, and that the Docker image is running correctly.
