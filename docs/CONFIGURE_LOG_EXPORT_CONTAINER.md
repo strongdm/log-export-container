@@ -94,3 +94,9 @@ By default, the container just classifies the different log traces (e.g. start, 
 The current version of the container only supports rsyslog, please refer to the image below to observe a typical configuration:
 
 <img src="https://user-images.githubusercontent.com/313803/123248041-76aab480-d4b5-11eb-8070-9da9619f02f7.png" data-canonical-src="https://user-images.githubusercontent.com/313803/123248041-76aab480-d4b5-11eb-8070-9da9619f02f7.png" width="50%" height="50%" />
+
+## High Availability
+
+It's possible to set up a high availability environment using an AWS Load Balancer with more than one LEC instance. Please refer to this tutorial.
+
+https://user-images.githubusercontent.com/82273420/167867989-2eb64a2e-ce18-4b6b-998e-88e5a34a70e7.mp4
