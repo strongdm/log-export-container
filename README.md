@@ -18,10 +18,11 @@ The Log Export Container is a Docker Image you can use for spinning up multiple 
 
 1. Download the `docker-compose.yml` file from the Github repo onto your machine (or copy-paste its contents into a file you created directly on the machine with the same name).
    - Make sure that the 'Required variables' in the .yml file are set appropriately based on your desired log format and output destination.
-2. Run `sudo docker-compose up`
+2. Run with your preferred container orchestrator (with docker, you can simply run `docker-compose up`)
 3. Log into the strongDM Admin UI and go to the Settings page, then the Log Encryption & Storage tab.
 4. Set "Log locally on relays?" to 'Yes'
-5. Set "Local storage?" to "Syslog" and enter the IP address of the machine running the Log Export Container along with port 5140 ![image](https://user-images.githubusercontent.com/7840034/127934335-239b5e97-772c-4ac6-8e66-864ffaf4cccc.png)
+5. Set "Local storage?" to "Syslog" and enter the IP address of the machine running the Log Export Container along with port 5140
+   - ![image](https://user-images.githubusercontent.com/7840034/127934335-239b5e97-772c-4ac6-8e66-864ffaf4cccc.png)
    - Make sure that port 5140 on the machine hosting the container is accesible from your gateways. You can also host the container on your gateways themselves.
 6. Set "Local format?" to match the input format you specified in the .yml file.
 7. Click "Update" and you're done!
@@ -39,7 +40,10 @@ If you want to modify the container and quickly see the changes in your local, y
 ./dev-tools/start-container.sh
 ```
 
-You could also run the project in your local without docker, please refer to [CONFIGURE_LOCAL_ENV](docs/CONFIGURE_LOCAL_ENV.md)
+You could also run the project in your local without docker, please refer to [CONFIGURE_LOCAL_ENV](docs/deploy_log_export_container/CONFIGURE_LOCAL_ENV.md)
+
+## Monitoring
+Currently the application supports Prometheus Metrics about the received and forwarded logs. For more details, please see [CONFIGURE_PROMETHEUS](docs/monitoring/CONFIGURE_PROMETHEUS.md)
 
 ## Contributing
 Refer to the [contributing](CONTRIBUTING.md) guidelines or dump part of the information here.

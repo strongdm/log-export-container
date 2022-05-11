@@ -1,0 +1,9 @@
+scrape_configs:
+  - job_name: "prometheus"
+    scrape_interval: 5s
+    static_configs:
+      - targets: ["localhost:9090"]
+  - job_name: "log_export_container_metrics"
+    scrape_interval: 5s
+    static_configs:
+      - targets: ["log-export-container:24321"]

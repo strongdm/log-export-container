@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  log-export-container:
+    image: public.ecr.aws/strongdm/log-export-container:latest
+    ports:
+      - "5140:5140"
+      - "24321:24321"
+    environment:
+      - LOG_EXPORT_CONTAINER_INPUT=syslog-json
+      - LOG_EXPORT_CONTAINER_OUTPUT=stdout
+      - LOG_EXPORT_CONTAINER_ENABLE_MONITORING=true
+    networks:
+      - log-export-container
+  prometheus:
+    build: dev-tools/prometheus
+    ports:
+      - 9090:9090
+    networks:
+      - log-export-container
+  grafana:
+    build: dev-tools/grafana
+    ports:
+      - 3000:3000
+    networks:
+      - log-export-container
+networks:
+  log-export-container:
+    driver: bridge
