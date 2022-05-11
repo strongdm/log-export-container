@@ -11,6 +11,12 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
     Fluent::Test.setup
   end
 
+  def cleanup
+    super
+
+    reset_environment_variables
+  end
+
   def test_syslog_json_input_conf
     fluent_conf = generate_fluent_conf('syslog-json', 'stdout')
     assert_includes(fluent_conf, input_conf)
@@ -200,6 +206,12 @@ class TestCreateFluentConfChangingOutput < Test::Unit::TestCase
     Fluent::Test.setup
   end
 
+  def cleanup
+    super
+
+    reset_environment_variables
+  end
+
   def test_remote_syslog_output_conf
     ENV['REMOTE_SYSLOG_HOST'] = '127.0.0.1'
     ENV['REMOTE_SYSLOG_PORT'] = '5140'
@@ -379,6 +391,51 @@ def reset_environment_variables
   ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = nil
   ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] = nil
   ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = nil
+  ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = nil
+  ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = nil
+  ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] = nil
+  ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = nil
+  ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] = nil
+  ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = nil
+  ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = nil
+  ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = nil
+  ENV['LOG_EXPORT_CONTAINER_ENABLE_MONITORING'] = nil
+  ENV['REMOTE_SYSLOG_HOST'] = nil
+  ENV['REMOTE_SYSLOG_PORT'] = nil
+  ENV['REMOTE_SYSLOG_PROTOCOL'] = nil
+  ENV['AZURE_LOGANALYTICS_CUSTOMER_ID'] = nil
+  ENV['AZURE_LOGANALYTICS_SHARED_KEY'] = nil
+  ENV['AWS_ACCESS_KEY_ID'] = nil
+  ENV['AWS_SECRET_ACCESS_KEY'] = nil
+  ENV['AWS_REGION'] = nil
+  ENV['CLOUDWATCH_LOG_GROUP_NAME'] = nil
+  ENV['CLOUDWATCH_LOG_STREAM_NAME'] = nil
+  ENV['HOSTNAME'] = nil
+  ENV['DATADOG_API_KEY'] = nil
+  ENV['KAFKA_BROKERS'] = nil
+  ENV['KAFKA_TOPIC'] = nil
+  ENV['KAFKA_FORMAT_TYPE'] = nil
+  ENV['AWS_ACCESS_KEY_ID'] = nil
+  ENV['AWS_SECRET_ACCESS_KEY'] = nil
+  ENV['S3_BUCKET'] = nil
+  ENV['S3_REGION'] = nil
+  ENV['S3_PATH'] = nil
+  ENV['BIGQUERY_PRIVATE_KEY'] = nil
+  ENV['BIGQUERY_CLIENT_EMAIL'] = nil
+  ENV['BIGQUERY_PROJECT_ID'] = nil
+  ENV['BIGQUERY_DATASET_ID'] = nil
+  ENV['BIGQUERY_TABLE_ID'] = nil
+  ENV['SPLUNK_HEC_HOST'] = nil
+  ENV['SPLUNK_HEC_PORT'] = nil
+  ENV['SPLUNK_HEC_TOKEN'] = nil
+  ENV['SUMOLOGIC_ENDPOINT'] = nil
+  ENV['SUMOLOGIC_SOURCE_CATEGORY'] = nil
+  ENV['MONGO_URI'] = nil
+  ENV['LOGZ_ENDPOINT'] = nil
+  ENV['LOKI_URL'] = nil
+  ENV['ELASTICSEARCH_HOST'] = nil
+  ENV['ELASTICSEARCH_PORT'] = nil
+  ENV['ELASTICSEARCH_INDEX_NAME'] = nil
 end
 
 def activities_conf(interval)
