@@ -7,9 +7,8 @@ services:
       - "24321:24321"
     environment:
       - LOG_EXPORT_CONTAINER_INPUT=syslog-json
-      - LOG_EXPORT_CONTAINER_OUTPUT=stdout mongo
+      - LOG_EXPORT_CONTAINER_OUTPUT=stdout
       - LOG_EXPORT_CONTAINER_ENABLE_MONITORING=true
-      - MONGO_URI=mongodb://admin:admin@mongo:27017/admin?authSource=admin
     networks:
       - log-export-container
   prometheus:
