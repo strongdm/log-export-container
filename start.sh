@@ -6,6 +6,8 @@ if [ "$SDM_ADMIN_TOKEN" != "" ]; then
   ./sdm --admin-token $SDM_ADMIN_TOKEN login
   ./sdm listen &
   cd /
+
+  ruby $FLUENTD_DIR/scripts/setup-streams.rb &
 fi
 
 echo "Creating Fluentd conf file"
