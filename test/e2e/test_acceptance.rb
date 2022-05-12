@@ -6,6 +6,7 @@ require 'open3'
 require_relative '../helper'
 
 SIGTERM = 15
+LOG_FILE_PATH = "#{`pwd`.chomp}/lec-test.log"
 
 class TestFluentAcceptance < Test::Unit::TestCase
   include Fluent::Test::Helpers
@@ -29,7 +30,7 @@ class TestFluentAcceptance < Test::Unit::TestCase
 
   def test_json_start_log
     log = sample_start_log
-    send_socket_message(create_log_message(log))
+    send_socket_message(create_json_log_message(log))
     output = @stdout.gets
     output = extract_valid_json_from_log(output)
     assert_equal(log['type'], output['type'])
@@ -47,7 +48,7 @@ class TestFluentAcceptance < Test::Unit::TestCase
 
   def test_json_chunk_log
     log = sample_chunk_log
-    send_socket_message(create_log_message(log))
+    send_socket_message(create_json_log_message(log))
     output = @stdout.gets
     output = extract_valid_json_from_log(output)
     assert_equal(log['type'], output['type'])
@@ -62,7 +63,7 @@ class TestFluentAcceptance < Test::Unit::TestCase
 
   def test_json_post_start_log
     log = sample_post_start_log
-    send_socket_message(create_log_message(log))
+    send_socket_message(create_json_log_message(log))
     output = @stdout.gets
     output = extract_valid_json_from_log(output)
     assert_equal(log['type'], output['type'])
@@ -76,7 +77,7 @@ class TestFluentAcceptance < Test::Unit::TestCase
 
   def test_json_unclass_log
     log = sample_unclass_log
-    send_socket_message(create_log_message(log))
+    send_socket_message(create_json_log_message(log))
     output = @stdout.gets
     output = extract_valid_json_from_log(output)
     assert_equal(log['type'], output['type'])
@@ -91,7 +92,7 @@ class TestFluentAcceptance < Test::Unit::TestCase
 
   def test_json_complete_log
     log = sample_complete_log
-    send_socket_message(create_log_message(log))
+    send_socket_message(create_json_log_message(log))
     output = @stdout.gets
     output = extract_valid_json_from_log(output)
     assert_equal(log['type'], output['type'])
@@ -126,7 +127,7 @@ class TestFluentCSVAcceptance < Test::Unit::TestCase
 
   def test_csv_start_log
     log = sample_start_log_csv
-    send_socket_message(create_log_message_from_csv(log))
+    send_socket_message(create_csv_log_message(log))
     output = @stdout.gets
     output = extract_valid_json_from_log(output)
     assert_equal(log['1'], output['timestamp'])
@@ -144,7 +145,7 @@ class TestFluentCSVAcceptance < Test::Unit::TestCase
 
   def test_csv_chunk_log
     log = sample_chunk_log_csv
-    send_socket_message(create_log_message_from_csv(log))
+    send_socket_message(create_csv_log_message(log))
     output = @stdout.gets
     output = extract_valid_json_from_log(output)
     assert_equal(log['1'], output['timestamp'])
@@ -159,7 +160,7 @@ class TestFluentCSVAcceptance < Test::Unit::TestCase
 
   def test_csv_post_start_log
     log = sample_post_start_log_csv
-    send_socket_message(create_log_message_from_csv(log))
+    send_socket_message(create_csv_log_message(log))
     output = @stdout.gets
     output = extract_valid_json_from_log(output)
     assert_equal(log['1'], output['timestamp'])
@@ -173,7 +174,7 @@ class TestFluentCSVAcceptance < Test::Unit::TestCase
 
   def test_csv_unclass_log
     log = sample_event_log_csv
-    send_socket_message(create_log_message_from_csv(log))
+    send_socket_message(create_csv_log_message(log))
     output = @stdout.gets
     output = extract_valid_json_from_log(output)
     assert_equal(log['1'], output['timestamp'])
@@ -188,7 +189,7 @@ class TestFluentCSVAcceptance < Test::Unit::TestCase
 
   def test_csv_complete_log
     log = sample_complete_log_csv
-    send_socket_message(create_log_message_from_csv(log))
+    send_socket_message(create_csv_log_message(log))
     output = @stdout.gets
     output = extract_valid_json_from_log(output)
     assert_equal(log['1'], output['timestamp'])
@@ -198,6 +199,200 @@ class TestFluentCSVAcceptance < Test::Unit::TestCase
     assert_equal(log['5'], output['records'])
     assert_not_nil(output['sourceAddress'])
     assert_not_nil(output['sourceHostname'])
+  end
+end
+
+class TestFluentFileJSONAcceptance < Test::Unit::TestCase
+  include Fluent::Test::Helpers
+  include TestHelperModule
+
+  def setup
+    super
+    Fluent::Test.setup
+
+    ENV['LOG_FILE_PATH'] = LOG_FILE_PATH
+    File.new(LOG_FILE_PATH, 'w')
+    generate_fluent_conf('file-json', 'stdout')
+    _, @stdout, _, @fluent_thread = Open3.popen3("fluentd -c #{ETC_DIR}/fluent.conf -p ./fluentd/plugins")
+    wait_for_fluent(@stdout)
+    clear_buffer(@stdout)
+  end
+
+  def cleanup
+    super
+
+    Process.kill(SIGTERM, @fluent_thread.pid)
+    delete_log_file
+    ENV['LOG_FILE_PATH'] = nil
+  end
+
+  def append_log_file_content(txt)
+    File.open(LOG_FILE_PATH, 'a') do |file|
+      file.write("#{txt}\n")
+    end
+  end
+
+  def test_json_start_log
+    log = sample_start_log
+    append_log_file_content(create_json_line_from_hash(log))
+    output = @stdout.gets
+    output = extract_valid_json_from_log(output)
+    assert_equal(log['type'], output['type'])
+    assert_equal(log['timestamp'], output['timestamp'])
+    assert_equal(log['uuid'], output['uuid'])
+    assert_equal(log['datasourceId'], output['datasourceId'])
+    assert_equal(log['datasourceName'], output['datasourceName'])
+    assert_equal(log['userId'], output['userId'])
+    assert_equal(log['userName'], output['userName'])
+    assert_equal(log['query'], output['query'])
+    assert_equal(log['hash'], output['hash'])
+  end
+
+  def test_json_chunk_log
+    log = sample_chunk_log
+    append_log_file_content(create_json_line_from_hash(log))
+    output = @stdout.gets
+    output = extract_valid_json_from_log(output)
+    assert_equal(log['type'], output['type'])
+    assert_equal(log['timestamp'], output['timestamp'])
+    assert_equal(log['uuid'], output['uuid'])
+    assert_equal(log['chunkId'], output['chunkId'])
+    assert_equal(log['events'], output['events'])
+    assert_equal(log['hash'], output['hash'])
+  end
+
+  def test_json_post_start_log
+    log = sample_post_start_log
+    append_log_file_content(create_json_line_from_hash(log))
+    output = @stdout.gets
+    output = extract_valid_json_from_log(output)
+    assert_equal(log['type'], output['type'])
+    assert_equal(log['timestamp'], output['timestamp'])
+    assert_equal(log['uuid'], output['uuid'])
+    assert_equal(log['query'], output['query'])
+    assert_equal(log['hash'], output['hash'])
+  end
+
+  def test_json_unclass_log
+    log = sample_unclass_log
+    append_log_file_content(create_json_line_from_hash(log))
+    output = @stdout.gets
+    output = extract_valid_json_from_log(output)
+    assert_equal(log['type'], output['type'])
+    assert_equal(log['timestamp'], output['timestamp'])
+    assert_equal(log['uuid'], output['uuid'])
+    assert_equal(log['records'], output['records'])
+    assert_equal(log['duration'], output['duration'])
+    assert_equal(log['hash'], output['hash'])
+  end
+
+  def test_json_complete_log
+    log = sample_complete_log
+    append_log_file_content(create_json_line_from_hash(log))
+    output = @stdout.gets
+    output = extract_valid_json_from_log(output)
+    assert_equal(log['type'], output['type'])
+    assert_equal(log['timestamp'], output['timestamp'])
+    assert_equal(log['uuid'], output['uuid'])
+    assert_equal(log['duration'], output['duration'])
+    assert_equal(log['records'], output['records'])
+  end
+end
+
+class TestFluentFileCSVAcceptance < Test::Unit::TestCase
+  include Fluent::Test::Helpers
+  include TestHelperModule
+
+  def setup
+    super
+    Fluent::Test.setup
+
+    ENV['LOG_FILE_PATH'] = LOG_FILE_PATH
+    File.new(LOG_FILE_PATH, 'w')
+    generate_fluent_conf('file-csv', 'stdout')
+    _, @stdout, _, @fluent_thread = Open3.popen3("fluentd -c #{ETC_DIR}/fluent.conf -p ./fluentd/plugins")
+    wait_for_fluent(@stdout)
+    clear_buffer(@stdout)
+  end
+
+  def cleanup
+    super
+
+    Process.kill(SIGTERM, @fluent_thread.pid)
+    delete_log_file
+    ENV['LOG_FILE_PATH'] = nil
+  end
+
+  def append_log_file_content(txt)
+    File.open(LOG_FILE_PATH, 'a') do |file|
+      file.write("#{txt}\n")
+    end
+  end
+
+  def test_csv_start_log
+    log = sample_start_log_csv
+    append_log_file_content(create_csv_log_from_hash(log))
+    output = @stdout.gets
+    output = extract_valid_json_from_log(output)
+    assert_equal(log['1'], output['timestamp'])
+    assert_equal(log['2'], output['type'])
+    assert_equal(log['3'], output['uuid'])
+    assert_equal(log['4'], output['datasourceId'])
+    assert_equal(log['5'], output['datasourceName'])
+    assert_equal(log['6'], output['userId'])
+    assert_equal(log['7'], output['userName'])
+    assert_equal(log['8'], output['query'])
+    assert_equal(log['9'], output['hash'])
+  end
+
+  def test_csv_chunk_log
+    log = sample_chunk_log_csv
+    append_log_file_content(create_csv_log_from_hash(log))
+    output = @stdout.gets
+    output = extract_valid_json_from_log(output)
+    assert_equal(log['1'], output['timestamp'])
+    assert_equal(log['2'], output['type'])
+    assert_equal(log['3'], output['uuid'])
+    assert_equal(log['4'], output['chunkId'])
+    assert_equal(log['5'], output['events'])
+    assert_equal(log['6'], output['hash'])
+  end
+
+  def test_csv_post_start_log
+    log = sample_post_start_log_csv
+    append_log_file_content(create_csv_log_from_hash(log))
+    output = @stdout.gets
+    output = extract_valid_json_from_log(output)
+    assert_equal(log['1'], output['timestamp'])
+    assert_equal(log['2'], output['type'])
+    assert_equal(log['3'], output['uuid'])
+    assert_equal(log['4'].gsub("\"", ""), output['query'])
+    assert_equal(log['5'], output['hash'])
+  end
+
+  def test_csv_unclass_log
+    log = sample_event_log_csv
+    append_log_file_content(create_csv_log_from_hash(log))
+    output = @stdout.gets
+    output = extract_valid_json_from_log(output)
+    assert_equal(log['1'], output['timestamp'])
+    assert_equal(log['2'], output['type'])
+    assert_equal(log['3'], output['uuid'])
+    assert_equal(log['4'], output['undef'])
+    assert_equal(log['5'], output['duration'])
+    assert_equal(log['6'], output['data'])
+  end
+
+  def test_csv_complete_log
+    log = sample_complete_log_csv
+    append_log_file_content(create_csv_log_from_hash(log))
+    output = @stdout.gets
+    output = extract_valid_json_from_log(output)
+    assert_equal(log['1'], output['timestamp'])
+    assert_equal(log['2'], output['type'])
+    assert_equal(log['3'], output['uuid'])
+    assert_equal(log['4'], output['duration'])
+    assert_equal(log['5'], output['records'])
   end
 end
 
@@ -238,6 +433,11 @@ def extract_valid_json_from_log(log)
     log = log[idx..-1]
   end
   JSON.parse(log)
+end
+
+def delete_log_file
+  File.delete(LOG_FILE_PATH)
+  File.delete("#{LOG_FILE_PATH}.pos")
 end
 
 def sample_start_log
@@ -341,10 +541,18 @@ def sample_event_log_csv
   }
 end
 
-def create_log_message(hash)
-  "<5>2021-11-25T00:00:00Z ip-0-0-0-0 strongDM[734548]: #{JSON.generate(hash)}"
+def create_json_log_message(hash)
+  "<5>#{create_json_line_from_hash(hash)}"
 end
 
-def create_log_message_from_csv(hash)
-  "<5>#{hash.values.join(',')}"
+def create_json_line_from_hash(hash)
+  "2021-11-25T00:00:00Z ip-0-0-0-0 strongDM[734548]: #{JSON.generate(hash)}"
+end
+
+def create_csv_log_message(hash)
+  "<5>#{create_csv_log_from_hash(hash)}"
+end
+
+def create_csv_log_from_hash(hash)
+  "#{hash.values.join(',')}"
 end

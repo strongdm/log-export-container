@@ -1,5 +1,6 @@
 require 'json'
 require 'date'
+require_relative './parse_entities'
 
 def get_audit_activities
   interval_time = extract_activity_interval
@@ -16,16 +17,6 @@ def extract_activity_interval
     interval = (ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'].match /activities\/+(\d+)/)[1].to_i || 15
   end
   interval
-end
-
-def parse_activities(output_list)
-  parsed_activities = []
-  output_list.each do |item|
-    activity = JSON.parse(item)
-    activity['type'] = 'activity'
-    parsed_activities << activity
-  end
-  parsed_activities
 end
 
 def print_activities(activities)

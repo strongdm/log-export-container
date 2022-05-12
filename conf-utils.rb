@@ -61,7 +61,12 @@ def input_conf
   else
     filename = "#{ETC_DIR}/input-syslog-json.conf"
   end
-  File.read(filename)
+  stream_entity = extract_value(ENV["LOG_EXPORT_CONTAINER_STREAM_AUDIT_ENTITY"])
+  file = File.read(filename)
+  if conf == "file-json" && stream_entity != ""
+    file = file.gsub("\#{ENV['LOG_FILE_PATH']}", "/var/log/sdm-audit-#{stream_entity}.log")
+  end
+  file
 end
 
 def decode_chunk_events_conf
