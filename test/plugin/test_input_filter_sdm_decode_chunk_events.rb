@@ -3,8 +3,8 @@
 require 'test/unit'
 require 'fluent/test'
 require 'fluent/test/helpers'
-require 'fluent/test/driver/output'
 require_relative '../helper'
+require_relative '../stdout_utils'
 require_relative '../../fluentd/plugins/filter_sdm_decode_chunk_events'
 
 class TestSDMDecodeChunkEventsFilter < Test::Unit::TestCase
@@ -165,14 +165,4 @@ def sample_decoded_chunk_log
       }
     ]
   }
-end
-
-def omit_stdout(&block)
-  original_stdout = $stdout
-  $stdout = StringIO.new
-  begin
-    yield
-  ensure
-    $stdout = original_stdout
-  end
 end
