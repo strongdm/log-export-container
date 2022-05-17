@@ -13,6 +13,7 @@ def create_file
     f.write(input_extract_audit_entity_conf("roles"))
     f.write(default_classify_conf)
     f.write(custom_classify_conf)
+    f.write(File.read("#{ETC_DIR}/healthcheck.conf"))
     f.write(File.read("#{ETC_DIR}/process.conf"))
     f.write(decode_chunk_events_conf)
     f.write(output_conf)

@@ -109,6 +109,8 @@ GEM
       fluentd (>= 0.14.22)
     fluent-plugin-grafana-loki (1.2.18)
       fluentd (>= 1.9.3, < 2)
+    fluent-plugin-http-healthcheck (0.1.0)
+      fluentd (>= 0.14.10, < 2)
     fluent-plugin-kafka (0.17.5)
       fluentd (>= 0.10.58, < 2)
       ltsv
@@ -341,6 +343,7 @@ DEPENDENCIES
   fluent-plugin-datadog
   fluent-plugin-elasticsearch
   fluent-plugin-grafana-loki
+  fluent-plugin-http-healthcheck
   fluent-plugin-kafka
   fluent-plugin-logzio
   fluent-plugin-mongo

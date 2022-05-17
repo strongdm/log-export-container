@@ -45,6 +45,8 @@ You could also run the project in your local without docker, please refer to [CO
 ## Monitoring
 Currently the application supports Prometheus Metrics about the received and forwarded logs. For more details, please see [CONFIGURE_PROMETHEUS](docs/monitoring/CONFIGURE_PROMETHEUS.md)
 
+There is also a health check endpoint available at `http://localhost:24322`. It returns a "200 OK" HTTP response with an empty body if it is healthy.
+
 ## Contributing
 Refer to the [contributing](CONTRIBUTING.md) guidelines or dump part of the information here.
 
