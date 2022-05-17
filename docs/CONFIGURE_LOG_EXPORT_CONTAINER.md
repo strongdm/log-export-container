@@ -8,7 +8,12 @@ nav_order: 2
 
 ## The container
 
+The container can be configured to forward syslog messages to a several number of destinations, even at the same time. 
+For that, you need to provide some commonly required environment variables and some optionals depending on the targets.
+
 ### Required configuration
+
+These are the commonly required variables:
 
 - **LOG_EXPORT_CONTAINER_INPUT**. Container input format (`syslog-json`, `syslog-csv`, `tcp-json`, `tcp-csv`, `file-json` or `file-csv`). Default: `syslog-json`
 - **LOG_EXPORT_CONTAINER_OUTPUT**. Container output storage (`stdout`, `remote-syslog`, `s3`, `cloudwatch`, `splunk-hec`, `datadog`, `azure-loganalytics`, `sumologic`, `kafka`, `mongo`, `logz`, `loki`, `elasticsearch` and/or `bigquery`). Default: `stdout`. You could configure multiple storages, for example: `stdout s3 datadog`.
@@ -16,6 +21,9 @@ nav_order: 2
 When using `LOG_EXPORT_CONTAINER_INPUT=file-json` or `LOG_EXPORT_CONTAINER_INPUT=file-csv` add variables listed in [CONFIGURE_FILE_INPUT.md](inputs/CONFIGURE_FILE_INPUT.md)
 
 ### Optional configuration
+
+Here you will find the complete list of supported targets and for each one there will be a link pointing to their respective
+detailed configuration instructions.
 
 #### Remote Syslog
 
