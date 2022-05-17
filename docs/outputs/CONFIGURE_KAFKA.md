@@ -13,9 +13,9 @@ The Log Export Container uses a [fluentd kafka output plugin](https://github.com
 
 ## Plugin changes
 
-The kafka output plugin supports multiple configurations. Please refer to [output-kafka.conf](../fluentd/etc/output-kafka.conf)
+The kafka output plugin supports multiple configurations. Please refer to [output-kafka.conf](../../fluentd/etc/output-kafka.conf)
 
-In case you want to specify different parameters and customize the output plugin, you could download [output-kafka.conf](../fluentd/etc/output-kafka.conf), make your modifications, and pass the file to the container. For example:
+In case you want to specify different parameters and customize the output plugin, you could download [output-kafka.conf](../../fluentd/etc/output-kafka.conf), make your modifications, and pass the file to the container. For example:
 ```
 docker run -p 5140:5140 \
   -v /path-to-your/output-cloudwatch.conf:/fluentd/etc/output-cloudwatch.conf \

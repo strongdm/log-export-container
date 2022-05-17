@@ -19,9 +19,9 @@ about which columns you will need to create, just refer to the example files, fo
 
 ## Plugin changes
 
-The GCP BigQuery output plugin supports multiple configurations. Please refer to [output-bigquery.conf](../fluentd/etc/output-bigquery.conf)
+The GCP BigQuery output plugin supports multiple configurations. Please refer to [output-bigquery.conf](../../fluentd/etc/output-bigquery.conf)
 
-In case you want to specify different parameters and customize the output plugin, download [output-bigquery.conf](../fluentd/etc/output-bigquery.conf), make your modifications, and pass the file to the container. For example:
+In case you want to specify different parameters and customize the output plugin, download [output-bigquery.conf](../../fluentd/etc/output-bigquery.conf), make your modifications, and pass the file to the container. For example:
 ```
 docker run -p 5140:5140 \
   -v /path-to-your/output-bigquery.conf:/fluentd/etc/output-bigquery.conf \
