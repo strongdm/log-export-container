@@ -2,7 +2,7 @@
 layout: default
 title: Splunk HEC
 parent: Outputs
-nav_order: 1
+nav_order: 12
 ---
 
 

@@ -2,7 +2,7 @@
 layout: default
 title: Kafka
 parent: Outputs
-nav_order: 2
+nav_order: 6
 ---
 # Configure AWS CloudWatch
 

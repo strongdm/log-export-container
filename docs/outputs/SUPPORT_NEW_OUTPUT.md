@@ -2,7 +2,7 @@
 layout: default
 title: Add new output
 parent: Outputs
-nav_order: 9
+nav_order: 14
 ---
 # Support new Output
 

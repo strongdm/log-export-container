@@ -2,7 +2,7 @@
 layout: default
 title: Sumologic
 parent: Outputs
-nav_order: 9
+nav_order: 13
 ---
 # Configure Sumo Logic
 

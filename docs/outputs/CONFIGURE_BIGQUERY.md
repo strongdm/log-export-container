@@ -2,7 +2,7 @@
 layout: default
 title: Big Query
 parent: Outputs
-nav_order: 12
+nav_order: 2
 ---
 # Configure GCP BigQuery
 
