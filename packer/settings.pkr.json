@@ -1,0 +1,46 @@
+{
+  "variables": {
+    "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
+    "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
+    "aws_region": "us-west-2"
+  },
+  "builders": [
+    {
+      "access_key": "{{user `aws_access_key`}}",
+      "secret_key": "{{user `aws_secret_key`}}",
+      "ami_name": "log-export-container",
+      "instance_type": "t2.micro",
+      "region": "{{user `aws_region`}}",
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "ubuntu/images/*ubuntu-focal-20.04-amd64-server*",
+          "root-device-type": "ebs"
+        },
+        "owners": ["099720109477"],
+        "most_recent": true
+      },
+      "ssh_username": "ubuntu",
+      "type": "amazon-ebs"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "lec-playbook.yml",
+      "destination": "/home/ubuntu/lec-playbook.yml"
+    },
+    {
+      "type": "file",
+      "source": "env-file.example",
+      "destination": "/home/ubuntu/env-file"
+    },
+    {
+      "execute_command": "echo 'ubuntu' | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
+      "scripts": [
+        "packer/install-ansible-and-run-playbook.sh"
+      ],
+      "type": "shell"
+    }
+  ]
+}
