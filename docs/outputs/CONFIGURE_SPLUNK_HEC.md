@@ -2,7 +2,7 @@
 layout: default
 title: Splunk HEC
 parent: Outputs
-nav_order: 1
+nav_order: 12
 ---
 
 
@@ -17,9 +17,9 @@ IMPORTANT: SSL validation is disabled by default, you can pass different [SSL Pa
 
 ## Plugin changes
 
-The splunk output plugin supports multiple configurations. Please refer to [output-splunk-hec.conf](../fluentd/etc/output-splunk-hec.conf)
+The splunk output plugin supports multiple configurations. Please refer to [output-splunk-hec.conf](../../../fluentd/etc/output-splunk-hec.conf)
 
-In case you want to specify different parameters and customize the output plugin, you could download [output-splunk-hec.conf](../fluentd/etc/output-splunk-hec.conf), make your modifications, and pass the file to the container. For example:
+In case you want to specify different parameters and customize the output plugin, you could download [output-splunk-hec.conf](../../../fluentd/etc/output-splunk-hec.conf), make your modifications, and pass the file to the container. For example:
 ```
 docker run -p 5140:5140 \
   -v /path-to-your/output-splunk.conf:/fluentd/etc/output-splunk.conf \

@@ -2,7 +2,7 @@
 layout: default
 title: Azure Log Analytics
 parent: Outputs
-nav_order: 5
+nav_order: 1
 ---
 # Configure Azure Log Analytics
 
@@ -12,9 +12,9 @@ The Log Export Container uses a [fluentd azure-loganalytics output plugin](https
 
 ## Plugin changes
 
-The azure-loganalytics output plugin supports multiple configurations. Please refer to [output-azure-loganalytics.conf](../fluentd/etc/output-azure-loganalytics.conf)
+The azure-loganalytics output plugin supports multiple configurations. Please refer to [output-azure-loganalytics.conf](../../fluentd/etc/output-azure-loganalytics.conf)
 
-In case you want to specify different parameters and customize the output plugin, download [output-azure-loganalytics.conf](../fluentd/etc/output-azure-loganalytics.conf), make your modifications, and pass the file to the container. For example:
+In case you want to specify different parameters and customize the output plugin, download [output-azure-loganalytics.conf](../../fluentd/etc/output-azure-loganalytics.conf), make your modifications, and pass the file to the container. For example:
 ```
 docker run -p 5140:5140 \
   -v /path-to-your/output-azure-loganalytics.conf:/fluentd/etc/output-azure-loganalytics.conf \

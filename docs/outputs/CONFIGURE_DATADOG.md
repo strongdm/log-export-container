@@ -2,7 +2,7 @@
 layout: default
 title: Datadog
 parent: Outputs
-nav_order: 3
+nav_order: 4
 ---
 # Configure Datadog
 
@@ -11,9 +11,9 @@ The Log Export Container uses a [fluentd datadog output plugin](https://github.c
 
 ## Plugin changes
 
-The datadog output plugin supports multiple configurations. Please refer to [output-datadog.conf](../fluentd/etc/output-datadog.conf)
+The datadog output plugin supports multiple configurations. Please refer to [output-datadog.conf](../../fluentd/etc/output-datadog.conf)
 
-In case you want to specify different parameters and customize the output plugin, you could download [output-datadog.conf](../fluentd/etc/output-datadog.conf), make your modifications, and pass the file to the container. For example:
+In case you want to specify different parameters and customize the output plugin, you could download [output-datadog.conf](../../fluentd/etc/output-datadog.conf), make your modifications, and pass the file to the container. For example:
 ```
 docker run -p 5140:5140 \
   -v /path-to-your/output-datadog.conf:/fluentd/etc/output-datadog.conf \

@@ -15,9 +15,9 @@ The Log Export Container uses [fluentd s3 output plugin](https://docs.fluentd.or
 
 ## Plugin changes
 
-The s3 output plugin supports multiple configurations. Log Export Container uses an in-memory buffer with almost default params. Please refer to [output-s3.conf](../fluentd/etc/output-s3.conf)
+The s3 output plugin supports multiple configurations. Log Export Container uses an in-memory buffer with almost default params. Please refer to [output-s3.conf](../../../fluentd/etc/output-s3.conf)
 
-In case you want to specify different parameters and customize the output plugin, you could download [output-s3.conf](../fluentd/etc/output-s3.conf), make your modifications, and pass the file to the container. For example:
+In case you want to specify different parameters and customize the output plugin, you could download [output-s3.conf](../../../fluentd/etc/output-s3.conf), make your modifications, and pass the file to the container. For example:
 ```
 docker run -p 5140:5140 \
   -v /path-to-your/output-s3.conf:/fluentd/etc/output-s3.conf \
