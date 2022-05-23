@@ -19,6 +19,7 @@ The Log Export Container is a Docker Image you can use for spinning up multiple 
 1. Download the `docker-compose.yml` file from the Github repo onto your machine (or copy-paste its contents into a file you created directly on the machine with the same name).
    - Make sure that the 'Required variables' in the .yml file are set appropriately based on your desired log format and output destination.
 2. Run with your preferred container orchestrator (with docker, you can simply run `docker-compose up`)
+   - NOTE: for deployment purposes, we recommend running the Docker image in a linux system. And the machine should have at least 200 MB of memory and 1 GB of disk available. 
 3. Log into the strongDM Admin UI and go to the Settings page, then the Log Encryption & Storage tab.
 4. Set "Log locally on relays?" to 'Yes'
 5. Set "Local storage?" to "Syslog" and enter the IP address of the machine running the Log Export Container along with port 5140
