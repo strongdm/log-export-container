@@ -64,7 +64,7 @@ def input_conf
   stream_entity = extract_value(ENV["LOG_EXPORT_CONTAINER_STREAM_AUDIT_ENTITY"])
   file = File.read(filename)
   if conf == "file-json" && stream_entity != ""
-    file = file.gsub("\#{ENV['LOG_FILE_PATH']}", "/var/log/sdm-audit-#{stream_entity}.log")
+    file = file.gsub("\#{ENV['LOG_FILE_PATH']}", "./sdm-audit-#{stream_entity}.log")
   end
   file
 end

@@ -9,7 +9,7 @@ ENTITY_PARSER = {
 }
 
 def stream_audit_data(entity_name)
-  file_path = "/var/log/sdm-audit-#{entity_name}.log"
+  file_path = "./sdm-audit-#{entity_name}.log"
   File.new(file_path, "w")
   _, @stdout, _, @fluent_thread = Open3.popen3("sdm audit #{entity_name} -f -j")
   while output = @stdout.gets
