@@ -1,12 +1,19 @@
 require 'json'
 require 'date'
 require_relative './parse_entities'
+require_relative './dump_utils'
 
 def get_audit_activities
   interval_time = extract_activity_interval
   datetime_from = DateTime.now - (interval_time + 1.0)/(24*60)
-  datetime_to = DateTime.now - 1.0/(24*60)
-  output = `sdm audit activities -j -e --from "#{datetime_from.to_s}" --to "#{datetime_to.to_s}"`
+  error_file_path = "/var/log/sdm-audit-activities-errors.log"
+  output = backoff_retry(-> () {
+    datetime_to = DateTime.now - 1.0/(24*60)
+    `sdm audit activities -j -e --from "#{datetime_from.to_s}" --to "#{datetime_to.to_s}" 2> #{error_file_path}`
+  }, "activities", error_file_path)
+  unless output
+    return
+  end
   output.split("\n")
 end
 
@@ -24,5 +31,8 @@ def print_activities(activities)
 end
 
 activities = get_audit_activities
+unless activities
+  return
+end
 parsed_activities = parse_activities(activities)
 print_activities(parsed_activities)

@@ -1,5 +1,6 @@
 require 'json'
 require 'date'
+require_relative './dump_utils'
 
 ENTITY_TYPES = {
   "resources" => "resource",
@@ -12,7 +13,13 @@ def entity_name_argument
 end
 
 def get_audit_rows
-  output = `sdm audit #{entity_name_argument} -j`
+  error_file_path = "/var/log/sdm-audit-#{entity_name_argument}-errors.log"
+  output = backoff_retry(-> () {
+    `sdm audit #{entity_name_argument} -j 2> #{error_file_path}`
+  }, entity_name_argument, error_file_path)
+  unless output
+    return
+  end
   output.split("\n")
 end
 
