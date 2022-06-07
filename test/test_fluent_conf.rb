@@ -376,7 +376,7 @@ def activities_conf(interval)
   "  </parse>\n" \
   "  tag activity\n" \
   "  run_interval #{interval}m\n" \
-  "  command ruby /fluentd/scripts/dump_activities.rb\n" \
+  "  command \"ruby \#{ENV['FLUENTD_DIR']}/scripts/dump_activities.rb\"\n" \
   "</source>\n"
 end
 
@@ -388,6 +388,6 @@ def entity_conf(tag, interval, entity)
   "  </parse>\n" \
   "  tag #{tag}\n" \
   "  run_interval #{interval}m\n" \
-  "  command ruby /fluentd/scripts/dump_sdm_entity.rb #{entity}\n" \
+  "  command \"ruby \#{ENV['FLUENTD_DIR']}/scripts/dump_sdm_entity.rb #{entity}\"\n" \
   "</source>\n"
 end
