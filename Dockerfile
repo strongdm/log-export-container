@@ -22,6 +22,7 @@ RUN unzip -x sdm*.zip
 RUN rm sdm*.zip
 RUN mv sdm /home/fluent
 RUN apk del curl ca-certificates wget
+RUN mkdir /root/.sdm
 
 COPY fluentd /fluentd
 COPY create-conf.rb /create-conf.rb
