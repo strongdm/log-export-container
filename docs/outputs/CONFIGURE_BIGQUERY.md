@@ -14,8 +14,8 @@ The Log Export Container uses a [fluent-plugin-bigquery](https://github.com/flue
 * **BIGQUERY_TABLE_ID**.  ID of the table created within the dataset informed in the variable `BIG_QUERY_DATASET_ID`
 
 With all the previous steps done, the LEC will already be sending data to your table in BigQuery, but pay attention that the column names of your table in BigQuery must be the same as the fields returned in the logs. If you have any doubts
-about which columns you will need to create, just refer to the example files, for logs received with input in JSON format refer to this [file](../examples/bigquery_table_schema_json_input_example.json) and for logs in CSV format refer to this
-[file](../examples/bigquery_table_schema_csv_input_example.json), which can even be used to generate a table with all the fields that the LEC uses
+about which columns you will need to create, refer to the example files, for logs received with input in JSON format refer to this [file](../examples/bigquery_table_schema_json_input_example.json) and for logs in CSV format refer to this
+[file](../examples/bigquery_table_schema_csv_input_example.json), which can be used to generate a table with fields that the LEC uses, but these files may not have all the fields you need, in which case you will need to add new fields.
 
 ## Plugin changes
 
