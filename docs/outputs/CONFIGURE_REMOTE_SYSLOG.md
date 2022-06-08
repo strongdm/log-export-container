@@ -2,7 +2,7 @@
 layout: default
 title: Remote Syslog
 parent: Outputs
-nav_order: 9
+nav_order: 10
 ---
 # Configure Remote Syslog
 

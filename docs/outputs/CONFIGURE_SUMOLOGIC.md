@@ -2,7 +2,7 @@
 layout: default
 title: Sumologic
 parent: Outputs
-nav_order: 9
+nav_order: 13
 ---
 # Configure Sumo Logic
 
@@ -12,9 +12,9 @@ The Log Export Container uses a [fluentd sumologic output plugin](https://github
 
 ## Plugin changes
 
-The sumologic output plugin supports multiple configurations. Please refer to [output-sumologic.conf](../fluentd/etc/output-sumologic.conf)
+The sumologic output plugin supports multiple configurations. Please refer to [output-sumologic.conf](../../../fluentd/etc/output-sumologic.conf)
 
-In case you want to specify different parameters and customize the output plugin, download [output-sumologic.conf](../fluentd/etc/output-sumologic.conf), make your modifications, and pass the file to the container. For example:
+In case you want to specify different parameters and customize the output plugin, download [output-sumologic.conf](../../fluentd/etc/output-sumologic.conf), make your modifications, and pass the file to the container. For example:
 ```
 docker run -p 5140:5140 \
   -v /path-to-your/output-sumologic.conf:/fluentd/etc/output-sumologic.conf \

@@ -2,7 +2,7 @@
 layout: default
 title: Elasticsearch
 parent: Outputs
-nav_order: 9
+nav_order: 5
 ---
 # Configure ElasticSearch
 

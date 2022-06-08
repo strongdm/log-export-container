@@ -2,7 +2,7 @@
 layout: default
 title: Mongo
 parent: Outputs
-nav_order: 8
+nav_order: 9
 ---
 # Configure Mongo
 
