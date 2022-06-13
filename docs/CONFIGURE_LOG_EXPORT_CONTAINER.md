@@ -73,11 +73,9 @@ When using `LOG_EXPORT_CONTAINER_OUTPUT=bigquery` add variables listed in [CONFI
 
 When using `syslog-json` or `tcp-json` specify `LOG_EXPORT_CONTAINER_DECODE_CHUNK_EVENTS=true` to decode chunk events. Possible values: true or false. **It's not enabled by default**. Please refer to [CONFIGURE_SSH_DECODE](processing/CONFIGURE_SSH_DECODE.md) for more information.
 
-### strongDM CLI Audit
+### strongDM Audit
 
-To use strongDM CLI Audit specify `LOG_EXPORT_CONTAINER_EXTRACT_AUDIT=activities/15 resources/480 users/480 roles/480`, it'll store the logs from strongDM CLI Audit in your specified output. You can configure this option with whatever features and log extraction interval you want. **It's not enabled by default**. Please refer to [CONFIGURE_SDM_AUDIT](inputs/CONFIGURE_SDM_AUDIT.md) for more information.
-
-We moved the section describing the variable `LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES` to [CONFIGURE_SDM_AUDIT](inputs/CONFIGURE_SDM_AUDIT.md) file. Please refer to it to know the behavior with this two variables.
+When using strongDM Audit specify `LOG_EXPORT_CONTAINER_EXTRACT_AUDIT=activities/15 resources/480 users/480 roles/480` to store the logs from strongDM Audit in your specified output. You can configure this option with whatever features and log extraction interval you want. **It's not enabled by default**. Please refer to [CONFIGURE_SDM_AUDIT](inputs/CONFIGURE_SDM_AUDIT.md) for more information.
 
 ### Source Data
 

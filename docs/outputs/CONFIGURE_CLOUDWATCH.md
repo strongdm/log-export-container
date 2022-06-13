@@ -2,7 +2,7 @@
 layout: default
 title: Cloudwatch
 parent: Outputs
-nav_order: 4
+nav_order: 3
 ---
 # Configure AWS CloudWatch
 
@@ -37,9 +37,9 @@ Add -at least- the following policy to your IAM user:
 
 ## Plugin changes
 
-The cloudwatch output plugin supports multiple configurations. Please refer to [output-cloudwatch.conf](../fluentd/etc/output-cloudwatch.conf)
+The cloudwatch output plugin supports multiple configurations. Please refer to [output-cloudwatch.conf](../../fluentd/etc/output-cloudwatch.conf)
 
-In case you want to specify different parameters and customize the output plugin, you could download [output-cloudwatch.conf](../fluentd/etc/output-cloudwatch.conf), make your modifications, and pass the file to the container. For example:
+In case you want to specify different parameters and customize the output plugin, you could download [output-cloudwatch.conf](../../fluentd/etc/output-cloudwatch.conf), make your modifications, and pass the file to the container. For example:
 ```
 docker run -p 5140:5140 \
   -v /path-to-your/output-cloudwatch.conf:/fluentd/etc/output-cloudwatch.conf \

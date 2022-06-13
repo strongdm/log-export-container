@@ -10,7 +10,7 @@ The container includes all plugins provided by the [fluent/fluentd/alpine:edge](
 
 With the available plugins you could process log traces, adding, changing or removing information. For example: a customer might want to avoid exporting all raw data to their external Logging Service - there could be sensitive data (e.g. credentials) being exposed.
 
-In order to include extra processing steps in your pipeline, just download [process.conf](../fluentd/etc/process.conf), make your modifications, and pass the file to the container. For example:
+In order to include extra processing steps in your pipeline, just download [process.conf](../../../fluentd/etc/process.conf), make your modifications, and pass the file to the container. For example:
 ```
 docker run -p 5140:5140 \
   -v /path-to-your/process.conf:/fluentd/etc/process.conf \
@@ -23,7 +23,7 @@ You might ask: "Can I remove X from the query log?", or, "we have to see API key
 
 The Sanitizer plugin allows you to obfuscate all or certain parts a log trace. Please refer to the [documentation](https://github.com/fluent/fluent-plugin-sanitizer) for more details.
 
-The current [process.conf](../fluentd/etc/process.conf) includes some examples you could just, uncoment and start to use now. From the provided sample rules:
+The current [process.conf](../../fluentd/etc/process.conf) includes some examples you could just, uncoment and start to use now. From the provided sample rules:
 
 Rules:
 ```
