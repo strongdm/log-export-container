@@ -5,12 +5,12 @@ ENV GF_AUTH_ANONYMOUS_ENABLED="true"
 ENV GF_AUTH_ANONYMOUS_ORG_ROLE="Admin"
 
 COPY grafana.ini /etc/grafana/
-COPY dashboard.sql /
+COPY init_dashboard.sql /
 
 USER root
 RUN apk add sqlite
 
-RUN sqlite3 /var/lib/grafana/grafana.db < /dashboard.sql
-RUN rm /dashboard.sql
+RUN sqlite3 /var/lib/grafana/grafana.db < /init_dashboard.sql
+RUN rm /init_dashboard.sql
 
 USER grafana
