@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   log-export-container:
-    image: public.ecr.aws/strongdm/log-export-container:latest
+    build: .
     ports:
       - "5140:5140"
       - "24321:24321"
