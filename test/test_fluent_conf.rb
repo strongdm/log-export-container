@@ -17,6 +17,12 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
     reset_environment_variables
   end
 
+  def teardown
+    super
+
+    reset_environment_variables
+  end
+
   def test_syslog_json_input_conf
     fluent_conf = generate_fluent_conf('syslog-json', 'stdout')
     assert_includes(fluent_conf, input_conf)
@@ -75,7 +81,6 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
   end
 
   def test_audit_when_generate_activity_logs_using_the_default_interval
-    reset_environment_variables
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = 'true'
     expected = activities_conf("15")
     actual = input_extract_audit_activities_conf
@@ -90,7 +95,6 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
   end
 
   def test_audit_when_generate_activity_logs_using_a_custom_interval
-    reset_environment_variables
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = 'true'
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] = '20'
     expected = activities_conf("20")
@@ -106,7 +110,6 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
   end
 
   def test_audit_when_activity_settings_overwrite_audit_settings
-    reset_environment_variables
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = 'true'
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] = '20'
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = 'activities/10 resources/30 users/50 roles/60'
@@ -134,7 +137,6 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
   end
 
   def test_audit_when_there_are_multiple_entities_to_get_the_logs
-    reset_environment_variables
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = 'activities/10 resources/20 users/30 roles/40'
 
     actual_activities_conf = input_extract_audit_activities_conf
@@ -160,7 +162,6 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
   end
 
   def test_audit_when_all_intervals_are_empty
-    reset_environment_variables
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = 'activities/ resources/ users/ roles/'
 
     expected_activities_conf = activities_conf("15")
@@ -186,13 +187,43 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
   end
 
   def test_fluent_conf_when_enabling_monitoring
-    reset_environment_variables
     ENV['LOG_EXPORT_CONTAINER_ENABLE_MONITORING'] = 'true'
 
     fluent_conf = generate_fluent_conf('syslog-json', 'stdout')
     assert_includes(fluent_conf, input_conf)
     assert_includes(fluent_conf, default_classify_conf)
     assert_includes(fluent_conf, monitoring_conf)
+    assert_includes(fluent_conf, process_conf)
+    assert_includes(fluent_conf, output_conf)
+    assert(is_valid_fluent_conf)
+  end
+
+  def test_audit_when_stream_activities
+    ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = 'activities/stream'
+
+    expected_activities_conf = file_json_conf("sdm-audit-activities.log")
+    fluent_conf = generate_fluent_conf('syslog-json', 'stdout')
+
+    assert_includes(fluent_conf, input_conf)
+    assert_includes(fluent_conf, expected_activities_conf)
+    assert_includes(fluent_conf, default_classify_conf)
+    assert_includes(fluent_conf, process_conf)
+    assert_includes(fluent_conf, output_conf)
+    assert(is_valid_fluent_conf)
+  end
+
+  def test_audit_when_stream_activities_and_activities_interval
+    ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = 'activities/stream'
+    ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] = '1'
+
+    expected_activities_conf = activities_conf('1')
+    actual_activities_conf = input_extract_audit_activities_conf
+    fluent_conf = generate_fluent_conf('syslog-json', 'stdout')
+
+    assert_equal(expected_activities_conf, actual_activities_conf)
+    assert_includes(fluent_conf, input_conf)
+    assert_includes(fluent_conf, expected_activities_conf)
+    assert_includes(fluent_conf, default_classify_conf)
     assert_includes(fluent_conf, process_conf)
     assert_includes(fluent_conf, output_conf)
     assert(is_valid_fluent_conf)
@@ -391,14 +422,6 @@ def reset_environment_variables
   ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = nil
   ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] = nil
   ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = nil
-  ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = nil
-  ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = nil
-  ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] = nil
-  ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = nil
-  ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] = nil
-  ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = nil
-  ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = nil
-  ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = nil
   ENV['LOG_EXPORT_CONTAINER_ENABLE_MONITORING'] = nil
   ENV['REMOTE_SYSLOG_HOST'] = nil
   ENV['REMOTE_SYSLOG_PORT'] = nil
@@ -460,4 +483,16 @@ def entity_conf(tag, interval, entity)
   "  run_interval #{interval}m\n" \
   "  command \"ruby \#{ENV['FLUENTD_DIR']}/scripts/dump_sdm_entity.rb #{entity}\"\n" \
   "</source>\n"
+end
+
+def file_json_conf(file_path)
+  "<source>\n" \
+  "  @type tail\n" \
+  "  path \"#{ENV['FLUENTD_DIR']}/#{file_path}\"\n" \
+  "  pos_file \"#{ENV['FLUENTD_DIR']}/#{file_path}.pos\"\n" \
+  "  tag log\n" \
+  "  <parse>\n" \
+  "    @type sdm_json\n" \
+  "  </parse>\n" \
+  "</source>\n" \
 end

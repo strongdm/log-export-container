@@ -6,6 +6,7 @@ require_relative './conf-utils'
 def create_file
   File.open("#{ETC_DIR}/fluent.conf", "w") do |f|
     f.write(input_conf)
+    f.write(input_entities_stream)
     f.write(input_extract_audit_activities_conf)
     f.write(monitoring_conf)
     f.write(input_extract_audit_entity_conf("resources"))

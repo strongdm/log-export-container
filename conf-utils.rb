@@ -1,4 +1,6 @@
 
+require_relative './fluentd/scripts/parse_entities'
+
 SUPPORTED_STORES="stdout remote-syslog s3 cloudwatch splunk-hec datadog azure-loganalytics sumologic kafka mongo logz loki elasticsearch bigquery"
 AUDIT_ENTITY_TYPES = {
   "resources" => "resource",
@@ -61,12 +63,27 @@ def input_conf
   else
     filename = "#{ETC_DIR}/input-syslog-json.conf"
   end
-  stream_entity = extract_value(ENV["LOG_EXPORT_CONTAINER_STREAM_AUDIT_ENTITY"])
-  file = File.read(filename)
-  if conf == "file-json" && stream_entity != ""
-    file = file.gsub("\#{ENV['LOG_FILE_PATH']}", "/var/log/sdm-audit-#{stream_entity}.log")
+  File.read(filename)
+end
+
+def input_entities_stream
+  extract_audit = ENV["LOG_EXPORT_CONTAINER_EXTRACT_AUDIT"]
+  if extract_audit == nil or !extract_audit.include?("/stream")
+    return
   end
-  file
+  file = File.read("#{ETC_DIR}/input-file-json.conf")
+  stream_entities = extract_audit.downcase.split
+  files = []
+  stream_entities.each { |entity|
+    match_stream = entity.match(/(.+)\/stream/)
+    if not match_stream or !valid_stream_entities.include?(match_stream[1])
+      next
+    elsif match_stream[1] == "activities" && ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] != nil
+      next
+    end
+    files << file.gsub("\#{ENV['LOG_FILE_PATH']}", "#{ENV['FLUENTD_DIR']}/sdm-audit-#{match_stream[1]}.log")
+  }
+  files.join("\n")
 end
 
 def decode_chunk_events_conf
@@ -79,8 +96,8 @@ end
 
 def input_extract_audit_activities_conf
   extract_activities = extract_value(ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'])
-  extracted_entities = extract_value(ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'])
-  unless extract_activities == "true" || extracted_entities.match(/activities/)
+  extract_entities = extract_value(ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'])
+  if extract_activities != "true" && extract_entities.match(/activities/) == nil
     return
   end
   read_file = File.read("#{ETC_DIR}/input-extract-audit-activities.conf")
