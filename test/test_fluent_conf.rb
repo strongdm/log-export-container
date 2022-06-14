@@ -11,6 +11,12 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
     Fluent::Test.setup
   end
 
+  def cleanup
+    super
+
+    reset_environment_variables
+  end
+
   def test_syslog_json_input_conf
     fluent_conf = generate_fluent_conf('syslog-json', 'stdout')
     assert_includes(fluent_conf, input_conf)
@@ -68,7 +74,7 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
     assert(is_valid_fluent_conf)
   end
 
-  def test_audit_when_it_is_to_generate_activities_logs_using_the_default_interval
+  def test_audit_when_generate_activity_logs_using_the_default_interval
     reset_environment_variables
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = 'true'
     expected = activities_conf("15")
@@ -83,7 +89,7 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
     assert(is_valid_fluent_conf)
   end
 
-  def test_audit_when_it_is_to_generate_activities_logs_using_a_custom_interval
+  def test_audit_when_generate_activity_logs_using_a_custom_interval
     reset_environment_variables
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = 'true'
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] = '20'
@@ -99,19 +105,19 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
     assert(is_valid_fluent_conf)
   end
 
-  def test_audit_when_activities_settings_overwrite_audit_setting
+  def test_audit_when_activity_settings_overwrite_audit_settings
     reset_environment_variables
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = 'true'
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] = '20'
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = 'activities/10 resources/30 users/50 roles/60'
 
     expected_activities_conf = activities_conf("20")
-    actual_activities_conf = input_extract_audit_activities_conf
     expected_resources_conf = entity_conf("resource", "30", "resources")
-    actual_resources_conf = input_extract_audit_entity_conf("resources")
     expected_users_conf = entity_conf("user", "50", "users")
-    actual_users_conf = input_extract_audit_entity_conf("users")
     expected_roles_conf = entity_conf("role", "60", "roles")
+    actual_activities_conf = input_extract_audit_activities_conf
+    actual_resources_conf = input_extract_audit_entity_conf("resources")
+    actual_users_conf = input_extract_audit_entity_conf("users")
     actual_roles_conf = input_extract_audit_entity_conf("roles")
 
     assert_equal(expected_activities_conf, actual_activities_conf)
@@ -131,13 +137,39 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
     reset_environment_variables
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = 'activities/10 resources/20 users/30 roles/40'
 
-    expected_activities_conf = activities_conf("10")
     actual_activities_conf = input_extract_audit_activities_conf
-    expected_resources_conf = entity_conf("resource", "20", "resources")
     actual_resources_conf = input_extract_audit_entity_conf("resources")
-    expected_users_conf = entity_conf("user", "30", "users")
     actual_users_conf = input_extract_audit_entity_conf("users")
+    actual_roles_conf = input_extract_audit_entity_conf("roles")
+    expected_activities_conf = activities_conf("10")
+    expected_resources_conf = entity_conf("resource", "20", "resources")
+    expected_users_conf = entity_conf("user", "30", "users")
     expected_roles_conf = entity_conf("role", "40", "roles")
+
+    assert_equal(expected_activities_conf, actual_activities_conf)
+    assert_equal(expected_resources_conf, actual_resources_conf)
+    assert_equal(expected_users_conf, actual_users_conf)
+    assert_equal(expected_roles_conf, actual_roles_conf)
+
+    fluent_conf = generate_fluent_conf('syslog-json', 'stdout')
+    assert_includes(fluent_conf, input_conf)
+    assert_includes(fluent_conf, default_classify_conf)
+    assert_includes(fluent_conf, process_conf)
+    assert_includes(fluent_conf, output_conf)
+    assert(is_valid_fluent_conf)
+  end
+
+  def test_audit_when_all_intervals_are_empty
+    reset_environment_variables
+    ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = 'activities/ resources/ users/ roles/'
+
+    expected_activities_conf = activities_conf("15")
+    expected_resources_conf = entity_conf("resource", "480", "resources")
+    expected_users_conf = entity_conf("user", "480", "users")
+    expected_roles_conf = entity_conf("role", "480", "roles")
+    actual_activities_conf = input_extract_audit_activities_conf
+    actual_resources_conf = input_extract_audit_entity_conf("resources")
+    actual_users_conf = input_extract_audit_entity_conf("users")
     actual_roles_conf = input_extract_audit_entity_conf("roles")
 
     assert_equal(expected_activities_conf, actual_activities_conf)
@@ -153,27 +185,14 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
     assert(is_valid_fluent_conf)
   end
 
-  def test_audit_when_the_intervals_are_empty
+  def test_fluent_conf_when_enabling_monitoring
     reset_environment_variables
-    ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = 'activities/ resources/ users/ roles/'
-
-    expected_activities_conf = activities_conf("15")
-    actual_activities_conf = input_extract_audit_activities_conf
-    expected_resources_conf = entity_conf("resource", "480", "resources")
-    actual_resources_conf = input_extract_audit_entity_conf("resources")
-    expected_users_conf = entity_conf("user", "480", "users")
-    actual_users_conf = input_extract_audit_entity_conf("users")
-    expected_roles_conf = entity_conf("role", "480", "roles")
-    actual_roles_conf = input_extract_audit_entity_conf("roles")
-
-    assert_equal(expected_activities_conf, actual_activities_conf)
-    assert_equal(expected_resources_conf, actual_resources_conf)
-    assert_equal(expected_users_conf, actual_users_conf)
-    assert_equal(expected_roles_conf, actual_roles_conf)
+    ENV['LOG_EXPORT_CONTAINER_ENABLE_MONITORING'] = 'true'
 
     fluent_conf = generate_fluent_conf('syslog-json', 'stdout')
     assert_includes(fluent_conf, input_conf)
     assert_includes(fluent_conf, default_classify_conf)
+    assert_includes(fluent_conf, monitoring_conf)
     assert_includes(fluent_conf, process_conf)
     assert_includes(fluent_conf, output_conf)
     assert(is_valid_fluent_conf)
@@ -185,6 +204,12 @@ class TestCreateFluentConfChangingOutput < Test::Unit::TestCase
 
   def setup
     Fluent::Test.setup
+  end
+
+  def cleanup
+    super
+
+    reset_environment_variables
   end
 
   def test_remote_syslog_output_conf
@@ -366,6 +391,51 @@ def reset_environment_variables
   ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = nil
   ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] = nil
   ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = nil
+  ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = nil
+  ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = nil
+  ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] = nil
+  ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = nil
+  ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] = nil
+  ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = nil
+  ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = nil
+  ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = nil
+  ENV['LOG_EXPORT_CONTAINER_ENABLE_MONITORING'] = nil
+  ENV['REMOTE_SYSLOG_HOST'] = nil
+  ENV['REMOTE_SYSLOG_PORT'] = nil
+  ENV['REMOTE_SYSLOG_PROTOCOL'] = nil
+  ENV['AZURE_LOGANALYTICS_CUSTOMER_ID'] = nil
+  ENV['AZURE_LOGANALYTICS_SHARED_KEY'] = nil
+  ENV['AWS_ACCESS_KEY_ID'] = nil
+  ENV['AWS_SECRET_ACCESS_KEY'] = nil
+  ENV['AWS_REGION'] = nil
+  ENV['CLOUDWATCH_LOG_GROUP_NAME'] = nil
+  ENV['CLOUDWATCH_LOG_STREAM_NAME'] = nil
+  ENV['HOSTNAME'] = nil
+  ENV['DATADOG_API_KEY'] = nil
+  ENV['KAFKA_BROKERS'] = nil
+  ENV['KAFKA_TOPIC'] = nil
+  ENV['KAFKA_FORMAT_TYPE'] = nil
+  ENV['AWS_ACCESS_KEY_ID'] = nil
+  ENV['AWS_SECRET_ACCESS_KEY'] = nil
+  ENV['S3_BUCKET'] = nil
+  ENV['S3_REGION'] = nil
+  ENV['S3_PATH'] = nil
+  ENV['BIGQUERY_PRIVATE_KEY'] = nil
+  ENV['BIGQUERY_CLIENT_EMAIL'] = nil
+  ENV['BIGQUERY_PROJECT_ID'] = nil
+  ENV['BIGQUERY_DATASET_ID'] = nil
+  ENV['BIGQUERY_TABLE_ID'] = nil
+  ENV['SPLUNK_HEC_HOST'] = nil
+  ENV['SPLUNK_HEC_PORT'] = nil
+  ENV['SPLUNK_HEC_TOKEN'] = nil
+  ENV['SUMOLOGIC_ENDPOINT'] = nil
+  ENV['SUMOLOGIC_SOURCE_CATEGORY'] = nil
+  ENV['MONGO_URI'] = nil
+  ENV['LOGZ_ENDPOINT'] = nil
+  ENV['LOKI_URL'] = nil
+  ENV['ELASTICSEARCH_HOST'] = nil
+  ENV['ELASTICSEARCH_PORT'] = nil
+  ENV['ELASTICSEARCH_INDEX_NAME'] = nil
 end
 
 def activities_conf(interval)

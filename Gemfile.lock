@@ -119,6 +119,9 @@ GEM
     fluent-plugin-mongo (1.5.0)
       fluentd (>= 0.14.22, < 2)
       mongo (~> 2.6.0)
+    fluent-plugin-prometheus (2.0.3)
+      fluentd (>= 1.9.1, < 2)
+      prometheus-client (>= 2.1.0)
     fluent-plugin-remote_syslog (1.0.0)
       fluentd
       remote_syslog_sender (>= 1.1.1)
@@ -341,6 +344,7 @@ DEPENDENCIES
   fluent-plugin-kafka
   fluent-plugin-logzio
   fluent-plugin-mongo
+  fluent-plugin-prometheus
   fluent-plugin-remote_syslog
   fluent-plugin-rewrite-tag-filter
   fluent-plugin-s3

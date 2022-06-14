@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  log-export-container:
+    build: .
+    ports:
+      - "5140:5140"
+      - "24321:24321"
+    environment:
+      - LOG_EXPORT_CONTAINER_INPUT=syslog-json
+      - LOG_EXPORT_CONTAINER_OUTPUT=stdout
+      - LOG_EXPORT_CONTAINER_ENABLE_MONITORING=true
+  prometheus:
+    build: dev-tools/prometheus
+    ports:
+      - 9090:9090
+  grafana:
+    build: dev-tools/grafana
+    ports:
+      - 3000:3000

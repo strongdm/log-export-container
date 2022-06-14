@@ -32,6 +32,13 @@ def extract_activity_interval
   interval
 end
 
+def monitoring_conf
+  monitoring_enabled = extract_value(ENV['LOG_EXPORT_CONTAINER_ENABLE_MONITORING']) == "true"
+  if monitoring_enabled
+    File.read("#{ETC_DIR}/monitoring.conf")
+  end
+end
+
 def output_stores_conf
   conf = ""
   output_types = extract_value(ENV['LOG_EXPORT_CONTAINER_OUTPUT'])
