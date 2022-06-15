@@ -82,7 +82,7 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
 
   def test_audit_when_generate_activity_logs_using_the_default_interval
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = 'true'
-    expected = activities_conf("15")
+    expected = activities_conf('15m')
     actual = input_extract_audit_activities_conf
     assert_equal(expected, actual)
 
@@ -97,7 +97,7 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
   def test_audit_when_generate_activity_logs_using_a_custom_interval
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = 'true'
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] = '20'
-    expected = activities_conf("20")
+    expected = activities_conf('20m')
     actual = input_extract_audit_activities_conf
     assert_equal(expected, actual)
 
@@ -114,7 +114,7 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] = '20'
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = 'activities/10 resources/30 users/50 roles/60'
 
-    expected_activities_conf = activities_conf("20")
+    expected_activities_conf = activities_conf('20m')
     expected_resources_conf = entity_conf("resource", "30", "resources")
     expected_users_conf = entity_conf("user", "50", "users")
     expected_roles_conf = entity_conf("role", "60", "roles")
@@ -143,7 +143,7 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
     actual_resources_conf = input_extract_audit_entity_conf("resources")
     actual_users_conf = input_extract_audit_entity_conf("users")
     actual_roles_conf = input_extract_audit_entity_conf("roles")
-    expected_activities_conf = activities_conf("10")
+    expected_activities_conf = activities_conf('10m')
     expected_resources_conf = entity_conf("resource", "20", "resources")
     expected_users_conf = entity_conf("user", "30", "users")
     expected_roles_conf = entity_conf("role", "40", "roles")
@@ -164,7 +164,7 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
   def test_audit_when_all_intervals_are_empty
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = 'activities/ resources/ users/ roles/'
 
-    expected_activities_conf = activities_conf("15")
+    expected_activities_conf = activities_conf('15m')
     expected_resources_conf = entity_conf("resource", "480", "resources")
     expected_users_conf = entity_conf("user", "480", "users")
     expected_roles_conf = entity_conf("role", "480", "roles")
@@ -201,7 +201,7 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
   def test_audit_when_stream_activities
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = 'activities/stream'
 
-    expected_activities_conf = file_json_conf("sdm-audit-activities.log")
+    expected_activities_conf = activities_conf('')
     fluent_conf = generate_fluent_conf('syslog-json', 'stdout')
 
     assert_includes(fluent_conf, input_conf)
@@ -216,7 +216,7 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = 'activities/stream'
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] = '1'
 
-    expected_activities_conf = activities_conf('1')
+    expected_activities_conf = activities_conf('1m')
     actual_activities_conf = input_extract_audit_activities_conf
     fluent_conf = generate_fluent_conf('syslog-json', 'stdout')
 
@@ -468,7 +468,7 @@ def activities_conf(interval)
   "    @type json\n" \
   "  </parse>\n" \
   "  tag activity\n" \
-  "  run_interval #{interval}m\n" \
+  "  run_interval #{interval}\n" \
   "  command \"ruby \#{ENV['FLUENTD_DIR']}/scripts/dump_activities.rb\"\n" \
   "</source>\n"
 end
@@ -483,16 +483,4 @@ def entity_conf(tag, interval, entity)
   "  run_interval #{interval}m\n" \
   "  command \"ruby \#{ENV['FLUENTD_DIR']}/scripts/dump_sdm_entity.rb #{entity}\"\n" \
   "</source>\n"
-end
-
-def file_json_conf(file_path)
-  "<source>\n" \
-  "  @type tail\n" \
-  "  path \"#{ENV['FLUENTD_DIR']}/#{file_path}\"\n" \
-  "  pos_file \"#{ENV['FLUENTD_DIR']}/#{file_path}.pos\"\n" \
-  "  tag log\n" \
-  "  <parse>\n" \
-  "    @type sdm_json\n" \
-  "  </parse>\n" \
-  "</source>\n" \
 end

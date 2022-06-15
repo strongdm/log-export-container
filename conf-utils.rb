@@ -26,8 +26,11 @@ def extract_entity_interval(entity, default_interval)
 end
 
 def extract_activity_interval
+  extract_audit = ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT']
   if ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] != nil
     interval = "#{ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL']}m"
+  elsif extract_audit != nil && extract_audit.match(/activities\/stream/) != nil
+    return nil
   else
     interval = extract_entity_interval("activities", "15")
   end
@@ -66,26 +69,6 @@ def input_conf
   File.read(filename)
 end
 
-def input_entities_stream
-  extract_audit = ENV["LOG_EXPORT_CONTAINER_EXTRACT_AUDIT"]
-  if extract_audit == nil or !extract_audit.include?("/stream")
-    return
-  end
-  file = File.read("#{ETC_DIR}/input-file-json.conf")
-  stream_entities = extract_audit.downcase.split
-  files = []
-  stream_entities.each { |entity|
-    match_stream = entity.match(/(.+)\/stream/)
-    if not match_stream or !valid_stream_entities.include?(match_stream[1])
-      next
-    elsif match_stream[1] == "activities" && ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] != nil
-      next
-    end
-    files << file.gsub("\#{ENV['LOG_FILE_PATH']}", "#{ENV['FLUENTD_DIR']}/sdm-audit-#{match_stream[1]}.log")
-  }
-  files.join("\n")
-end
-
 def decode_chunk_events_conf
   conf = extract_value(ENV['LOG_EXPORT_CONTAINER_INPUT'])
   decode_chunks_enabled = extract_value(ENV['LOG_EXPORT_CONTAINER_DECODE_CHUNK_EVENTS']) == "true"
@@ -101,11 +84,7 @@ def input_extract_audit_activities_conf
     return
   end
   file = File.read("#{ETC_DIR}/input-extract-audit-activities.conf")
-  if extract_entities.match(/activities\/stream/)
-    file['run_interval $interval'] = ""
-  else
-    file['$interval'] = extract_activity_interval
-  end
+  file['$interval'] = extract_activity_interval.to_s
   file
 end
 
