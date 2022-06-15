@@ -100,9 +100,13 @@ def input_extract_audit_activities_conf
   if extract_activities != "true" && extract_entities.match(/activities/) == nil
     return
   end
-  read_file = File.read("#{ETC_DIR}/input-extract-audit-activities.conf")
-  read_file['$interval'] = extract_activity_interval
-  read_file
+  file = File.read("#{ETC_DIR}/input-extract-audit-activities.conf")
+  if extract_entities.match(/activities\/stream/)
+    file['run_interval $interval'] = ""
+  else
+    file['$interval'] = extract_activity_interval
+  end
+  file
 end
 
 def input_extract_audit_entity_conf(entity)
