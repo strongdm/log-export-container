@@ -44,4 +44,6 @@ just set it as `stream`):
 LOG_EXPORT_CONTAINER_EXTRACT_AUDIT=activities/stream
 ```
 
-**NOTE**: Currently, it's only possible to use the stream functionality with activities
+**NOTES**:
+- It's only possible to stream activities
+- It's only possible to stream when using a syslog (csv or json) input

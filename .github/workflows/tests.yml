@@ -21,3 +21,5 @@ jobs:
         run: bundle install
       - name: Run tests
         run: ruby test/run_test.rb
+      - name: Run RSpec Tests
+        run: bundle exec rspec test
