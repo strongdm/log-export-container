@@ -1,16 +1,19 @@
 version: "3.3"
 services:
   log-export-container:
-    image: public.ecr.aws/strongdm/log-export-container:latest
+    #    image: public.ecr.aws/strongdm/log-export-container:latest
+    build: .
     ports:
       - "5140:5140"
-      - "24321:24321"
     environment:
-      # IMPORTANT: Do not enclose values in double or single quotes 
+      # IMPORTANT: Do not enclose values in double or single quotes
 
       # Required variables
-      - LOG_EXPORT_CONTAINER_INPUT=syslog-json # possible values = syslog-json, syslog-csv, tcp-json, tcp-csv, file-json and file-csv
+      - LOG_EXPORT_CONTAINER_INPUT=syslog-csv # possible values = syslog-json, syslog-csv, tcp-json, tcp-csv, file-json and file-csv
       - LOG_EXPORT_CONTAINER_OUTPUT=stdout # possible values = stdout, remote-syslog, s3, cloudwatch, splunk-hec, datadog, azure-loganalytics, sumologic, kafka, mongo, loki, elasticsearch, bigquery
+      - MONGO_URI=mongodb://reports:reports@host.docker.internal:37017/reports
+      - LOG_EXPORT_CONTAINER_EXTRACT_AUDIT=activities/stream resources users/1 roles/invalid
+      - SDM_ADMIN_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjc5NTA5MzY4MjEsIm9yZ2FuaXphdGlvbklkIjoxNjQ4LCJjcmVhdG9yIjoiZGFuaWVsQHF1aW1iaWsuY29tIiwiY3JlYXRvcklkIjo0ODAzNDI2NDY0MTAwNzg3NTkyLCJndWlkIjoiMzA3MjY2ZWYtMDAxZC00NGVmLWE0YTMtZjk1YmI2Yzg2ZDBkIiwibmFtZSI6IkRhbmllbCBBZG1pbiJ9.bCuROgE-k2aUTvbrfND3fUCDke4E_j8xvZVt1vCw33g
 
       # Optional variables
       # For LOG_EXPORT_CONTAINER_OUTPUT=remote-syslog refer to docs/CONFIGURE_REMOTE_SYSLOG.md
@@ -25,4 +28,3 @@ services:
       # For LOG_EXPORT_CONTAINER_OUTPUT=logz refer to docs/CONFIGURE_LOGZ.md
       # For LOG_EXPORT_CONTAINER_OUTPUT=loki refer to docs/CONFIGURE_LOKI.md
       # For LOG_EXPORT_CONTAINER_OUTPUT=elasticsearch refer to docs/CONFIGURE_ELASTICSEARCH.md
-      # For LOG_EXPORT_CONTAINER_OUTPUT=bigquery refer to docs/CONFIGURE_BIGQUERY.md

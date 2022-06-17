@@ -1,8 +1,7 @@
 
-require_relative './fluentd/scripts/parse_entities'
-
-SUPPORTED_STORES="stdout remote-syslog s3 cloudwatch splunk-hec datadog azure-loganalytics sumologic kafka mongo logz loki elasticsearch bigquery"
+SUPPORTED_STORES = "stdout remote-syslog s3 cloudwatch splunk-hec datadog azure-loganalytics sumologic kafka mongo logz loki elasticsearch bigquery"
 AUDIT_ENTITY_TYPES = {
+  "activities" => "activity",
   "resources" => "resource",
   "users" => "user",
   "roles" => "role",
@@ -15,26 +14,26 @@ def extract_value(str)
   str.gsub(/ /, "").downcase
 end
 
-def extract_entity_interval(entity, default_interval)
-  treated_entity_list = ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'].to_s.match /#{entity}\/+(\d+)/
-  if treated_entity_list != nil
-    interval = treated_entity_list[1]
-  else
-    interval = default_interval
+def extract_entity_interval(entity)
+  if entity == 'activities'
+    return extract_activity_interval
   end
+  entity_interval_match = ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'].to_s.match /#{entity}\/(\d+)/
+  interval = entity_interval_match ? entity_interval_match[1] : 480
   "#{interval}m"
 end
 
 def extract_activity_interval
-  extract_audit = ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT']
+  extract_entities = ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT']
   if ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] != nil
-    interval = "#{ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL']}m"
-  elsif extract_audit != nil && extract_audit.match(/activities\/stream/) != nil
-    return nil
+    interval = ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL']
+  elsif extract_entities && extract_entities.match(/activities\/stream/)
+    return ""
   else
-    interval = extract_entity_interval("activities", "15")
+    interval_match = ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'].to_s.match /activities\/(\d+)/
+    interval = interval_match ? interval_match[1] : 15
   end
-  interval
+  "#{interval}m"
 end
 
 def monitoring_conf
@@ -77,25 +76,17 @@ def decode_chunk_events_conf
   end
 end
 
-def input_extract_audit_activities_conf
+def input_extract_audit_entities_conf(entity)
   extract_activities = extract_value(ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'])
   extract_entities = extract_value(ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'])
-  if extract_activities != "true" && extract_entities.match(/activities/) == nil
+  if entity == "activities" && extract_activities != "true" && !extract_entities.match(/activities/)
+    return
+  elsif entity != "activities" && !extract_entities.match(/#{entity}/)
     return
   end
-  file = File.read("#{ETC_DIR}/input-extract-audit-activities.conf")
-  file['$interval'] = extract_activity_interval.to_s
-  file
-end
-
-def input_extract_audit_entity_conf(entity)
-  extract_audit = extract_value(ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'])
-  unless extract_audit.match(/#{entity}/)
-    return
-  end
-  read_file = File.read("#{ETC_DIR}/input-extract-audit-entity.conf")
+  read_file = File.read("#{ETC_DIR}/input-extract-audit-entities.conf")
   read_file['$tag'] = AUDIT_ENTITY_TYPES[entity]
-  read_file['$interval'] = extract_entity_interval(entity, "480")
+  read_file['$interval'] = extract_entity_interval(entity)
   read_file.gsub!("$entity", entity)
   read_file
 end

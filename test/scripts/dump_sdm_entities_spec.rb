@@ -1,7 +1,7 @@
 
 require 'open3'
 require 'socket'
-require_relative '../../fluentd/scripts/parse_entities'
+require_relative "../../fluentd/scripts/dump_sdm_entities"
 
 describe 'dump_activities' do
   describe "stream_activities" do
@@ -18,7 +18,7 @@ describe 'dump_activities' do
       allow(wait_thr_value).to receive(:exitcode).and_return(0)
       allow(wait_thr_value).to receive(:success?).and_return(true)
       allow(stdout).to receive(:readline).and_return(activity_audit_log, nil)
-      allow(Open3).to receive(:popen3).with('sdm audit activities -f -j').and_return([nil, stdout, nil, wait_thr])
+      allow(Open3).to receive(:popen3).with('sdm audit activities -e -f -j').and_return([nil, stdout, nil, wait_thr])
       allow(TCPSocket).to receive(:open).and_return(socket, nil)
       allow(socket).to receive(:puts)
       allow(socket).to receive(:close)
@@ -26,10 +26,10 @@ describe 'dump_activities' do
     end
 
     it "should stream activities when enabled" do
-      require_relative "../../fluentd/scripts/dump_activities"
-      expect(Open3).to have_received(:popen3).with('sdm audit activities -f -j')
+      dump_entities("activities")
+      expect(Open3).to have_received(:popen3).with('sdm audit activities -e -f -j')
       expect(TCPSocket).to have_received(:open)
-      expect(socket).to have_received(:puts).with("<5>#{JSON.generate(parse_entity_with_type(activity_audit_log, 'activity'))}")
+      expect(socket).to have_received(:puts).with("<5>#{JSON.generate(parse_entity(activity_audit_log, 'activities'))}")
       expect(socket).to have_received(:close)
     end
 

@@ -6,6 +6,7 @@ require 'open3'
 require_relative '../common'
 require_relative '../helper'
 
+# ToDo fix for testing on windows
 LOG_FILE_PATH = "#{`pwd`.chomp}/lec-test.log"
 
 class TestFluentAcceptance < Test::Unit::TestCase

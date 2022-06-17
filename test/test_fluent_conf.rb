@@ -82,8 +82,8 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
 
   def test_audit_when_generate_activity_logs_using_the_default_interval
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = 'true'
-    expected = activities_conf('15m')
-    actual = input_extract_audit_activities_conf
+    expected = entity_conf('activity', '15m', 'activities')
+    actual = input_extract_audit_entities_conf("activities")
     assert_equal(expected, actual)
 
     fluent_conf = generate_fluent_conf('syslog-json', 'stdout')
@@ -97,8 +97,8 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
   def test_audit_when_generate_activity_logs_using_a_custom_interval
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'] = 'true'
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] = '20'
-    expected = activities_conf('20m')
-    actual = input_extract_audit_activities_conf
+    expected = entity_conf('activity', '20m', 'activities')
+    actual = input_extract_audit_entities_conf("activities")
     assert_equal(expected, actual)
 
     fluent_conf = generate_fluent_conf('syslog-json', 'stdout')
@@ -114,14 +114,14 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] = '20'
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = 'activities/10 resources/30 users/50 roles/60'
 
-    expected_activities_conf = activities_conf('20m')
-    expected_resources_conf = entity_conf("resource", "30", "resources")
-    expected_users_conf = entity_conf("user", "50", "users")
-    expected_roles_conf = entity_conf("role", "60", "roles")
-    actual_activities_conf = input_extract_audit_activities_conf
-    actual_resources_conf = input_extract_audit_entity_conf("resources")
-    actual_users_conf = input_extract_audit_entity_conf("users")
-    actual_roles_conf = input_extract_audit_entity_conf("roles")
+    expected_activities_conf = entity_conf('activity', '20m', 'activities')
+    expected_resources_conf = entity_conf("resource", "30m", "resources")
+    expected_users_conf = entity_conf("user", "50m", "users")
+    expected_roles_conf = entity_conf("role", "60m", "roles")
+    actual_activities_conf = input_extract_audit_entities_conf("activities")
+    actual_resources_conf = input_extract_audit_entities_conf("resources")
+    actual_users_conf = input_extract_audit_entities_conf("users")
+    actual_roles_conf = input_extract_audit_entities_conf("roles")
 
     assert_equal(expected_activities_conf, actual_activities_conf)
     assert_equal(expected_resources_conf, actual_resources_conf)
@@ -139,14 +139,14 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
   def test_audit_when_there_are_multiple_entities_to_get_the_logs
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = 'activities/10 resources/20 users/30 roles/40'
 
-    actual_activities_conf = input_extract_audit_activities_conf
-    actual_resources_conf = input_extract_audit_entity_conf("resources")
-    actual_users_conf = input_extract_audit_entity_conf("users")
-    actual_roles_conf = input_extract_audit_entity_conf("roles")
-    expected_activities_conf = activities_conf('10m')
-    expected_resources_conf = entity_conf("resource", "20", "resources")
-    expected_users_conf = entity_conf("user", "30", "users")
-    expected_roles_conf = entity_conf("role", "40", "roles")
+    actual_activities_conf = input_extract_audit_entities_conf("activities")
+    actual_resources_conf = input_extract_audit_entities_conf("resources")
+    actual_users_conf = input_extract_audit_entities_conf("users")
+    actual_roles_conf = input_extract_audit_entities_conf("roles")
+    expected_activities_conf = entity_conf('activity', '10m', 'activities')
+    expected_resources_conf = entity_conf("resource", "20m", "resources")
+    expected_users_conf = entity_conf("user", "30m", "users")
+    expected_roles_conf = entity_conf("role", "40m", "roles")
 
     assert_equal(expected_activities_conf, actual_activities_conf)
     assert_equal(expected_resources_conf, actual_resources_conf)
@@ -164,14 +164,14 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
   def test_audit_when_all_intervals_are_empty
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = 'activities/ resources/ users/ roles/'
 
-    expected_activities_conf = activities_conf('15m')
-    expected_resources_conf = entity_conf("resource", "480", "resources")
-    expected_users_conf = entity_conf("user", "480", "users")
-    expected_roles_conf = entity_conf("role", "480", "roles")
-    actual_activities_conf = input_extract_audit_activities_conf
-    actual_resources_conf = input_extract_audit_entity_conf("resources")
-    actual_users_conf = input_extract_audit_entity_conf("users")
-    actual_roles_conf = input_extract_audit_entity_conf("roles")
+    expected_activities_conf = entity_conf('activity', '15m', 'activities')
+    expected_resources_conf = entity_conf("resource", "480m", "resources")
+    expected_users_conf = entity_conf("user", "480m", "users")
+    expected_roles_conf = entity_conf("role", "480m", "roles")
+    actual_activities_conf = input_extract_audit_entities_conf("activities")
+    actual_resources_conf = input_extract_audit_entities_conf("resources")
+    actual_users_conf = input_extract_audit_entities_conf("users")
+    actual_roles_conf = input_extract_audit_entities_conf("roles")
 
     assert_equal(expected_activities_conf, actual_activities_conf)
     assert_equal(expected_resources_conf, actual_resources_conf)
@@ -201,7 +201,7 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
   def test_audit_when_stream_activities
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = 'activities/stream'
 
-    expected_activities_conf = activities_conf('')
+    expected_activities_conf = entity_conf('activity', '', 'activities')
     fluent_conf = generate_fluent_conf('syslog-json', 'stdout')
 
     assert_includes(fluent_conf, input_conf)
@@ -216,8 +216,8 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = 'activities/stream'
     ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] = '1'
 
-    expected_activities_conf = activities_conf('1m')
-    actual_activities_conf = input_extract_audit_activities_conf
+    expected_activities_conf = entity_conf('activity', '1m', 'activities')
+    actual_activities_conf = input_extract_audit_entities_conf("activities")
     fluent_conf = generate_fluent_conf('syslog-json', 'stdout')
 
     assert_equal(expected_activities_conf, actual_activities_conf)
@@ -461,18 +461,6 @@ def reset_environment_variables
   ENV['ELASTICSEARCH_INDEX_NAME'] = nil
 end
 
-def activities_conf(interval)
-  "<source>\n" \
-  "  @type exec\n" \
-  "  <parse>\n" \
-  "    @type json\n" \
-  "  </parse>\n" \
-  "  tag activity\n" \
-  "  run_interval #{interval}\n" \
-  "  command \"ruby \#{ENV['FLUENTD_DIR']}/scripts/dump_activities.rb\"\n" \
-  "</source>\n"
-end
-
 def entity_conf(tag, interval, entity)
   "<source>\n" \
   "  @type exec\n" \
@@ -480,7 +468,7 @@ def entity_conf(tag, interval, entity)
   "    @type json\n" \
   "  </parse>\n" \
   "  tag #{tag}\n" \
-  "  run_interval #{interval}m\n" \
-  "  command \"ruby \#{ENV['FLUENTD_DIR']}/scripts/dump_sdm_entity.rb #{entity}\"\n" \
+  "  run_interval #{interval}\n" \
+  "  command \"ruby \#{ENV['FLUENTD_DIR']}/scripts/dump_sdm_entities.rb #{entity}\"\n" \
   "</source>\n"
 end
