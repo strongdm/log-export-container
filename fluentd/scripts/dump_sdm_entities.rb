@@ -5,7 +5,7 @@ require 'socket'
 
 SIGTERM = 15
 
-ENTITY_TYPES = {
+AUDIT_ENTITY_TYPES = {
   "activities" => "activity",
   "resources" => "resource",
   "users" => "user",
@@ -36,7 +36,7 @@ def extract_activities_interval
   extract_entities = ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'].downcase
   if ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] != nil
     interval = ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'].to_i
-  elsif extract_entities.match /activities\/stream/
+  elsif extract_entities&.match /activities\/stream/
     return nil
   else
     interval = (extract_entities.match /activities\/+(\d+)/)[1].to_i || 15
@@ -68,7 +68,7 @@ end
 
 def parse_entity(entity, entity_name)
   parsed_entity = JSON.parse(entity)
-  parsed_entity['type'] = ENTITY_TYPES[entity_name]
+  parsed_entity['type'] = AUDIT_ENTITY_TYPES[entity_name]
   parsed_entity
 end
 
@@ -87,7 +87,7 @@ end
 def parse_rows(rows, entity_name)
   parsed_rows = []
   rows.each do |row|
-    parsed_rows << parse_entity(row, ENTITY_TYPES[entity_name])
+    parsed_rows << parse_entity(row, AUDIT_ENTITY_TYPES[entity_name])
   end
   parsed_rows
 end
@@ -97,7 +97,7 @@ def print_rows(rows)
 end
 
 def dump_entities(entity_name)
-  unless ENTITY_TYPES.keys.include?(entity_name.to_s)
+  unless AUDIT_ENTITY_TYPES.keys.include?(entity_name.to_s)
     return
   end
   rows = get_audit_rows(entity_name)

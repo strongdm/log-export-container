@@ -31,10 +31,10 @@ bundle install
 ### Ruby tests
 ```
 ruby test/run_test.rb
+bundle exec rspec test
 ```
 
-### Python tests
+### Run locally
 ```
-pytest
 dev-tools/start-local.sh
 ```

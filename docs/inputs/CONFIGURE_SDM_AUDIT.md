@@ -12,6 +12,8 @@ First, to make this work, you need to provide the following variable:
 - **SDM_ADMIN_TOKEN**. Admin Token created in SDM Web UI. You need to check the options `Activities`, `Datasources`, `Users`, `Roles` and `Gateways`
 to have permissions to extract all logs from the SDM CLI audit command.
 
+**NOTE**: if you intend to run LEC locally, you'll need to install the [SDM CLI](https://www.strongdm.com/docs/user-guide/client-installation).
+
 ## Configure Periodic Audit Data Extraction
 
 The Log Export Container uses [fluentd input exec plugin](https://docs.fluentd.org/input/exec) to extract the logs from strongDM Audit command.

@@ -1,11 +1,7 @@
 
+require_relative './fluentd/scripts/dump_sdm_entities'
+
 SUPPORTED_STORES = "stdout remote-syslog s3 cloudwatch splunk-hec datadog azure-loganalytics sumologic kafka mongo logz loki elasticsearch bigquery"
-AUDIT_ENTITY_TYPES = {
-  "activities" => "activity",
-  "resources" => "resource",
-  "users" => "user",
-  "roles" => "role",
-}
 
 def extract_value(str)
   unless str
@@ -16,23 +12,11 @@ end
 
 def extract_entity_interval(entity)
   if entity == 'activities'
-    return extract_activity_interval
+    extract_interval = extract_activities_interval
+    return extract_interval ? "#{extract_interval}m" : ""
   end
   entity_interval_match = ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'].to_s.match /#{entity}\/(\d+)/
   interval = entity_interval_match ? entity_interval_match[1] : 480
-  "#{interval}m"
-end
-
-def extract_activity_interval
-  extract_entities = ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT']
-  if ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] != nil
-    interval = ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL']
-  elsif extract_entities && extract_entities.match(/activities\/stream/)
-    return ""
-  else
-    interval_match = ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'].to_s.match /activities\/(\d+)/
-    interval = interval_match ? interval_match[1] : 15
-  end
   "#{interval}m"
 end
 
