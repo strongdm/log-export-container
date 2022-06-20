@@ -16,7 +16,7 @@ def get_audit_rows(entity_name)
   if entity_name == "activities"
     return get_audit_activities_rows
   end
-  output = `sdm audit #{entity_name} -e -j`
+  output = `sdm audit #{entity_name} -j`
   output.split("\n")
 end
 
@@ -96,12 +96,10 @@ def print_rows(rows)
   rows.each { |row| puts "#{JSON.generate(row)}" }
 end
 
-
 def dump_entities(entity_name)
-  unless ENTITY_TYPES.include?(entity_name.to_s)
+  unless ENTITY_TYPES.keys.include?(entity_name.to_s)
     return
   end
-  entity_name = entity_name
   rows = get_audit_rows(entity_name)
   unless rows
     return
