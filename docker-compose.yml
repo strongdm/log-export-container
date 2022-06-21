@@ -6,7 +6,7 @@ services:
       - "5140:5140"
       - "24321:24321"
     environment:
-      # IMPORTANT: Do not enclose values in double or single quotes 
+      # IMPORTANT: Do not enclose values in double or single quotes
 
       # Required variables
       - LOG_EXPORT_CONTAINER_INPUT=syslog-json # possible values = syslog-json, syslog-csv, tcp-json, tcp-csv, file-json and file-csv
@@ -26,3 +26,4 @@ services:
       # For LOG_EXPORT_CONTAINER_OUTPUT=loki refer to docs/CONFIGURE_LOKI.md
       # For LOG_EXPORT_CONTAINER_OUTPUT=elasticsearch refer to docs/CONFIGURE_ELASTICSEARCH.md
       # For LOG_EXPORT_CONTAINER_OUTPUT=bigquery refer to docs/CONFIGURE_BIGQUERY.md
+

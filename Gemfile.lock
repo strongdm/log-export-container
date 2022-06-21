@@ -215,7 +215,6 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2022.0105)
     mini_mime (1.1.2)
-    mini_portile2 (2.8.0)
     minitest (5.15.0)
     mongo (2.6.4)
       bson (>= 4.3.0, < 5.0.0)
@@ -226,8 +225,7 @@ GEM
     net-http-persistent (3.1.0)
       connection_pool (~> 2.2)
     netrc (0.11.0)
-    nokogiri (1.13.6)
-      mini_portile2 (~> 2.8.0)
+    nokogiri (1.13.6-x86_64-linux)
       racc (~> 1.4)
     openid_connect (1.1.8)
       activemodel
@@ -351,6 +349,7 @@ DEPENDENCIES
   fluent-plugin-sanitizer
   fluent-plugin-splunk-hec
   fluent-plugin-sumologic_output
+  rspec
   test-unit
 
 BUNDLED WITH

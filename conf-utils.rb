@@ -1,10 +1,7 @@
 
-SUPPORTED_STORES="stdout remote-syslog s3 cloudwatch splunk-hec datadog azure-loganalytics sumologic kafka mongo logz loki elasticsearch bigquery"
-AUDIT_ENTITY_TYPES = {
-  "resources" => "resource",
-  "users" => "user",
-  "roles" => "role",
-}
+require_relative './fluentd/scripts/dump_sdm_entities'
+
+SUPPORTED_STORES = "stdout remote-syslog s3 cloudwatch splunk-hec datadog azure-loganalytics sumologic kafka mongo logz loki elasticsearch bigquery"
 
 def extract_value(str)
   unless str
@@ -13,23 +10,14 @@ def extract_value(str)
   str.gsub(/ /, "").downcase
 end
 
-def extract_entity_interval(entity, default_interval)
-  treated_entity_list = ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'].to_s.match /#{entity}\/+(\d+)/
-  if treated_entity_list != nil
-    interval = treated_entity_list[1]
-  else
-    interval = default_interval
+def extract_entity_interval(entity)
+  if entity == 'activities'
+    extract_interval = extract_activities_interval
+    return extract_interval ? "#{extract_interval}m" : ""
   end
+  entity_interval_match = ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'].to_s.match /#{entity}\/(\d+)/
+  interval = entity_interval_match ? entity_interval_match[1] : 480
   "#{interval}m"
-end
-
-def extract_activity_interval
-  if ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] != nil
-    interval = "#{ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL']}m"
-  else
-    interval = extract_entity_interval("activities", "15")
-  end
-  interval
 end
 
 def monitoring_conf
@@ -72,25 +60,17 @@ def decode_chunk_events_conf
   end
 end
 
-def input_extract_audit_activities_conf
+def input_extract_audit_entities_conf(entity)
   extract_activities = extract_value(ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES'])
-  extracted_entities = extract_value(ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'])
-  unless extract_activities == "true" || extracted_entities.match(/activities/)
+  extract_entities = extract_value(ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'])
+  if entity == "activities" && extract_activities != "true" && !extract_entities.match(/activities/)
+    return
+  elsif entity != "activities" && !extract_entities.match(/#{entity}/)
     return
   end
-  read_file = File.read("#{ETC_DIR}/input-extract-audit-activities.conf")
-  read_file['$interval'] = extract_activity_interval
-  read_file
-end
-
-def input_extract_audit_entity_conf(entity)
-  extract_audit = extract_value(ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'])
-  unless extract_audit.match(/#{entity}/)
-    return
-  end
-  read_file = File.read("#{ETC_DIR}/input-extract-audit-entity.conf")
+  read_file = File.read("#{ETC_DIR}/input-extract-audit-entities.conf")
   read_file['$tag'] = AUDIT_ENTITY_TYPES[entity]
-  read_file['$interval'] = extract_entity_interval(entity, "480")
+  read_file['$interval'] = extract_entity_interval(entity)
   read_file.gsub!("$entity", entity)
   read_file
 end
