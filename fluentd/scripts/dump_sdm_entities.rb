@@ -33,13 +33,14 @@ def get_audit_activities_rows
 end
 
 def extract_activities_interval
-  extract_entities = ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'].downcase
+  extract_entities = ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT']
   if ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'] != nil
     interval = ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL'].to_i
   elsif extract_entities&.match /activities\/stream/
     return nil
   else
-    interval = (extract_entities.match /activities\/+(\d+)/)[1].to_i || 15
+    interval_match = extract_entities&.match /activities\/+(\d+)/
+    interval = interval_match ? interval_match[1].to_i : 15
   end
   interval
 end
