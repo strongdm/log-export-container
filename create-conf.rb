@@ -16,6 +16,7 @@ def create_file
     f.write(File.read("#{ETC_DIR}/process.conf"))
     f.write(decode_chunk_events_conf)
     f.write(output_conf)
+    f.write(File.read("#{ETC_DIR}/input-sdm-health-check.conf"))
   end
 end
 

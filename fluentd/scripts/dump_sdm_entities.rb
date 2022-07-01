@@ -26,8 +26,8 @@ def get_audit_activities_rows
     stream_activities
     return
   end
-  datetime_from = DateTime.now - (interval_time + 1.0)/(24*60)
-  datetime_to = DateTime.now - 1.0/(24*60)
+  datetime_from = DateTime.now - (interval_time + 1.0) / (24 * 60)
+  datetime_to = DateTime.now - 1.0 / (24 * 60)
   output = `sdm audit activities -j -e --from "#{datetime_from.to_s}" --to "#{datetime_to.to_s}"`
   output.split("\n")
 end
@@ -57,8 +57,8 @@ def open_activities_stream
   if must_stream_json
     command += " -j"
   end
-  _, out, _, thread = Open3.popen3(command)
-  [out, thread]
+  _, stdout, _, thread = Open3.popen3(command)
+  [stdout, thread]
 end
 
 def send_socket_message(message)
