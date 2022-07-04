@@ -5,6 +5,7 @@ services:
     ports:
       - "5140:5140"
       - "24321:24321"
+      - "24220:24220"
     environment:
       # IMPORTANT: Do not enclose values in double or single quotes
 

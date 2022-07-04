@@ -29,5 +29,4 @@ COPY create-conf.rb /create-conf.rb
 COPY conf-utils.rb /conf-utils.rb
 COPY start.sh /start.sh
 
-USER root
 CMD ["/start.sh"]
