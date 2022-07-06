@@ -7,10 +7,9 @@ def create_file
   File.open("#{ETC_DIR}/fluent.conf", "w") do |f|
     f.write(input_conf)
     f.write(monitoring_conf)
-    f.write(input_extract_audit_entities_conf("activities"))
-    f.write(input_extract_audit_entities_conf("resources"))
-    f.write(input_extract_audit_entities_conf("users"))
-    f.write(input_extract_audit_entities_conf("roles"))
+    AUDIT_ENTITY_TYPES.keys.each { |entity_name|
+      f.write(input_extract_audit_entities_conf(entity_name))
+    }
     f.write(default_classify_conf)
     f.write(custom_classify_conf)
     f.write(File.read("#{ETC_DIR}/process.conf"))
