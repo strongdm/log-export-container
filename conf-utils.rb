@@ -16,7 +16,7 @@ def extract_entity_interval(entity)
     return extract_interval ? "#{extract_interval}m" : ""
   end
   entity_interval_match = ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'].to_s.match /#{entity}\/(\d+)/
-  interval = entity_interval_match ? entity_interval_match[1] : 480
+  interval = entity_interval_match ? entity_interval_match[1] : EXTRACT_ENTITY_LONG_INTERVAL
   "#{interval}m"
 end
 

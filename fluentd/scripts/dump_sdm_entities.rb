@@ -8,9 +8,12 @@ SIGTERM = 15
 AUDIT_ENTITY_TYPES = {
   "activities" => "activity",
   "resources" => "resource",
+  "permissions" => "permission",
   "users" => "user",
   "roles" => "role",
 }
+EXTRACT_ENTITY_LONG_INTERVAL = 480
+EXTRACT_ENTITY_SHORT_INTERVAL = 15
 
 def get_audit_rows(entity_name)
   if entity_name == "activities"
@@ -40,7 +43,7 @@ def extract_activities_interval
     return nil
   else
     interval_match = extract_entities&.match /activities\/+(\d+)/
-    interval = interval_match ? interval_match[1].to_i : 15
+    interval = interval_match ? interval_match[1].to_i : EXTRACT_ENTITY_SHORT_INTERVAL
   end
   interval
 end
@@ -88,7 +91,7 @@ end
 def parse_rows(rows, entity_name)
   parsed_rows = []
   rows.each do |row|
-    parsed_rows << parse_entity(row, AUDIT_ENTITY_TYPES[entity_name])
+    parsed_rows << parse_entity(row, entity_name)
   end
   parsed_rows
 end

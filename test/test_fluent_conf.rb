@@ -137,21 +137,24 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
   end
 
   def test_audit_when_there_are_multiple_entities_to_get_the_logs
-    ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = 'activities/10 resources/20 users/30 roles/40'
+    ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = 'activities/10 resources/20 users/30 roles/40 permissions/50'
 
     actual_activities_conf = input_extract_audit_entities_conf("activities")
     actual_resources_conf = input_extract_audit_entities_conf("resources")
     actual_users_conf = input_extract_audit_entities_conf("users")
     actual_roles_conf = input_extract_audit_entities_conf("roles")
+    actual_permissions_conf = input_extract_audit_entities_conf("permissions")
     expected_activities_conf = entity_conf('activity', '10m', 'activities')
     expected_resources_conf = entity_conf("resource", "20m", "resources")
     expected_users_conf = entity_conf("user", "30m", "users")
     expected_roles_conf = entity_conf("role", "40m", "roles")
+    expected_permissions_conf = entity_conf("permission", "50m", "permissions")
 
     assert_equal(expected_activities_conf, actual_activities_conf)
     assert_equal(expected_resources_conf, actual_resources_conf)
     assert_equal(expected_users_conf, actual_users_conf)
     assert_equal(expected_roles_conf, actual_roles_conf)
+    assert_equal(expected_permissions_conf, actual_permissions_conf)
 
     fluent_conf = generate_fluent_conf('syslog-json', 'stdout')
     assert_includes(fluent_conf, input_conf)
@@ -162,21 +165,24 @@ class TestCreateFluentConfChangingInput < Test::Unit::TestCase
   end
 
   def test_audit_when_all_intervals_are_empty
-    ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = 'activities/ resources/ users/ roles/'
+    ENV['LOG_EXPORT_CONTAINER_EXTRACT_AUDIT'] = 'activities/ resources/ users/ roles/ permissions/'
 
     expected_activities_conf = entity_conf('activity', '15m', 'activities')
     expected_resources_conf = entity_conf("resource", "480m", "resources")
     expected_users_conf = entity_conf("user", "480m", "users")
     expected_roles_conf = entity_conf("role", "480m", "roles")
+    expected_permissions_conf = entity_conf("permission", "480m", "permissions")
     actual_activities_conf = input_extract_audit_entities_conf("activities")
     actual_resources_conf = input_extract_audit_entities_conf("resources")
     actual_users_conf = input_extract_audit_entities_conf("users")
     actual_roles_conf = input_extract_audit_entities_conf("roles")
+    actual_permissions_conf = input_extract_audit_entities_conf("permissions")
 
     assert_equal(expected_activities_conf, actual_activities_conf)
     assert_equal(expected_resources_conf, actual_resources_conf)
     assert_equal(expected_users_conf, actual_users_conf)
     assert_equal(expected_roles_conf, actual_roles_conf)
+    assert_equal(expected_permissions_conf, actual_permissions_conf)
 
     fluent_conf = generate_fluent_conf('syslog-json', 'stdout')
     assert_includes(fluent_conf, input_conf)
