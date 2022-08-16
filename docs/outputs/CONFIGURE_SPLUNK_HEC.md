@@ -9,9 +9,9 @@ nav_order: 12
 # Configure Splunk HEC
 
 The Log Export Container uses [fluentd splunk hec output plugin](https://github.com/splunk/fluent-plugin-splunk-hec). In order to enable it you need to specify `LOG_EXPORT_CONTAINER_OUTPUT=splunk-hec` and provide the following variables:
-* **SPLUNK_HEC_HOST**. The hostname/IP for the HEC token or the HEC load balancer, for example: `prd-p-xxxxx.splunkcloud.com`
-* **SPLUNK_HEC_PORT**. The port number for the HEC token or the HEC load balancer, for example: `8088`
-* **SPLUNK_HEC_TOKEN**. Identifier for the HEC token, for example: `xxxxxxxx-yyyy-yyyy-yyyy-zzzzzzzzzzzz`
+* **SPLUNK_HEC_HOST**. The hostname/IP for the HEC token or the HEC load balancer. E.g., `prd-p-xxxxx.splunkcloud.com`
+* **SPLUNK_HEC_PORT**. The port number for the HEC token or the HEC load balancer. E.g., `8088`
+* **SPLUNK_HEC_TOKEN**. Identifier for the HEC token. E.g., `xxxxxxxx-yyyy-yyyy-yyyy-zzzzzzzzzzzz`
 
 IMPORTANT: SSL validation is disabled by default, you can pass different [SSL Params](https://github.com/splunk/fluent-plugin-splunk-hec#ssl-parameters) overriding the builtin configuration as commented below
 

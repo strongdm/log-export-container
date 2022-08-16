@@ -9,9 +9,9 @@ nav_order: 3
 The Log Export Container uses a [fluentd cloudwatch output plugin](https://github.com/fluent-plugins-nursery/fluent-plugin-cloudwatch-logs). In order to enable it you need to specify `LOG_EXPORT_CONTAINER_OUTPUT=cloudwatch` and provide the following variables:
 * **AWS_ACCESS_KEY_ID**. AWS Access Key
 * **AWS_SECRET_ACCESS_KEY**. AWS Access Secret
-* **AWS_REGION**. AWS Region Name, for example: `us-west-2`
-* **CLOUDWATCH_LOG_GROUP_NAME**. AWS CloudWatch Log Group Name to store logs, for example: `aws/sdm-logs`
-* **CLOUDWATCH_LOG_STREAM_NAME**. AWS CloudWatch Log Stream Name to store logs, for example: `test`
+* **AWS_REGION**. AWS Region Name. E.g., `us-west-2`
+* **CLOUDWATCH_LOG_GROUP_NAME**. AWS CloudWatch Log Group Name to store logs. E.g., `aws/sdm-logs`
+* **CLOUDWATCH_LOG_STREAM_NAME**. AWS CloudWatch Log Stream Name to store logs. E.g., `test`
 
 ## IAM permissions
 Add -at least- the following policy to your IAM user:
