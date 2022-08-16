@@ -9,8 +9,7 @@ nav_order: 9
 
 First, to make this work, you need to provide the following variable:
 
-- **SDM_ADMIN_TOKEN**. Admin Token created in SDM Web UI. You need to check the options `Activities`, `Datasources`, `Users`, `Roles` and `Gateways`
-to have permissions to extract all logs from the SDM CLI audit command.
+* **SDM_ADMIN_TOKEN**. Admin Token created in SDM Web UI. The token must have the audit permissions for `Activities`, `Datasources`, `Users`, `Roles` and `Gateways`.
 
 **NOTE**: if you intend to run LEC locally, you'll need to install the [SDM CLI](https://www.strongdm.com/docs/user-guide/client-installation).
 
@@ -29,8 +28,8 @@ It is worth noting that if you do not specify the interval value after each `/`,
 
 If you want to specifically extract the activity logs you can also use the variables below:
 
-- `LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES=true` Variable responsible for indicating whether activity logs will be extracted, default = false.
-- `LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL=15` Interval in minutes for running the extractor script, default = 15.
+- `LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES=true` Variable responsible for indicating whether activity logs will be extracted. Default = `false`.
+- `LOG_EXPORT_CONTAINER_EXTRACT_AUDIT_ACTIVITIES_INTERVAL=15` Interval in minutes for running the extractor script. Default = `15`.
 
 However, be aware that if these variables are informed together with `LOG_EXPORT_CONTAINER_EXTRACT_AUDIT`, their content will have priority over `LOG_EXPORT_CONTAINER_EXTRACT_AUDIT`.
 

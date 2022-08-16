@@ -6,7 +6,9 @@ When Prometheus is enabled, an endpoint is available in port `24321` allowing to
 - `fluentd_output_status_emit_count` - the total count of forwarded logs by output (e.g.: `stdout`, `remote-syslog`, `s3`, `cloudwatch`, `splunk-hec`, `datadog`, `azure-loganalytics`, `sumologic`, `kafka`, `mongo`, `loki`, `elasticsearch` and `bigquery`)
 - `fluentd_output_status_num_errors` - the count of total errors by output match
 
-To enable it, you need to set the variable `LOG_EXPORT_CONTAINER_ENABLE_MONITORING=true`.
+
+To enable it, you need to configure the following variable:
+* **LOG_EXPORT_CONTAINER_ENABLE_MONITORING**. Boolean variable to enable the monitoring endpoint.
 
 To see an example, you can use `docker-compose-prometheus.yml` to run Log Export Container with Prometheus and Grafana. Then you can access the `Log Export Container Metrics` dashboard in Grafana (in the port `3000`) and see how it's used. There we have the following panels:
 
