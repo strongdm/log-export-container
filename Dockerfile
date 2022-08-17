@@ -1,33 +1,36 @@
-# latest version is older
-FROM fluent/fluentd:edge
+FROM fluent/fluentd:edge-debian
 
 ENV FLUENTD_DIR=fluentd
-ENV PATH="/root:$PATH"
 
 USER root
-RUN apk add gettext
-RUN apk add build-base ruby-dev zlib-dev
-RUN gem install bundler -v '~> 2.3.3'
+RUN apt-get update && \
+    apt-get install -y \
+        build-essential \
+        curl \
+        ca-certificates \
+        gettext \
+        jq \
+        ruby-dev \
+        zlib1g-dev && \
+    gem install bundler -v '~> 2.3.3' && \
+    apt-get autoclean && \
+    apt-get autoremove -y && \
+    apt-get clean && \
+    rm -rf /root/.cache /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 COPY Gemfile /Gemfile
 RUN bundle install
-
-RUN apk --no-cache add curl ca-certificates wget
-RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
-RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.28-r0/glibc-2.28-r0.apk
-RUN apk add glibc-2.28-r0.apk
-
-RUN curl -J -O -L https://app.strongdm.com/releases/cli/linux
-RUN unzip -x sdm*.zip
-RUN rm sdm*.zip
-RUN mv sdm /root
-RUN apk del curl ca-certificates wget
-RUN mkdir /root/.sdm
 
 COPY fluentd /fluentd
 COPY create-conf.rb /create-conf.rb
 COPY conf-utils.rb /conf-utils.rb
 COPY start.sh /start.sh
 
-USER root
+RUN curl -fsSLo sdm.zip \
+    $(curl https://app.strongdm.com/releases/upgrade\?os\=linux\&arch\=$(uname -m | sed -e 's:x86_64:amd64:' -e 's:aarch64:arm64:')\&software\=sdm-cli\&version\=productionexample | jq ".url" -r) && \
+    unzip -x sdm.zip && \
+    rm -f sdm.zip && \
+    mv sdm /bin && \
+    mkdir -p /root/.sdm
+
 CMD ["/start.sh"]
