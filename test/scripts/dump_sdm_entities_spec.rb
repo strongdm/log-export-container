@@ -7,7 +7,7 @@ describe 'dump_activities' do
   describe "stream_activities" do
     let(:wait_thr) { double }
     let(:wait_thr_value) { double }
-    let(:stdout) { double }
+    let(:stdout_and_stderr) { double }
     let(:socket) { double }
 
     before(:each) do
@@ -17,8 +17,8 @@ describe 'dump_activities' do
       allow(wait_thr).to receive(:pid).and_return(nil)
       allow(wait_thr_value).to receive(:exitcode).and_return(0)
       allow(wait_thr_value).to receive(:success?).and_return(true)
-      allow(stdout).to receive(:readline).and_return(activity_audit_log, nil)
-      allow(Open3).to receive(:popen3).with('sdm audit activities -e -f -j').and_return([nil, stdout, nil, wait_thr])
+      allow(stdout_and_stderr).to receive(:each).and_yield(activity_audit_log)
+      allow(Open3).to receive(:popen2e).with('sdm audit activities -e -f -j').and_return([nil, stdout_and_stderr, wait_thr])
       allow(TCPSocket).to receive(:open).and_return(socket, nil)
       allow(socket).to receive(:puts)
       allow(socket).to receive(:close)
@@ -27,7 +27,8 @@ describe 'dump_activities' do
 
     it "should stream activities when enabled" do
       dump_entities("activities")
-      expect(Open3).to have_received(:popen3).with('sdm audit activities -e -f -j')
+      expect(Open3).to have_received(:popen2e).with('sdm audit activities -e -f -j')
+      expect(stdout_and_stderr).to have_received(:each)
       expect(TCPSocket).to have_received(:open)
       expect(socket).to have_received(:puts).with("<5>#{JSON.generate(parse_entity(activity_audit_log, 'activities'))}")
       expect(socket).to have_received(:close)
