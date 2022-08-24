@@ -6,7 +6,7 @@ ENV PATH="/root:$PATH"
 
 USER root
 RUN apk add gettext
-RUN apk add build-base ruby-dev zlib-dev
+RUN apk add build-base ruby-dev zlib-dev bash
 RUN gem install bundler -v '~> 2.3.3'
 
 COPY Gemfile /Gemfile
@@ -29,5 +29,4 @@ COPY create-conf.rb /create-conf.rb
 COPY conf-utils.rb /conf-utils.rb
 COPY start.sh /start.sh
 
-USER root
 CMD ["/start.sh"]

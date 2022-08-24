@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ "$SDM_ADMIN_TOKEN" != "" ]; then
   echo "Starting SDM"
