@@ -46,8 +46,10 @@ jobs:
         run: |
           # Adding version
           echo _version_=\"$IMAGE_TAG\" > fluentd/_version.rb
-          # Building docker image
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          # Create moby/buildkit container
+          docker buildx create --use
+          # Building docker image for multiple platforms
+          docker buildx build --platform "linux/amd64,linux/arm64" -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           # Pushing image to ECR
           aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG

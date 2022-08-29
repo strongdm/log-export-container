@@ -101,12 +101,17 @@ def dump_entities(entity_name)
   unless AUDIT_ENTITY_TYPES.keys.include?(entity_name.to_s)
     return
   end
-  rows = get_audit_rows(entity_name)
-  unless rows
-    return
+  begin
+    rows = get_audit_rows(entity_name)
+    unless rows
+      return
+    end
+    parsed_rows = parse_rows(rows, entity_name)
+    print_rows(parsed_rows)
+  rescue StandardError => _e
+    error = {"error" => "An error ocurred while extracting the audit #{entity_name.to_s} data: #{_e}", "type" => "unclass"}
+    send_socket_message(JSON.generate(error))
   end
-  parsed_rows = parse_rows(rows, entity_name)
-  print_rows(parsed_rows)
 end
 
 dump_entities(ARGV[0])
