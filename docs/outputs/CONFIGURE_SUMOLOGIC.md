@@ -8,7 +8,7 @@ nav_order: 13
 
 The Log Export Container uses a [fluentd sumologic output plugin](https://github.com/SumoLogic/fluentd-output-sumologic). In order to enable it you need to specify `LOG_EXPORT_CONTAINER_OUTPUT=sumologic` and provide the following variables:
 * **SUMOLOGIC_ENDPOINT**. SumoLogic HTTP Collector URL
-* **SUMOLOGIC_SOURCE_CATEGORY**. Source Category metadata field within SumoLogic, for example: `/prod/sdm/logs`
+* **SUMOLOGIC_SOURCE_CATEGORY**. Source Category metadata field within SumoLogic. E.g., `/prod/sdm/logs`.
 
 ## Plugin changes
 

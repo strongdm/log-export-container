@@ -9,7 +9,7 @@ nav_order: 6
 The Log Export Container uses a [fluentd kafka output plugin](https://github.com/fluent/fluent-plugin-kafka). In order to enable it you need to specify `LOG_EXPORT_CONTAINER_OUTPUT=kafka` and provide the following variables:
 * **KAFKA_BROKERS**. List of brokers, following the format: `<broker1_host>:<broker1_port>,<broker2_host>:<broker2_port>`
 * **KAFKA_TOPIC**. Topic name 
-* **KAFKA_FORMAT_TYPE**. Input text type, for example: `text, json, ltsv, msgpack`. Default = json
+* **KAFKA_FORMAT_TYPE**. Input text type. E.g., `text, json, ltsv, msgpack`. Default = `json`.
 
 ## Plugin changes
 

@@ -10,8 +10,8 @@ nav_order: 2
 
 ### Required configuration
 
-- **LOG_EXPORT_CONTAINER_INPUT**. Container input format (`syslog-json`, `syslog-csv`, `tcp-json`, `tcp-csv`, `file-json` or `file-csv`). Default: `syslog-json`
-- **LOG_EXPORT_CONTAINER_OUTPUT**. Container output storage (`stdout`, `remote-syslog`, `s3`, `cloudwatch`, `splunk-hec`, `datadog`, `azure-loganalytics`, `sumologic`, `kafka`, `mongo`, `logz`, `loki`, `elasticsearch` and/or `bigquery`). Default: `stdout`. You could configure multiple storages, for example: `stdout s3 datadog`.
+* **LOG_EXPORT_CONTAINER_INPUT**. Container input format (`syslog-json`, `syslog-csv`, `tcp-json`, `tcp-csv`, `file-json` or `file-csv`). Default = `syslog-json`.
+* **LOG_EXPORT_CONTAINER_OUTPUT**. Container output storage (`stdout`, `remote-syslog`, `s3`, `cloudwatch`, `splunk-hec`, `datadog`, `azure-loganalytics`, `sumologic`, `kafka`, `mongo`, `logz`, `loki`, `elasticsearch` and/or `bigquery`). Default = `stdout`. You could configure multiple storages, for example: `stdout s3 datadog`.
 
 When using `LOG_EXPORT_CONTAINER_INPUT=file-json` or `LOG_EXPORT_CONTAINER_INPUT=file-csv` add variables listed in [CONFIGURE_FILE_INPUT.md](inputs/CONFIGURE_FILE_INPUT.md)
 
