@@ -46,8 +46,9 @@ jobs:
         run: |
           # Adding version
           echo _version_=\"$IMAGE_TAG\" > fluentd/_version.rb
-          # Create moby/buildkit container
-          docker buildx create --use
+          # Create multiarch builder container
+          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+          docker buildx create --name multiarch --driver docker-container --use
           # Building docker image for multiple platforms
           docker buildx build --platform "linux/amd64,linux/arm64" -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           # Pushing image to ECR
