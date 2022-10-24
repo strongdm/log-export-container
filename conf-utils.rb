@@ -1,7 +1,7 @@
 
 require_relative './fluentd/scripts/dump_sdm_entities'
 
-SUPPORTED_STORES = "stdout remote-syslog s3 cloudwatch splunk-hec datadog azure-loganalytics sumologic kafka mongo logz loki elasticsearch bigquery"
+SUPPORTED_STORES = "stdout remote-syslog s3 cloudwatch splunk-hec datadog azure-loganalytics sumologic kafka mongo logz loki elasticsearch-8 bigquery"
 
 def extract_value(str)
   unless str

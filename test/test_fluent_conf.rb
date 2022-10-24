@@ -374,7 +374,7 @@ class TestCreateFluentConfChangingOutput < Test::Unit::TestCase
     ENV['ELASTICSEARCH_HOST'] = '192.168.0.1'
     ENV['ELASTICSEARCH_PORT'] = '9201'
     ENV['ELASTICSEARCH_INDEX_NAME'] = 'my-index'
-    fluent_conf_content = generate_fluent_conf('tcp-json', 'elasticsearch')
+    fluent_conf_content = generate_fluent_conf('tcp-json', 'elasticsearch-8')
     assert_includes(fluent_conf_content, input_conf)
     assert_includes(fluent_conf_content, default_classify_conf)
     assert_includes(fluent_conf_content, process_conf)
