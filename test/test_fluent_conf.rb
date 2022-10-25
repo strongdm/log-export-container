@@ -382,6 +382,17 @@ class TestCreateFluentConfChangingOutput < Test::Unit::TestCase
     assert(is_valid_fluent_conf)
   end
 
+  def test_elasticsearch_output_conf_with_hosts
+    ENV['ELASTICSEARCH_HOSTS'] = 'localhost:9201,https://user:pass@192.168.0.1:443'
+    ENV['ELASTICSEARCH_INDEX_NAME'] = 'my-index'
+    fluent_conf_content = generate_fluent_conf('tcp-json', 'elasticsearch-8')
+    assert_includes(fluent_conf_content, input_conf)
+    assert_includes(fluent_conf_content, default_classify_conf)
+    assert_includes(fluent_conf_content, process_conf)
+    assert_includes(fluent_conf_content, output_conf)
+    assert(is_valid_fluent_conf)
+  end
+
   def test_bigquery_output_conf
     ENV['BIGQUERY_PRIVATE_KEY'] = '-----BEGIN PRIVATE KEY-----\n...'
     ENV['BIGQUERY_CLIENT_EMAIL'] = 'xxx@developer.gserviceaccount.com'
@@ -458,6 +469,7 @@ def reset_environment_variables
   ENV['LOKI_URL'] = nil
   ENV['ELASTICSEARCH_HOST'] = nil
   ENV['ELASTICSEARCH_PORT'] = nil
+  ENV['ELASTICSEARCH_HOSTS'] = nil
   ENV['ELASTICSEARCH_INDEX_NAME'] = nil
 end
 
