@@ -3,7 +3,7 @@
 When Prometheus is enabled, an endpoint is available in port `24321` allowing to see the following metrics:
 
 - `fluentd_input_status_num_records_total` - the total count of received logs by tag (e.g.: `start`, `chunk`, `event`, `postStart`, `complete` and `activity`)
-- `fluentd_output_status_emit_count` - the total count of forwarded logs by output (e.g.: `stdout`, `remote-syslog`, `s3`, `cloudwatch`, `splunk-hec`, `datadog`, `azure-loganalytics`, `sumologic`, `kafka`, `mongo`, `loki`, `elasticsearch` and `bigquery`)
+- `fluentd_output_status_emit_count` - the total count of forwarded logs by output (e.g.: `stdout`, `remote-syslog`, `s3`, `cloudwatch`, `splunk-hec`, `datadog`, `azure-loganalytics`, `sumologic`, `kafka`, `mongo`, `loki`, `elasticsearch-8` and `bigquery`)
 - `fluentd_output_status_num_errors` - the count of total errors by output match
 
 To enable it, you need to set the variable `LOG_EXPORT_CONTAINER_ENABLE_MONITORING=true`.

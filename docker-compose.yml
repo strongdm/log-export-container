@@ -10,7 +10,7 @@ services:
 
       # Required variables
       - LOG_EXPORT_CONTAINER_INPUT=syslog-json # possible values = syslog-json, syslog-csv, tcp-json, tcp-csv, file-json and file-csv
-      - LOG_EXPORT_CONTAINER_OUTPUT=stdout # possible values = stdout, remote-syslog, s3, cloudwatch, splunk-hec, datadog, azure-loganalytics, sumologic, kafka, mongo, loki, elasticsearch, bigquery
+      - LOG_EXPORT_CONTAINER_OUTPUT=stdout # possible values = stdout, remote-syslog, s3, cloudwatch, splunk-hec, datadog, azure-loganalytics, sumologic, kafka, mongo, loki, elasticsearch-8, bigquery
 
       # Optional variables
       # For LOG_EXPORT_CONTAINER_OUTPUT=remote-syslog refer to docs/CONFIGURE_REMOTE_SYSLOG.md
@@ -24,6 +24,6 @@ services:
       # For LOG_EXPORT_CONTAINER_OUTPUT=mongo refer to docs/CONFIGURE_MONGO.md
       # For LOG_EXPORT_CONTAINER_OUTPUT=logz refer to docs/CONFIGURE_LOGZ.md
       # For LOG_EXPORT_CONTAINER_OUTPUT=loki refer to docs/CONFIGURE_LOKI.md
-      # For LOG_EXPORT_CONTAINER_OUTPUT=elasticsearch refer to docs/CONFIGURE_ELASTICSEARCH.md
+      # For LOG_EXPORT_CONTAINER_OUTPUT=elasticsearch-8 refer to docs/CONFIGURE_ELASTICSEARCH_8.md
       # For LOG_EXPORT_CONTAINER_OUTPUT=bigquery refer to docs/CONFIGURE_BIGQUERY.md
 
