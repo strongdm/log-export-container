@@ -37,24 +37,24 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Build, tag, and push the image to Amazon ECR
-        id: build-image
-        env:
-          ECR_REGISTRY: public.ecr.aws/strongdm
-          ECR_REPOSITORY: log-export-container
-          IMAGE_TAG: ${{ steps.version.outputs.new_tag }}
-        run: |
-          # Adding version
-          echo _version_=\"$IMAGE_TAG\" > fluentd/_version.rb
-          # Authenticating to ECR
-          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
-          # Create multiarch builder container
-          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-          docker buildx create --name multiarch --driver docker-container --use
-          # Building docker image for multiple platforms and pushing to ECR
-          docker buildx build --push --platform "linux/amd64,linux/arm64" -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker buildx build --push --platform "linux/amd64,linux/arm64" -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+#      - name: Build, tag, and push the image to Amazon ECR
+#        id: build-image
+#        env:
+#          ECR_REGISTRY: public.ecr.aws/strongdm
+#          ECR_REPOSITORY: log-export-container
+#          IMAGE_TAG: ${{ steps.version.outputs.new_tag }}
+#        run: |
+#          # Adding version
+#          echo _version_=\"$IMAGE_TAG\" > fluentd/_version.rb
+#          # Authenticating to ECR
+#          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
+#          # Create multiarch builder container
+#          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+#          docker buildx create --name multiarch --driver docker-container --use
+#          # Building docker image for multiple platforms and pushing to ECR
+#          docker buildx build --push --platform "linux/amd64,linux/arm64" -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+#          docker buildx build --push --platform "linux/amd64,linux/arm64" -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+#          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
       - name: Build and publish gem
         uses: dawidd6/action-publish-gem@v1
