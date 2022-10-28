@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+bin_dir = File.expand_path(File.dirname(__FILE__))
+
+ENV['FLUENTD_DIR'] = bin_dir + '/../fluentd'
+ENV['LOG_EXPORT_CONTAINER_INPUT'] = ENV['LOG_EXPORT_CONTAINER_INPUT'] || 'syslog-json'
+ENV['LOG_EXPORT_CONTAINER_OUTPUT'] = ENV['LOG_EXPORT_CONTAINER_OUTPUT'] || 'stdout'
+
+start_script_path = File.join(bin_dir, '../start.rb')
+
+require start_script_path

@@ -20,8 +20,8 @@ For Linux see: http://rvm.io/
 
 #### Configure RVM and dependencies
 ```
-rvm install 2.7.1
-rvm use 2.7.1@log-export-container --create
+rvm install 3.1.2
+rvm use 3.1.2@log-export-container --create
 gem install bundler -v '~> 2.1.4'
 bundle install
 ```

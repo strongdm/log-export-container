@@ -1,6 +1,6 @@
 FROM fluent/fluentd:edge-debian
 
-ENV FLUENTD_DIR=fluentd
+ENV FLUENTD_DIR=/fluentd
 
 USER root
 RUN apt-get update && \
@@ -19,12 +19,13 @@ RUN apt-get update && \
     rm -rf /root/.cache /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 COPY Gemfile /Gemfile
+COPY .gemspec /.gemspec
 RUN bundle install
 
 COPY fluentd /fluentd
 COPY create-conf.rb /create-conf.rb
 COPY conf-utils.rb /conf-utils.rb
-COPY start.sh /start.sh
+COPY start.rb /start.rb
 
 RUN curl -fsSLo sdm.zip \
     $(curl https://app.strongdm.com/releases/upgrade\?os\=linux\&arch\=$(uname -m | sed -e 's:x86_64:amd64:' -e 's:aarch64:arm64:')\&software\=sdm-cli\&version\=productionexample | jq ".url" -r) && \
@@ -33,4 +34,4 @@ RUN curl -fsSLo sdm.zip \
     mv sdm /bin && \
     mkdir -p /root/.sdm
 
-CMD ["/start.sh"]
+CMD ["ruby", "/start.rb"]

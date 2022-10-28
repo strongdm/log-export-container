@@ -14,7 +14,27 @@ A curated version of the documentation can be found [here](https://strongdm.gith
 * [Support](#support)
 
 ## Getting Started
-The Log Export Container is a Docker Image you can use for spinning up multiple containers. 
+The Log Export Container is available as a Ruby Gem and as a Docker Image you can use for spinning up multiple containers.
+
+### Ruby Gem
+
+To use the log-export-container Ruby Gem, first you should have Ruby 3 installed. Then, you can install log-export-container gem by running `gem install log-export-container`.
+
+> **NOTE**: In case you face the error `undefined class/module YAML` when trying to install the gem, enter the following commands to solve the error:
+> ```bash
+> $ gem install rubygems-update
+> $ update_rubygems
+> ```
+
+After that, you can use log-export-container globally as a command:
+
+```bash
+$ log-export-container
+```
+
+### Docker Image
+
+To use the log-export-container Docker Image, follow the next steps:
 
 1. Download the `docker-compose.yml` file from the Github repo onto your machine (or copy-paste its contents into a file you created directly on the machine with the same name).
    - Make sure that the 'Required variables' in the .yml file are set appropriately based on your desired log format and output destination.
@@ -31,6 +51,8 @@ The Log Export Container is a Docker Image you can use for spinning up multiple 
 Here's a gif demonstrating the setup process:
 
 ![image](docs/img/simple_demo.gif)
+
+## Configure Your LEC Instance
 
 For configuration details, please refer to [CONFIGURE_LOG_EXPORT_CONTAINER.md](docs/CONFIGURE_LOG_EXPORT_CONTAINER.md).
 
