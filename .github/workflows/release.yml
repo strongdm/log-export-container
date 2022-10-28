@@ -55,3 +55,10 @@ jobs:
           docker buildx build --push --platform "linux/amd64,linux/arm64" -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker buildx build --push --platform "linux/amd64,linux/arm64" -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
+      - name: Build and publish gem
+        uses: dawidd6/action-publish-gem@v1
+        env:
+          LEC_VERSION: ${{ steps.version.outputs.new_tag }}
+        with:
+          api_key: ${{secrets.RUBYGEMS_API_KEY}}

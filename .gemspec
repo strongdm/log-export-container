@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.metadata    = { "source_code_uri" => "https://github.com/strongdm/log-export-container" }
   spec.files       = ["create-conf.rb", "conf-utils.rb", "start.rb"] + Dir['fluentd/**/*.rb'] + Dir['fluentd/**/*.conf']
   spec.executables = ["log-export-container"]
-  spec.version     = '0.0.1'
+  spec.version     = ENV['LEC_VERSION']
 
   spec.add_dependency 'fluentd'
   spec.add_dependency 'fluent'
