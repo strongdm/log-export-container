@@ -1,3 +1,5 @@
+::USING_WINDOWS = !!((RUBY_PLATFORM =~ /(win|w)(32|64)$/) || (RUBY_PLATFORM =~ /mswin|mingw/))
+
 if ENV["SDM_ADMIN_TOKEN"]
   puts('Starting SDM')
   result = system("sdm --admin-token #{ENV['SDM_ADMIN_TOKEN']} login")
@@ -19,7 +21,11 @@ fluentd_pkg_version = "> 0.a"
 
 puts("Starting Fluentd")
 
-if Gem.respond_to?(:activate_bin_path)
+if ::USING_WINDOWS
+  fluentd_path = "fluentd"
+elsif Gem.respond_to?(:activate_bin_path)
+  # when using Linux sometimes the "fluentd" binary is not called,
+  # so to ensure the proper execution we need to provide the full binary path
   fluentd_path = Gem.activate_bin_path(fluentd_pkg_name, fluentd_pkg_name, fluentd_pkg_version)
 else
   fluentd_path = Gem.bin_path(fluentd_pkg_name, fluentd_pkg_name, fluentd_pkg_version)
