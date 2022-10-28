@@ -1,5 +1,5 @@
 Gem::Specification.new do |spec|
-  spec.name        = 'log-export-container'
+  spec.name        = 'lec-dv'
   spec.licenses    = ['Apache-2.0']
   spec.summary     = 'An application that can be easily deployed and configured to export strongDM query logs'
   spec.description = 'The application acts as a syslog concentrator. Customers that want to export their strongDM query logs to a third party logging service can use the application to do so. They configure the application for the appropriate target. Deploy the application. Configure their strongDM gateways to logs to a syslog destination and set the destination to the address of the logging application host.'
