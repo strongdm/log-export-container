@@ -38,9 +38,9 @@ jobs:
           aws-region: us-east-1
 
       - name: Set up Ruby
-          uses: ruby/setup-ruby@v1
-          with:
-            ruby-version: 3.1.2
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1.2
 
       - name: Build and publish gem
         env:
