@@ -37,6 +37,22 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
+      - name: Set up Ruby
+          uses: ruby/setup-ruby@v1
+          with:
+            ruby-version: 3.1.2
+
+      - name: Build and publish gem
+        env:
+          LEC_VERSION: ${{ steps.version.outputs.new_tag }}
+          RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
+        run: |
+          mkdir ~/.gem
+          echo ":api-key: ${RUBYGEMS_API_KEY}" > ~/.gem/credentials
+          chmod 0600 /home/runner/.gem/credentials
+          gem build .gemspec
+          gem push ./log-export-container-${LEC_VERSION}.gem --key api-key
+
       - name: Build, tag, and push the image to Amazon ECR
         id: build-image
         env:

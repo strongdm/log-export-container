@@ -1,46 +1,71 @@
+PATH
+  remote: .
+  specs:
+    log-export-container (0.0.1)
+      fluent
+      fluent-plugin-azure-loganalytics
+      fluent-plugin-bigquery
+      fluent-plugin-cloudwatch-logs
+      fluent-plugin-datadog
+      fluent-plugin-elasticsearch (= 5.2.4)
+      fluent-plugin-grafana-loki
+      fluent-plugin-kafka
+      fluent-plugin-logzio
+      fluent-plugin-mongo
+      fluent-plugin-prometheus
+      fluent-plugin-remote_syslog
+      fluent-plugin-rewrite-tag-filter
+      fluent-plugin-s3
+      fluent-plugin-sanitizer
+      fluent-plugin-splunk-hec
+      fluent-plugin-sumologic_output
+      fluentd
+      rspec
+      test-unit
+
 GEM
   remote: https://rubygems.org/
   specs:
-    activemodel (7.0.3)
-      activesupport (= 7.0.3)
-    activesupport (7.0.3)
+    activemodel (7.0.4)
+      activesupport (= 7.0.4)
+    activesupport (7.0.4)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
-    addressable (2.8.0)
-      public_suffix (>= 2.0.2, < 5.0)
+    addressable (2.8.1)
+      public_suffix (>= 2.0.2, < 6.0)
     aes_key_wrap (1.1.0)
     attr_required (1.0.1)
     aws-eventstream (1.2.0)
-    aws-partitions (1.594.0)
-    aws-sdk-cloudwatchlogs (1.53.0)
-      aws-sdk-core (~> 3, >= 3.127.0)
+    aws-partitions (1.652.0)
+    aws-sdk-cloudwatchlogs (1.54.0)
+      aws-sdk-core (~> 3, >= 3.165.0)
       aws-sigv4 (~> 1.1)
-    aws-sdk-core (3.131.1)
+    aws-sdk-core (3.166.0)
       aws-eventstream (~> 1, >= 1.0.2)
-      aws-partitions (~> 1, >= 1.525.0)
-      aws-sigv4 (~> 1.1)
+      aws-partitions (~> 1, >= 1.651.0)
+      aws-sigv4 (~> 1.5)
       jmespath (~> 1, >= 1.6.1)
-    aws-sdk-kms (1.57.0)
-      aws-sdk-core (~> 3, >= 3.127.0)
+    aws-sdk-kms (1.59.0)
+      aws-sdk-core (~> 3, >= 3.165.0)
       aws-sigv4 (~> 1.1)
-    aws-sdk-s3 (1.114.0)
-      aws-sdk-core (~> 3, >= 3.127.0)
+    aws-sdk-s3 (1.117.1)
+      aws-sdk-core (~> 3, >= 3.165.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.4)
-    aws-sdk-sqs (1.51.1)
-      aws-sdk-core (~> 3, >= 3.127.0)
+    aws-sdk-sqs (1.52.0)
+      aws-sdk-core (~> 3, >= 3.165.0)
       aws-sigv4 (~> 1.1)
-    aws-sigv4 (1.5.0)
+    aws-sigv4 (1.5.2)
       aws-eventstream (~> 1, >= 1.0.2)
     azure-loganalytics-datacollector-api (0.5.0)
       rest-client
-    bindata (2.4.10)
+    bindata (2.4.13)
     bson (4.15.0)
     childprocess (4.1.0)
     concurrent-ruby (1.1.10)
-    connection_pool (2.2.5)
+    connection_pool (2.3.0)
     cool.io (1.7.1)
     declarative (0.0.20)
     diff-lcs (1.5.0)
@@ -48,16 +73,16 @@ GEM
       rake (>= 12.0.0, < 14.0.0)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
-    elastic-transport (8.0.1)
-      faraday (~> 1)
+    elastic-transport (8.1.0)
+      faraday (< 3)
       multi_json
-    elasticsearch (8.2.2)
-      elastic-transport (~> 8.0)
-      elasticsearch-api (= 8.2.2)
-    elasticsearch-api (8.2.2)
+    elasticsearch (8.4.0)
+      elastic-transport (~> 8)
+      elasticsearch-api (= 8.4.0)
+    elasticsearch-api (8.4.0)
       multi_json
-    excon (0.92.3)
-    faraday (1.10.0)
+    excon (0.93.1)
+    faraday (1.10.2)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
       faraday-excon (~> 1.1)
@@ -73,13 +98,15 @@ GEM
     faraday-em_synchrony (1.0.0)
     faraday-excon (1.1.0)
     faraday-httpclient (1.0.1)
-    faraday-multipart (1.0.3)
-      multipart-post (>= 1.2, < 3)
+    faraday-multipart (1.0.4)
+      multipart-post (~> 2)
     faraday-net_http (1.0.1)
     faraday-net_http_persistent (1.2.0)
     faraday-patron (1.0.0)
     faraday-rack (1.0.0)
     faraday-retry (1.0.3)
+    faraday_middleware (1.2.0)
+      faraday (~> 1.0)
     fluent (0.7.5)
       mechanize (>= 2.7.3)
       rspec (>= 2.0)
@@ -92,63 +119,64 @@ GEM
       fluentd (>= 0.14.15, < 2)
       rest-client
       yajl-ruby
-    fluent-plugin-bigquery (2.3.0)
+    fluent-plugin-bigquery (3.0.0)
       fluentd (>= 0.14.0, < 2)
       google-api-client (>= 0.11.0)
       googleauth (>= 0.5.0)
       multi_json
-    fluent-plugin-cloudwatch-logs (0.14.2)
+    fluent-plugin-cloudwatch-logs (0.14.3)
       aws-sdk-cloudwatchlogs (~> 1.0)
       fluentd (>= 1.8.0)
-    fluent-plugin-datadog (0.14.1)
+    fluent-plugin-datadog (0.14.2)
       fluentd (>= 1, < 2)
-      net-http-persistent (~> 3.1)
-    fluent-plugin-elasticsearch (5.2.2)
+      net-http-persistent (~> 4.0.1)
+    fluent-plugin-elasticsearch (5.2.4)
       elasticsearch
       excon
+      faraday (~> 1.10)
       fluentd (>= 0.14.22)
     fluent-plugin-grafana-loki (1.2.18)
       fluentd (>= 1.9.3, < 2)
-    fluent-plugin-kafka (0.17.5)
+    fluent-plugin-kafka (0.18.1)
       fluentd (>= 0.10.58, < 2)
       ltsv
       ruby-kafka (>= 1.4.0, < 2)
-    fluent-plugin-logzio (0.0.21)
+    fluent-plugin-logzio (0.0.22)
       fluentd (>= 0.14.0, < 2)
-      net-http-persistent (~> 3.0)
-    fluent-plugin-mongo (1.5.0)
+      net-http-persistent (~> 4.0)
+    fluent-plugin-mongo (1.6.0)
       fluentd (>= 0.14.22, < 2)
-      mongo (~> 2.6.0)
+      mongo (>= 2.15.0, < 2.19.0)
     fluent-plugin-prometheus (2.0.3)
       fluentd (>= 1.9.1, < 2)
       prometheus-client (>= 2.1.0)
-    fluent-plugin-remote_syslog (1.0.0)
+    fluent-plugin-remote_syslog (1.1.0)
       fluentd
       remote_syslog_sender (>= 1.1.1)
     fluent-plugin-rewrite-tag-filter (2.4.0)
       fluent-config-regexp-type
       fluentd (>= 0.14.2, < 2)
-    fluent-plugin-s3 (1.6.1)
+    fluent-plugin-s3 (1.7.2)
       aws-sdk-s3 (~> 1.60)
       aws-sdk-sqs (~> 1.23)
       fluentd (>= 0.14.22, < 2)
     fluent-plugin-sanitizer (0.1.2)
       fluentd (>= 0.14.10, < 2)
-    fluent-plugin-splunk-hec (1.2.12)
-      fluentd (>= 1.4)
+    fluent-plugin-splunk-hec (1.3.0)
+      fluentd (>= 1.5)
       multi_json (~> 1.13)
-      net-http-persistent (~> 3.1)
+      net-http-persistent (~> 4.0)
       openid_connect (~> 1.1.8)
       prometheus-client (>= 2.1.0)
     fluent-plugin-sumologic_output (1.8.0)
       fluentd (>= 0.14.12)
       httpclient (~> 2.8.0)
-    fluentd (1.14.6)
+    fluentd (1.15.2)
       bundler
       cool.io (>= 1.4.5, < 2.0.0)
       http_parser.rb (>= 0.5.1, < 0.9.0)
       msgpack (>= 1.3.1, < 2.0.0)
-      serverengine (>= 2.2.5, < 3.0.0)
+      serverengine (>= 2.3.0, < 3.0.0)
       sigdump (~> 0.2.2)
       strptime (>= 0.2.4, < 1.0.0)
       tzinfo (>= 1.0, < 3.0)
@@ -159,7 +187,7 @@ GEM
     google-api-client (0.53.0)
       google-apis-core (~> 0.1)
       google-apis-generator (~> 0.1)
-    google-apis-core (0.5.0)
+    google-apis-core (0.9.1)
       addressable (~> 2.5, >= 2.5.1)
       googleauth (>= 0.16.2, < 2.a)
       httpclient (>= 2.8.1, < 3.a)
@@ -168,15 +196,15 @@ GEM
       retriable (>= 2.0, < 4.a)
       rexml
       webrick
-    google-apis-discovery_v1 (0.8.0)
-      google-apis-core (>= 0.4, < 2.a)
-    google-apis-generator (0.4.1)
+    google-apis-discovery_v1 (0.12.0)
+      google-apis-core (>= 0.9.0, < 2.a)
+    google-apis-generator (0.11.0)
       activesupport (>= 5.0)
       gems (~> 1.2)
-      google-apis-core (>= 0.4, < 2.a)
+      google-apis-core (>= 0.9.1, < 2.a)
       google-apis-discovery_v1 (~> 0.5)
       thor (>= 0.20, < 2.a)
-    googleauth (1.1.3)
+    googleauth (1.3.0)
       faraday (>= 0.17.3, < 3.a)
       jwt (>= 1.4, < 3.0)
       memoist (~> 0.16)
@@ -188,14 +216,15 @@ GEM
       domain_name (~> 0.5)
     http_parser.rb (0.8.0)
     httpclient (2.8.3)
-    i18n (1.10.0)
+    i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     jmespath (1.6.1)
-    json-jwt (1.13.0)
+    json-jwt (1.15.3)
       activesupport (>= 4.2)
       aes_key_wrap
       bindata
-    jwt (2.3.0)
+      httpclient
+    jwt (2.5.0)
     ltsv (0.1.2)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
@@ -215,17 +244,17 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2022.0105)
     mini_mime (1.1.2)
-    minitest (5.15.0)
-    mongo (2.6.4)
-      bson (>= 4.3.0, < 5.0.0)
-    msgpack (1.5.2)
+    minitest (5.16.3)
+    mongo (2.18.1)
+      bson (>= 4.14.1, < 5.0.0)
+    msgpack (1.6.0)
     multi_json (1.15.0)
-    multipart-post (2.1.1)
+    multipart-post (2.2.3)
     net-http-digest_auth (1.4.1)
-    net-http-persistent (3.1.0)
+    net-http-persistent (4.0.1)
       connection_pool (~> 2.2)
     netrc (0.11.0)
-    nokogiri (1.13.6)
+    nokogiri (1.13.9-x86_64-linux)
       racc (~> 1.4)
     openid_connect (1.1.8)
       activemodel
@@ -238,12 +267,12 @@ GEM
       validate_url
       webfinger (>= 1.0.1)
     os (1.1.4)
-    power_assert (2.0.1)
+    power_assert (2.0.2)
     prometheus-client (4.0.0)
-    public_suffix (4.0.7)
+    public_suffix (5.0.0)
     racc (1.6.0)
-    rack (2.2.3.1)
-    rack-oauth2 (1.19.0)
+    rack (3.0.0)
+    rack-oauth2 (1.21.3)
       activesupport
       attr_required
       httpclient
@@ -263,19 +292,19 @@ GEM
       netrc (~> 0.8)
     retriable (3.1.2)
     rexml (3.2.5)
-    rspec (3.11.0)
-      rspec-core (~> 3.11.0)
-      rspec-expectations (~> 3.11.0)
-      rspec-mocks (~> 3.11.0)
-    rspec-core (3.11.0)
-      rspec-support (~> 3.11.0)
-    rspec-expectations (3.11.0)
+    rspec (3.12.0)
+      rspec-core (~> 3.12.0)
+      rspec-expectations (~> 3.12.0)
+      rspec-mocks (~> 3.12.0)
+    rspec-core (3.12.0)
+      rspec-support (~> 3.12.0)
+    rspec-expectations (3.12.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.11.0)
-    rspec-mocks (3.11.1)
+      rspec-support (~> 3.12.0)
+    rspec-mocks (3.12.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.11.0)
-    rspec-support (3.11.0)
+      rspec-support (~> 3.12.0)
+    rspec-support (3.12.0)
     ruby-kafka (1.5.0)
       digest-crc
     ruby2_keywords (0.0.5)
@@ -286,12 +315,12 @@ GEM
       multi_json (~> 1.0)
       rubyzip (~> 1.0)
       websocket (~> 1.0.4)
-    serverengine (2.2.5)
+    serverengine (2.3.0)
       sigdump (~> 0.2.2)
     sigdump (0.2.4)
-    signet (0.16.1)
+    signet (0.17.0)
       addressable (~> 2.8)
-      faraday (>= 0.17.5, < 3.0)
+      faraday (>= 0.17.5, < 3.a)
       jwt (>= 1.5, < 3.0)
       multi_json (~> 1.10)
     strptime (0.2.5)
@@ -300,13 +329,13 @@ GEM
       attr_required (>= 0.0.5)
       httpclient (>= 2.4)
     syslog_protocol (0.9.2)
-    test-unit (3.5.3)
+    test-unit (3.5.5)
       power_assert
     thor (1.2.1)
     trailblazer-option (0.1.2)
-    tzinfo (2.0.4)
+    tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
-    tzinfo-data (1.2022.1)
+    tzinfo-data (1.2022.5)
       tzinfo (>= 1.0.0)
     uber (0.1.0)
     unf (0.1.4)
@@ -320,9 +349,10 @@ GEM
       public_suffix
     watir-webdriver (0.6.4)
       selenium-webdriver (>= 2.18.0)
-    webfinger (1.2.0)
+    webfinger (2.0.0)
       activesupport
-      httpclient (>= 2.4)
+      faraday (~> 1.7)
+      faraday_middleware (~> 1.1)
     webrick (1.7.0)
     webrobots (0.1.2)
     websocket (1.0.7)
@@ -332,25 +362,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  fluent
-  fluent-plugin-azure-loganalytics
-  fluent-plugin-bigquery
-  fluent-plugin-cloudwatch-logs
-  fluent-plugin-datadog
-  fluent-plugin-elasticsearch
-  fluent-plugin-grafana-loki
-  fluent-plugin-kafka
-  fluent-plugin-logzio
-  fluent-plugin-mongo
-  fluent-plugin-prometheus
-  fluent-plugin-remote_syslog
-  fluent-plugin-rewrite-tag-filter
-  fluent-plugin-s3
-  fluent-plugin-sanitizer
-  fluent-plugin-splunk-hec
-  fluent-plugin-sumologic_output
-  rspec
-  test-unit
+  log-export-container!
 
 BUNDLED WITH
    2.1.4
