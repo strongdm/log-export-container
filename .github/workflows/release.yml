@@ -12,7 +12,7 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - name: Checkout
@@ -37,6 +37,22 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
+      - name: Set up Ruby
+          uses: ruby/setup-ruby@v1
+          with:
+            ruby-version: 3.1.2
+
+      - name: Build and publish gem
+        env:
+          LEC_VERSION: ${{ steps.version.outputs.new_tag }}
+          RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
+        run: |
+          mkdir ~/.gem
+          echo ":api-key: ${RUBYGEMS_API_KEY}" > ~/.gem/credentials
+          chmod 0600 /home/runner/.gem/credentials
+          gem build .gemspec
+          gem push ./log-export-container-${LEC_VERSION}.gem --key api-key
+
       - name: Build, tag, and push the image to Amazon ECR
         id: build-image
         env:
@@ -55,10 +71,3 @@ jobs:
           docker buildx build --push --platform "linux/amd64,linux/arm64" -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker buildx build --push --platform "linux/amd64,linux/arm64" -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-
-      - name: Build and publish gem
-        uses: dawidd6/action-publish-gem@v1
-        env:
-          LEC_VERSION: ${{ steps.version.outputs.new_tag }}
-        with:
-          api_key: ${{secrets.RUBYGEMS_API_KEY}}
