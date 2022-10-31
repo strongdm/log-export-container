@@ -49,7 +49,7 @@ jobs:
         run: |
           mkdir ~/.gem
           echo ":api-key: ${RUBYGEMS_API_KEY}" > ~/.gem/credentials
-          chmod 0600 /home/runner/.gem/credentials
+          chmod 0600 ~/.gem/credentials
           gem build .gemspec
           gem push ./log-export-container-${LEC_VERSION}.gem --key api-key
 
