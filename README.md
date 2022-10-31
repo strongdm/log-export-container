@@ -72,3 +72,4 @@ Refer to the [contributing](CONTRIBUTING.md) guidelines or dump part of the info
 
 ## Support
 Refer to the [support](SUPPORT.md) guidelines or dump part of the information here.
+
