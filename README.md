@@ -1,4 +1,9 @@
 # Log Export Container
+
+**Thank you for your interest in Log Export Container. As a result of the positive feedback we have received about the LEC project, we want to further invest in our core product offering to deliver functionality that will address similar challenges. We will give time and attention to the development of these feature sets over the next few quarters.**
+
+**In the meantime,  we are freezing the current version of [Log Export Container v1.0.53](https://github.com/strongdm/log-export-container/releases/tag/1.0.53) and have halted any non-critical bug fixes. We’ll continue to support the existing version while we work to build out the core product to meet similar use cases to those that LEC serves. Let us know if you have any questions about how this might impact you or the projects you are working on.**
+
 A docker container that can be easily deployed and configured to export strongDM query logs.
 
 The container acts as a syslog concentrator. Customers that want to export their strongDM query logs to a third party logging service can use the container to do so. They configure the container for the appropriate target. Deploy the container. Configure their strongDM gateways to logs to a syslog destination and set the destination to the address of the logging container.
